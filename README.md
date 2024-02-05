@@ -13,14 +13,18 @@ Node.js - Server-side JavaScript runtime.
 Express.js - Web application framework for Node.js.
 
 ### Installation
-Clone the repository:
-`git clone https://01.kood.tech/git/aselge/make-your-game.git
-cd bomberman-game`
-Install dependencies:
-`npm install`
-Start the local server:
-`node server.js`
-Open your browser and navigate to http://localhost:4000 to play the game.
+
+1. Clone the repository:
+   ```bash
+   git clone https://01.kood.tech/git/aselge/make-your-game.git
+   cd bomberman-game
+2. Install dependencies:
+    ```bash
+    npm install
+3. Start the local server:
+    ```bash
+    node server.js
+4. Open your browser and navigate to http://localhost:4000.
 
 ## Features
 
