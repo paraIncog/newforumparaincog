@@ -5,9 +5,65 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="./style.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Inter"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
   </head>
   <body>
-    <h1>Initial App</h1>
-    <p>Hello, World</p>
+    <div class="sidebar">
+      <!-- Primary containing search and Forum/PM Sel Tab -->
+      <div class="container">
+        <input
+          class="searchbar"
+          placeholder="Search Something..."
+          maxlength="40"
+        />
+        <!-- Forum/Private Message Tab Selection -->
+        <div class="forum-pm-selrow">
+          <div class="forum-pm-icontext-sep forum-pm-active">
+            <div>
+              <span class="material-symbols-outlined"> forum </span>
+            </div>
+            Forums
+          </div>
+          <div class="forum-pm-icontext-sep">
+            <div>
+              <span class="material-symbols-outlined"> chat </span>
+            </div>
+            <div>Private Messages</div>
+          </div>
+        </div>
+        <!-- Forum Filtering -->
+        <div class="forum-filtering">
+          Filters
+          <div>Categories</div>
+          <div>Most Recent Posts</div>
+          <div>Liked Posts</div>
+          <div>Your Posts</div>
+        </div>
+        <!-- User's Account -->
+        <div class="useraccount">
+          <div class="profilepic">
+            <!-- Profile Pic -->
+          </div>
+          <div>Your Name</div>
+          <div>
+            <!-- Profile Options -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- DEBUG -->
+    <div class="debug-area">
+      <div id="overlay-toggle">
+        <span class="material-symbols-outlined debug-selector"> layers </span>
+      </div>
+      DEBUG
+    </div>
   </body>
 </html>

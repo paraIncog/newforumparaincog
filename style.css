@@ -1,4 +1,114 @@
 body {
-	background-color: azure;
-	font-family: Arial, Helvetica, sans-serif;
+	background-color: #FFFFFF;
+	font-family: 'Inter', serif;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 200,
+  'GRAD' 0,
+  'opsz' 24
+}
+
+.container {
+	padding: 1rem;
+}
+
+.sidebar {
+	background-color: #D9D9D9;
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 25%;
+}
+
+.searchbar {
+	display: flex;
+	justify-content: center;
+	width: 95%;
+	height: 2rem;
+	align-items: center;
+	border-radius: 1rem;
+	border: transparent;
+	outline: 0;
+	padding-left: 1rem;
+	letter-spacing: .07rem;
+	font-size: 1rem;
+}
+
+.forum-pm-selrow {
+	display: flex;
+	justify-content: space-around;
+	padding-top: 1rem;
+}
+
+.forum-pm-icontext-sep {
+	cursor: pointer;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding-top: 0.5rem;
+	height: 4rem;
+	width: 50%;
+}
+
+.forum-pm-active {
+	color: white;
+	background-color: blue;
+}
+
+.forum-filtering {
+	padding-top: 1rem;
+}
+
+.useraccount {
+	font-size: 1.5rem;
+	position: absolute;
+	bottom: 1rem;
+	background-color: blue;
+	color: white;
+	width: 90%;
+	padding-left: 1rem;
+	height: 5rem;
+	display: flex;
+	align-items: center;
+	border-radius: 50rem;
+}
+
+.profilepic {
+	height: 4rem;
+	width: 4rem;
+	background-color: white;
+	border-radius: 50%;
+}
+
+/* Debugging */
+
+.debug-area {
+	position: absolute;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 98;
+}
+
+.debug-selector {
+	height: 4rem;
+	width: 4rem;
+	background-color: gray;
+	border-radius: 50%;
+}
+
+.overlay {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 97;
+	background-color: red;
+	display: none;
+}
+
+.hidden {
+	display: none;
 }
