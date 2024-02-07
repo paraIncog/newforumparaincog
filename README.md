@@ -2,6 +2,12 @@
 <!-- Screenshot -->
 
 ## Table of Contents
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Dependencies](#dependencies)
+  - [Installation](#installation)
+- [Features](#features)
+- [Author](#author)
 
 ## Getting Started
 
