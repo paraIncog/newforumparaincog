@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", function () {
-	loadSideBarContent('forums');
+	loadPage('forums');
 })

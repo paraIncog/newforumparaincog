@@ -1,17 +1,17 @@
-function loadSideBarContent(page) {
+function loadPage(page) {
   const sidebarContent = document.getElementById("sidebar-content");
   switch (page) {
     case "forums":
       sidebarContent.innerHTML = `
 	  <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">
-          <div onclick="loadSideBarContent('forums')" href="/#" class="forum-pm-icontext-sep forum-pm-active">
+          <div class="forum-pm-icontext-sep forum-pm-active">
               <div>
                 <span class="material-symbols-outlined"> forum </span>
               </div>
               Forums
           		</div>
-          		<div onclick="loadSideBarContent('pms')" href="/#" class="forum-pm-icontext-sep">
+          		<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep">
               		<div>
                 	<span class="material-symbols-outlined"> chat </span>
               		</div>
@@ -74,13 +74,13 @@ function loadSideBarContent(page) {
       sidebarContent.innerHTML = `
 	  <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">
-          <div onclick="loadSideBarContent('forums')" href="/#" class="forum-pm-icontext-sep">
+          <div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
               <div>
                 <span class="material-symbols-outlined"> forum </span>
               </div>
               Forums
           </div>
-          <div onclick="loadSideBarContent('pms')" href="/#" class="forum-pm-icontext-sep forum-pm-active">
+          <div class="forum-pm-icontext-sep forum-pm-active">
               <div>
                 <span class="material-symbols-outlined"> chat </span>
               </div>
