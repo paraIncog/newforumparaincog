@@ -129,6 +129,16 @@ body {
 	width: 75%;
 }
 
+.primary-page-desc {
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	font-size: 3rem;
+	color: blue;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+}
+
 /* Debugging */
 
 .debug-area {
