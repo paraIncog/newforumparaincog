@@ -119,6 +119,16 @@ body {
 	border-radius: 50%;
 }
 
+.main-content {
+	overflow-x: hidden;
+	background-color: #ffffff;
+	position: absolute;
+	top: 0;
+	left: 25%;
+	height: 100%;
+	width: 75%;
+}
+
 /* Debugging */
 
 .debug-area {
