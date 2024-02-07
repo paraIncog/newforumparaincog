@@ -3,6 +3,21 @@ function loadSideBarContent(page) {
   switch (page) {
     case "forums":
       sidebarContent.innerHTML = `
+	  <!-- Forum/Private Message Tab Selection -->
+        <div class="forum-pm-selrow">
+          <div onclick="loadSideBarContent('forums')" href="/#" class="forum-pm-icontext-sep forum-pm-active">
+              <div>
+                <span class="material-symbols-outlined"> forum </span>
+              </div>
+              Forums
+          		</div>
+          		<div onclick="loadSideBarContent('pms')" href="/#" class="forum-pm-icontext-sep">
+              		<div>
+                	<span class="material-symbols-outlined"> chat </span>
+              		</div>
+              		<div>Private Messages</div>
+          		</div>
+        	</div>
 			<div class="forum-filtering">
 			  <div class="filter-header">Filters</div>
 			  <div class="filter-mainheader">Categories</div>
@@ -56,7 +71,24 @@ function loadSideBarContent(page) {
 			`;
       break;
     case "pms":
-      sidebarContent.innerHTML = `<div class="forum-filtering">Sorry, this section has not been implemented yet.</div>`;
+      sidebarContent.innerHTML = `
+	  <!-- Forum/Private Message Tab Selection -->
+        <div class="forum-pm-selrow">
+          <div onclick="loadSideBarContent('forums')" href="/#" class="forum-pm-icontext-sep">
+              <div>
+                <span class="material-symbols-outlined"> forum </span>
+              </div>
+              Forums
+          </div>
+          <div onclick="loadSideBarContent('pms')" href="/#" class="forum-pm-icontext-sep forum-pm-active">
+              <div>
+                <span class="material-symbols-outlined"> chat </span>
+              </div>
+              <div>Private Messages</div>
+          </div>
+        </div>
+	  <div class="forum-filtering">Sorry, this section has not been implemented yet.</div>
+	  `;
       break;
     default:
       sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
