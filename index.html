@@ -25,70 +25,20 @@
         />
         <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">
-          <div class="forum-pm-icontext-sep forum-pm-active">
-            <div>
-              <span class="material-symbols-outlined"> forum </span>
-            </div>
-            Forums
+          <div onclick="loadSideBarContent('forums')" href="/#" class="forum-pm-icontext-sep forum-pm-active">
+              <div>
+                <span class="material-symbols-outlined"> forum </span>
+              </div>
+              Forums
           </div>
-          <div class="forum-pm-icontext-sep">
-            <div>
-              <span class="material-symbols-outlined"> chat </span>
-            </div>
-            <div>Private Messages</div>
+          <div onclick="loadSideBarContent('pms')" href="/#" class="forum-pm-icontext-sep">
+              <div>
+                <span class="material-symbols-outlined"> chat </span>
+              </div>
+              <div>Private Messages</div>
           </div>
         </div>
-        <!-- Forum Filtering -->
-        <div class="forum-filtering">
-          <div class="filter-header">Filters</div>
-          <div class="filter-mainheader">Categories</div>
-          <ul class="filter-subcat-dot">
-            <li>
-              <a
-                class="filter-subcat"
-                href="/get-posts-by-category?category=Golang"
-                >Golang</a
-              >
-            </li>
-            <li>
-              <a
-                class="filter-subcat"
-                href="get-posts-by-category?category=Python"
-                >Python</a
-              >
-            </li>
-            <li>
-              <a
-                class="filter-subcat"
-                href="get-posts-by-category?category=JavaScript"
-                >JavaScript</a
-              >
-            </li>
-            <li>
-              <a
-                class="filter-subcat"
-                href="get-posts-by-category?category=Docker"
-                >Docker</a
-              >
-            </li>
-            <li>
-              <a class="filter-subcat" href="get-posts-by-category?category=SQL"
-                >SQL</a
-              >
-            </li>
-          </ul>
-          <ul class="filter-subcat-nodot">
-            <li>
-              <a class="filter-subcat filter-mainheader" href="/get-created-posts/"
-                >Most Recent Posts</a
-              >
-            </li>
-            <li>
-              <a class="filter-subcat" href="/get-liked-posts/">Liked Posts</a>
-            </li>
-            <li><a class="filter-subcat" href="/get-your-posts/"> Your Posts </a></li>
-          </ul>
-        </div>
+        <div id="sidebar-content"></div>
         <!-- User's Account -->
         <div class="useraccount">
           <div class="profilepic">
@@ -108,5 +58,8 @@
       </div>
       DEBUG
     </div>
+
+    <script src="app.js"></script>
+    <script src="loadSideBarContent.js"></script>
   </body>
 </html>
