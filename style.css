@@ -115,8 +115,9 @@ body {
 .profilepic {
 	height: 4rem;
 	width: 4rem;
-	background-color: white;
+	background-color: #D9D9D9;
 	border-radius: 50%;
+	border: .2rem solid white;
 }
 
 .main-content {
