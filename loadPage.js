@@ -1,7 +1,53 @@
 function loadPage(page) {
+  const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
   switch (page) {
     case "forums":
+      mainContent.innerHTML = `
+	  <div class="container">
+        <div class="primary-page-desc">Forums</div>
+        <!-- First thread -->
+        <div class="single-forum">
+          <div class="profilepic"></div>
+          <div class="single-forum-thread">
+            <div class="row">
+              <div class="single-forum-thread-title">Title 1 (80 letters max)</div>
+              <div class="single-forum-thread-time">31.12.24, 23:50</div>
+            </div>
+            <div class="single-forum-thread-uname">User Name 1</div>
+            <div class="single-forum-thread-intro">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam enim
+              mauris, sodales sit amet ipsum ut, vestibulum viverra nisl. Fusce
+              scelerisque metus ut orci iaculis, vitae maximus tortor fringilla.
+              Suspendisse sed ante vel dui elementum blandit ut vel purus. Nullam
+              scelerisque mi vel consequat maximus. Proin tellus elit, dignissim a
+              nulla non, imperdiet tempor nisl. Sed quis orci fringilla, porttitor
+              ex eget, ornare dolor. Morbi efficitur nec ipsum sit amet dapibus. (600 letters max)
+            </div>
+          </div>
+        </div>
+        <!-- second thread -->
+        <div class="single-forum">
+          <div class="profilepic"></div>
+          <div class="single-forum-thread">
+            <div class="row">
+              <div class="single-forum-thread-title">Title 1 (80 letters max)</div>
+              <div class="single-forum-thread-time">31.12.24, 23:50</div>
+            </div>
+            <div class="single-forum-thread-uname">User Name 1</div>
+            <div class="single-forum-thread-intro">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam enim
+              mauris, sodales sit amet ipsum ut, vestibulum viverra nisl. Fusce
+              scelerisque metus ut orci iaculis, vitae maximus tortor fringilla.
+              Suspendisse sed ante vel dui elementum blandit ut vel purus. Nullam
+              scelerisque mi vel consequat maximus. Proin tellus elit, dignissim a
+              nulla non, imperdiet tempor nisl. Sed quis orci fringilla, porttitor
+              ex eget, ornare dolor. Morbi efficitur nec ipsum sit amet dapibus. (600 letters max)
+            </div>
+          </div>
+        </div>
+      </div>
+	  `;
       sidebarContent.innerHTML = `
 	  <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">
@@ -71,6 +117,7 @@ function loadPage(page) {
 			`;
       break;
     case "pms":
+      mainContent.innerHTML = `<div class="primary-page-desc"><div class="container">Sorry, this section has not been implemented yet.</div></div>`;
       sidebarContent.innerHTML = `
 	  <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">

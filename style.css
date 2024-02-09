@@ -120,7 +120,7 @@ body {
 	border: .2rem solid white;
 }
 
-.main-content {
+#main-content {
 	overflow-x: hidden;
 	background-color: #ffffff;
 	position: absolute;
