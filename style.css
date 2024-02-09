@@ -143,6 +143,8 @@ body {
 .single-forum {
 	display: flex;
 	flex-direction: row;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
 }
 
 .single-forum-thread {
