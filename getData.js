@@ -17,7 +17,7 @@ db.serialize(() => {
     if (err) {
       console.error(err.message);
     }
-    console.log(row.id + "\t" + row.name);
+    console.log(row.id + "\t" + row.username);
   });
 });
 
