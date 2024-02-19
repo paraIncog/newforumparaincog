@@ -1,3 +1,3 @@
 document.addEventListener("DOMContentLoaded", function () {
-	loadPage('forums');
+	loadPage('pms');
 })

@@ -176,6 +176,18 @@ body {
 	flex-direction: row;
 }
 
+.pm-person-sel {
+	display: flex;
+	align-items: center;
+	background-color: aqua;
+	width: 95%;
+	padding: .5rem;
+}
+
+.accountname-side {
+	margin-left: .5rem;
+}
+
 /* Debugging */
 
 .debug-area {

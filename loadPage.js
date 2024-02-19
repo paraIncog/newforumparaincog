@@ -133,10 +133,15 @@ function loadPage(page) {
 					<div>Private Messages</div>
 				</div>
 			  </div>
-			  <div class="forum-filtering">Work in progress</div>
-			  <div class="">
-				${users.map((user) => `<div class="container">${user.username}</div>`).join(``)}
-			  </div>
+			  <br>
+			  <div class="pm-person-sel">
+          		<div class="profilepic">
+            	<!-- Profile Pic -->
+          		</div>
+          	  	<div class="accountname-side">Username</div>
+          	  <div>
+          </div>
+        </div>
 			`;
         })
         .catch((error) => {
