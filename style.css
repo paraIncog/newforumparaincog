@@ -177,9 +177,10 @@ body {
 }
 
 .pm-person-sel {
+	color: white;
 	display: flex;
 	align-items: center;
-	background-color: aqua;
+	background-color: #00A3FF;
 	width: 95%;
 	padding: .5rem;
 }
