@@ -1,16 +1,18 @@
 function loadPage(page) {
-	const mainContent = document.getElementById("main-content");
-	const sidebarContent = document.getElementById("sidebar-content");
-	switch (page) {
-		case "forums":
-			fetch("/get-forums")
-				.then((response) => response.json())
-				.then((posts) => {
-					mainContent.innerHTML = `
+  const mainContent = document.getElementById("main-content");
+  const sidebarContent = document.getElementById("sidebar-content");
+  switch (page) {
+    case "forums":
+      fetch("/get-forums")
+        .then((response) => response.json())
+        .then((posts) => {
+          mainContent.innerHTML = `
 		  <div class="container">
 		  	<div class="primary-page-desc">Forums</div>
 		  	<!-- Thread -->
-			  ${posts.map((post) => `
+			  ${posts
+          .map(
+            (post) => `
 			  <div class="single-forum">
 				<div class="profilepic">{{ .UserPic }}</div>
 				<div class="single-forum-thread">
@@ -29,13 +31,15 @@ function loadPage(page) {
 						${post.content}
 					</div>
 				</div>
-			  </div>`).join(``)}
+			  </div>`
+          )
+          .join(``)}
           </div>
 		  </div>
 		  </div>
 		  `;
-				});
-			sidebarContent.innerHTML = `
+        });
+      sidebarContent.innerHTML = `
 	  <!-- Forum/Private Message Tab Selection -->
         <div class="forum-pm-selrow">
           <div class="forum-pm-icontext-sep forum-pm-active">
@@ -102,18 +106,18 @@ function loadPage(page) {
 			  </ul>
 			</div>
 			`;
-			break;
-		case "pms":
-			mainContent.innerHTML = `
+      break;
+    case "pms":
+      mainContent.innerHTML = `
 		<div class="primary-page-desc">
 			<div class="container">
 				Sorry, this section has not been implemented yet.
 			</div>
 		</div>`;
-			fetch("/get-users")
-				.then((response) => response.json())
-				.then((users) => {
-					sidebarContent.innerHTML = `
+      fetch("/get-users")
+        .then((response) => response.json())
+        .then((users) => {
+          sidebarContent.innerHTML = `
 			  <!-- Forum/Private Message Tab Selection -->
 			  <div class="forum-pm-selrow">
 				<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
@@ -134,12 +138,12 @@ function loadPage(page) {
 				${users.map((user) => `<div class="container">${user.username}</div>`).join(``)}
 			  </div>
 			`;
-				})
-				.catch((error) => {
-					console.error("Error fetching users:", error);
-				});
-			break;
-		default:
-			sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
-	}
+        })
+        .catch((error) => {
+          console.error("Error fetching users:", error);
+        });
+      break;
+    default:
+      sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
+  }
 }
