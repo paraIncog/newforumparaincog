@@ -91,25 +91,40 @@ function loadPage(page) {
 			`;
       break;
     case "pms":
-      mainContent.innerHTML = `<div class="primary-page-desc"><div class="container">Sorry, this section has not been implemented yet.</div></div>`;
-      sidebarContent.innerHTML = `
-	  <!-- Forum/Private Message Tab Selection -->
-        <div class="forum-pm-selrow">
-          <div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
-              <div>
-                <span class="material-symbols-outlined"> forum </span>
-              </div>
-              Forums
-          </div>
-          <div class="forum-pm-icontext-sep forum-pm-active">
-              <div>
-                <span class="material-symbols-outlined"> chat </span>
-              </div>
-              <div>Private Messages</div>
-          </div>
-        </div>
-	  <div class="forum-filtering">Sorry, this section has not been implemented yet.</div>
-	  `;
+      mainContent.innerHTML = `
+		<div class="primary-page-desc">
+			<div class="container">
+				Sorry, this section has not been implemented yet.
+			</div>
+		</div>`;
+      fetch("/get-users")
+        .then((response) => response.json())
+        .then((users) => {
+          sidebarContent.innerHTML = `
+			  <!-- Forum/Private Message Tab Selection -->
+			  <div class="forum-pm-selrow">
+				<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+					<div>
+					  <span class="material-symbols-outlined"> forum </span>
+					</div>
+					Forums
+				</div>
+				<div class="forum-pm-icontext-sep forum-pm-active">
+					<div>
+					  <span class="material-symbols-outlined"> chat </span>
+					</div>
+					<div>Private Messages</div>
+				</div>
+			  </div>
+			  <div class="forum-filtering">Work in progress</div>
+			  <div class="">
+				${users.map((user) => `<div class="container">${user.username}</div>`).join(``)}
+			  </div>
+			`;
+        })
+        .catch((error) => {
+          console.error("Error fetching users:", error);
+        });
       break;
     default:
       sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
