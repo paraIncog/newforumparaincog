@@ -12,7 +12,6 @@ function loadPage(page) {
 		  	<!-- Thread -->
 			  ${posts.map((post) => `
 			  <div class="single-forum">
-			  	${post.id}	
 				<div class="profilepic">{{ .UserPic }}</div>
 				<div class="single-forum-thread">
 					<div class="row">
