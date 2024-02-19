@@ -32,6 +32,25 @@ app.get("/get-users", (req, res) => {
   });
 });
 
+// Endpoint to fetch forum posts
+app.get("/get-forums", (req, res) => {
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+    console.log("Connected to the database.");
+
+    db.all("SELECT id, title, author, content, created_at FROM posts", (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.json(rows);
+    });
+  });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
