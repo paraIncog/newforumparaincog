@@ -136,32 +136,31 @@ function loadPage(page) {
 								.then((users) => {
 									sidebarContent.innerHTML = 
 										`
-											<div class="forum-pm-selrow">
-												<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
-													<div>
-														<span class="material-symbols-outlined"> forum </span>
+												<div class="forum-pm-selrow">
+													<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+														<div>
+															<span class="material-symbols-outlined"> forum </span>
+														</div>
+														Forums
 													</div>
-													Forums
+												<div class="forum-pm-icontext-sep forum-pm-active">
+													<div>
+														<span class="material-symbols-outlined"> chat </span>
+													</div>
+													<div>Private Messages</div>
+													</div>
 												</div>
-											<div class="forum-pm-icontext-sep forum-pm-active">
-												<div>
-													<span class="material-symbols-outlined"> chat </span>
-												</div>
-												<div>Private Messages</div>
-												</div>
-											</div>
-											<!-- User friend -->
-											${users.map(
-												(user) => `
-												<div class="row pm-person-sel">
-												<div class="profilepic">
-												<!-- Profile Pic -->
-												</div>
-												<div class="accountname-side">
-												${user.username}
-												</div>
-												<div>
-												`
+												${users.map(
+													(user) => `
+													<div class="row pm-person-sel">
+													<div class="profilepic">
+													<!-- Profile Pic -->
+													</div>
+													<div class="accountname-side">
+													${user.username}
+													</div>
+													<div>
+													`
 											)}
 										`;
 								})
