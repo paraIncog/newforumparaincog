@@ -176,6 +176,11 @@ body {
 	flex-direction: row;
 }
 
+.friend-users {
+	display: flex;
+	flex-direction: row;
+}
+
 .pm-person-sel {
 	color: white;
 	display: flex;
@@ -188,6 +193,7 @@ body {
 .accountname-side {
 	margin-left: .5rem;
 }
+
 
 /* Debugging */
 
