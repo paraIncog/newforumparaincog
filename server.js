@@ -20,7 +20,6 @@ app.get("/get-users", (req, res) => {
       console.error(err.message);
       return res.status(500).send("Internal Server Error");
     }
-    console.log("Connected to the database.");
 
     db.all("SELECT id, username FROM users", (err, rows) => {
       if (err) {
@@ -39,7 +38,6 @@ app.get("/get-forums", (req, res) => {
       console.error(err.message);
       return res.status(500).send("Internal Server Error");
     }
-    console.log("Connected to the database.");
 
     db.all("SELECT id, title, author, content, created_at FROM posts", (err, rows) => {
       if (err) {

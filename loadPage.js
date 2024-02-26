@@ -136,13 +136,13 @@ function loadPage(page) {
 								.then((users) => {
 									sidebarContent.innerHTML = 
 										`
-												<div class="forum-pm-selrow">
-													<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
-														<div>
-															<span class="material-symbols-outlined"> forum </span>
-														</div>
-														Forums
+											<div class="forum-pm-selrow">
+												<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+													<div>
+														<span class="material-symbols-outlined"> forum </span>
 													</div>
+													Forums
+												</div>
 												<div class="forum-pm-icontext-sep forum-pm-active">
 													<div>
 														<span class="material-symbols-outlined"> chat </span>
@@ -151,24 +151,25 @@ function loadPage(page) {
 													</div>
 												</div>
 												${users.map(
-													(user) => `
-													<div class="row pm-person-sel">
-													<div class="profilepic">
-													<!-- Profile Pic -->
-													</div>
-													<div class="accountname-side">
-													${user.username}
-													</div>
-													<div>
+													(user) => 
 													`
-											)}
+														<div class="pm-person-sel">
+															<div class="profilepic">
+																<!-- Profile Pic -->
+															</div>
+															<div class="accountname-side">
+																${user.username}
+															</div>
+														</div>
+													`
+												).join(``)}
 										`;
 								})
 							.catch((error) => {
 								console.error("Error fetching users:", error);
 							});
 							break;
-								default:
-									sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
+							default:
+								sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
 	}
 }
