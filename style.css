@@ -228,6 +228,13 @@ body {
 
 /* About user */
 
+.back-arrow {
+	color: #5c5c5c;
+	font-size: 2rem;
+	margin-left: 1rem;
+	position: absolute;
+}
+
 .about-user-container {
 	padding: 2rem 5rem;
 	display: flex;

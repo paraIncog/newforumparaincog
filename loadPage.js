@@ -207,6 +207,9 @@ function showUserInfo(userId) {
             mainContent.innerHTML =
                 `
                     <div class="container">
+						<div class="back-arrow" onClick="loadPage('pms')">
+							Back
+						</div>
                         <div class="primary-page-desc">
                             User: ${user.username}
                         </div>
