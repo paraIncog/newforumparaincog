@@ -13,7 +13,7 @@ let db = new sqlite3.Database(
 );
 
 db.serialize(() => {
-  db.each(`SELECT id, username, age, namefirst, namelast FROM users`, (err, row) => {
+  db.each(`SELECT id, username, age, namefirst, namelast, email FROM users`, (err, row) => {
     if (err) {
       console.error(err.message);
     }

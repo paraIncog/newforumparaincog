@@ -21,7 +21,7 @@ app.get("/get-users", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT id, username, age, namefirst, namelast FROM users", (err, rows) => {
+    db.all("SELECT id, username, age, namefirst, namelast, email FROM users", (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -58,7 +58,7 @@ app.get("/get-user", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT id, username, age, namefirst, namelast FROM users WHERE id = ?", [userId], (err, row) => {
+    db.get("SELECT id, username, age, namefirst, namelast, email FROM users WHERE id = ?", [userId], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");

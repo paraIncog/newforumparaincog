@@ -226,6 +226,26 @@ body {
 	color: #5c5c5c;
 }
 
+/* About user */
+
+.about-user-container {
+	padding: 2rem 5rem;
+	display: flex;
+	align-items: center;
+}
+
+.about-user-profilepic {
+	height: 5rem;
+	width: 5rem;
+	background-color: #D9D9D9;
+	border-radius: 50%;
+	border: .2rem solid white;
+}
+
+.about-user-fullname {
+	font-size: 2rem;
+}
+
 /* Debugging */
 
 .debug-area {

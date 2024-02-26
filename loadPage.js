@@ -210,15 +210,22 @@ function showUserInfo(userId) {
                         <div class="primary-page-desc">
                             User: ${user.username}
                         </div>
-                        <div class="user-info">
-                            <div>
-                                Name: ${user.namefirst} ${user.namelast}
-                            </div>
-                            <div>
-                                Age: ${user.age}
-                            </div>
-                            <!-- Add more user information here as needed -->
-                        </div>
+						<div class="about-user-container">
+							<div class="about-user-profilepic">
+								<!-- Profilepic -->
+							</div>
+							<div class="user-info">
+								<div class="about-user-fullname">
+									${user.namefirst} ${user.namelast}
+								</div>
+								<div>
+									(${user.age})
+								</div>
+								<div>
+									${user.email}
+								</div>
+							</div>
+						</div>
                     </div>
                 `;
         })
