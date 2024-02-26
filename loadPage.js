@@ -151,19 +151,21 @@ function loadPage(page) {
 											</div>
 										</div>
 										<br>
-										${users.map(
-											(user) => 
-											`
-												<div class="pm-person-sel">
+										<div>
+											${users.map(
+												(user) => 
+												`
+													<div class="pm-person-sel">
 													<div class="profilepic">
-														<!-- Profile Pic -->
+													<!-- Profile Pic -->
 													</div>
 													<div class="accountname-side">
-														${user.username}
+													${user.username}
 													</div>
-												</div>
-											`
-										).join(``)}
+													</div>
+												`
+											).join(``)}
+										</div>
 									`;
 								})
 							.catch((error) => {
