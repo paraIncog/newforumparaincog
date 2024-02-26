@@ -122,77 +122,79 @@ function loadPage(page) {
 						</div>
 					`;
 					break;
-					case "pms":
-						fetch("/get-users")
-							.then((response) => response.json())
-								.then((users) => {
-									mainContent.innerHTML = 
-									`
-										<div class="container">
-											<div class="primary-page-desc">
-												Users
-											</div>
-											<div class="user-search-items-container">
-											${users.map(
-												(user) => 
-												`
-													<div class="user-search-item">
-														<div class="profilepic">
+		case "pms":
+			fetch("/get-users")
+				.then((response) => response.json())
+				.then((users) => {
+					mainContent.innerHTML = 
+						`
+							<div class="container">
+								<div class="primary-page-desc">
+									Users
+								</div>
+								<div class="user-search-items-container">
+									${users.map(
+										(user) => 
+											`
+												<div class="user-search-item" onClick="" href="/user=${user.id}">
+													<div class="profilepic">
 														<!-- Profile Pic -->
-														</div>
-														<div class="user-search-info">
-															<div class="user-search-username">
-																${user.username}
-															</div>
-															<div class="user-search-fullname">
-																${user.namefirst} ${user.namelast}
-															</div>
-														</div>
 													</div>
-												`
-											).join(``)}
-											</div>
-										</div>
-									`;
-									sidebarContent.innerHTML = 
-									`
-										<div class="forum-pm-selrow">
-											<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
-												<div>
-													<span class="material-symbols-outlined"> forum </span>
-												</div>
-												Forums
-											</div>
-											<div class="forum-pm-icontext-sep forum-pm-active">
-												<div>
-													<span class="material-symbols-outlined"> chat </span>
-												</div>
-												<div>Private Messages</div>
-											</div>
-										</div>
-										<br>
-										<div class="friend-users">
-											${users.map(
-												(user) => 
-												`
-													<div class="pm-person-sel">
-														<div class="profilepic">
-															<!-- Profile Pic -->
-														</div>
-														<div class="accountname-side">
+													<div class="user-search-info">
+														<div class="user-search-username">
 															${user.username}
 														</div>
+														<div class="user-search-fullname">
+															${user.namefirst} ${user.namelast}
+														</div>
 													</div>
-												`
-											).join(``)}
-										</div>
-									`;
-								})
-							.catch((error) => {
-								console.error("Error fetching users:", error);
-							});
-							break;
-							default:
-								sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
+												</div>
+											`
+										)
+									.join(``)}
+								</div>
+							</div>
+						`;
+					sidebarContent.innerHTML = 
+						`
+							<div class="forum-pm-selrow">
+								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+									<div>
+										<span class="material-symbols-outlined"> forum </span>
+									</div>
+									Forums
+								</div>
+								<div class="forum-pm-icontext-sep forum-pm-active">
+									<div>
+										<span class="material-symbols-outlined"> chat </span>
+									</div>
+									<div>Private Messages</div>
+								</div>
+							</div>
+							<br>
+							<div class="friend-users">
+								${users.map(
+									(user) => 
+										`
+											<div class="pm-person-sel">
+												<div class="profilepic">
+													<!-- Profile Pic -->
+												</div>
+												<div class="accountname-side">
+													${user.username}
+												</div>
+											</div>
+										`
+									)
+								.join(``)}
+							</div>
+						`;
+				})
+				.catch((error) => {
+					console.error("Error fetching users:", error);
+				});
+		break;
+		default:
+			sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
 	}
 }
