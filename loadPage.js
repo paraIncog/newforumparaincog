@@ -178,7 +178,7 @@ function loadPage(page) {
 									(user) => 
 										`
 											<div class="pm-person-sel txt-white bg-scnd clickable">
-												<div class="profilepic bg-gray">
+												<div class="pm-inner-container profilepic bg-gray">
 													<!-- Profile Pic -->
 												</div>
 												<div class="accountname-side">

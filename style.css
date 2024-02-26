@@ -216,6 +216,10 @@ body {
 	padding-bottom: .5rem;
 }
 
+.pm-inner-container{
+	margin-left: 1rem;
+}
+
 .accountname-side {
 	margin-left: .5rem;
 }
