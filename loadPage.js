@@ -208,12 +208,9 @@ function showUserInfo(userId) {
                 `
                     <div class="container">
                         <div class="primary-page-desc">
-                            User Information
+                            User: ${user.username}
                         </div>
                         <div class="user-info">
-                            <div>
-                                Username: ${user.username}
-                            </div>
                             <div>
                                 Name: ${user.namefirst} ${user.namelast}
                             </div>
