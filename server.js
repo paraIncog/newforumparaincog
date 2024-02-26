@@ -49,6 +49,28 @@ app.get("/get-forums", (req, res) => {
   });
 });
 
+// Endpoint to fetch a specific user by ID
+app.get("/get-user", (req, res) => {
+  const userId = req.query.id; // Extract userId from query parameters
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.get("SELECT id, username, age, namefirst, namelast FROM users WHERE id = ?", [userId], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      if (!row) {
+        return res.status(404).send("User not found");
+      }
+      res.json(row);
+    });
+  });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);

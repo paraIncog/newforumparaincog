@@ -134,24 +134,23 @@ function loadPage(page) {
 								</div>
 								<div class="user-search-items-container">
 									${users.map(
-										(user) => 
-											`
-												<div class="user-search-item" onClick="" href="/user=${user.id}">
-													<div class="profilepic">
-														<!-- Profile Pic -->
+										(user) =>
+										`
+											<div class="user-search-item" onclick="showUserInfo(${user.id})">
+												<div class="profilepic">
+													<!-- Profile Pic -->
+												</div>
+												<div class="user-search-info">
+													<div class="user-search-username">
+														${user.username}
 													</div>
-													<div class="user-search-info">
-														<div class="user-search-username">
-															${user.username}
-														</div>
-														<div class="user-search-fullname">
-															${user.namefirst} ${user.namelast}
-														</div>
+													<div class="user-search-fullname">
+														${user.namefirst} ${user.namelast}
 													</div>
 												</div>
-											`
-										)
-									.join(``)}
+											</div>
+										`
+									).join(``)}
 								</div>
 							</div>
 						`;
@@ -197,4 +196,36 @@ function loadPage(page) {
 	default:
 		sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
 	}
+}
+
+// Function to show user information
+function showUserInfo(userId) {
+    fetch(`/get-user?id=${userId}`) // Assuming there's an endpoint to fetch a specific user by ID
+        .then((response) => response.json())
+        .then((user) => {
+            const mainContent = document.getElementById("main-content");
+            mainContent.innerHTML =
+                `
+                    <div class="container">
+                        <div class="primary-page-desc">
+                            User Information
+                        </div>
+                        <div class="user-info">
+                            <div>
+                                Username: ${user.username}
+                            </div>
+                            <div>
+                                Name: ${user.namefirst} ${user.namelast}
+                            </div>
+                            <div>
+                                Age: ${user.age}
+                            </div>
+                            <!-- Add more user information here as needed -->
+                        </div>
+                    </div>
+                `;
+        })
+        .catch((error) => {
+            console.error("Error fetching user information:", error);
+        });
 }
