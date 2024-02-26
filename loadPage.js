@@ -128,10 +128,21 @@ function loadPage(page) {
 								.then((users) => {
 									mainContent.innerHTML = 
 									`
-										<div class="primary-page-desc">
-											<div class="container">
+										<div class="container">
+											<div class="primary-page-desc">
 												Sorry, this section has not been implemented yet.
 											</div>
+											${users.map(
+												(user) => 
+												`
+													<div class="profilepic">
+														<!-- Profile Pic -->
+													</div>
+													<div class="accountname-side">
+														${user.username}
+													</div>
+												`
+											).join(``)}
 										</div>
 									`;
 									sidebarContent.innerHTML = 
