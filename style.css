@@ -196,6 +196,17 @@ body {
 	margin-left: .5rem;
 }
 
+/* User seacrh */
+
+.user-search-items-container {
+	display: flex;
+}
+
+.user-search-item {
+	border: 2px solid blue;
+	border-radius: 1rem;
+}
+
 /* Debugging */
 
 .debug-area {

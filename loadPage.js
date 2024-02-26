@@ -132,17 +132,21 @@ function loadPage(page) {
 											<div class="primary-page-desc">
 												Sorry, this section has not been implemented yet.
 											</div>
+											<div class="user-search-items-container">
 											${users.map(
 												(user) => 
 												`
+													<div class="user-search-item">
 													<div class="profilepic">
-														<!-- Profile Pic -->
+													<!-- Profile Pic -->
 													</div>
 													<div class="accountname-side">
-														${user.username}
+													${user.username}
+													</div>
 													</div>
 												`
 											).join(``)}
+											</div>
 										</div>
 									`;
 									sidebarContent.innerHTML = 
