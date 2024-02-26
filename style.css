@@ -30,20 +30,51 @@ body {
 .profilepic {
 	height: 4rem;
 	width: 4rem;
-	background-color: #D9D9D9;
 	border-radius: 50%;
-	border: .2rem solid white;
+	border: .2rem solid #FFF;
+}
+
+/* Background cols */
+
+.bg-white {
+	background-color: #FFFFFF;
+}
+
+.bg-gray {
+	background-color: #D9D9D9;
+}
+
+.bg-prim {
+	background-color: #0000FF;
+}
+
+.bg-scnd {
+	background-color: #00A3FF;
+}
+
+/* Text cols */
+
+.txt-prim {
+	color: #0000FF;
+}
+
+.txt-scnd {
+	color: #5C5C5C;
+}
+
+.txt-white {
+	color: #FFF;
 }
 
 /* Sidebar */
 
 .sidebar {
-	background-color: #D9D9D9;
 	position: absolute;
 	top: 0;
 	left: 0;
 	height: 100%;
 	width: 25%;
+	z-index: 1;
 }
 
 .searchbar {
@@ -75,11 +106,6 @@ body {
 	width: 50%;
 }
 
-.forum-pm-active {
-	color: white;
-	background-color: blue;
-}
-
 .forum-filtering {
 	padding-top: 1rem;
 	padding-left: 1rem;
@@ -96,7 +122,6 @@ body {
 }
 
 .filter-subcat {
-	color: #5c5c5c;
 	text-decoration: none;
 }
 
@@ -127,12 +152,12 @@ body {
 
 #main-content {
 	overflow-x: hidden;
-	background-color: #ffffff;
 	position: absolute;
 	top: 0;
 	left: 25%;
 	height: 100%;
 	width: 75%;
+	z-index: 2;
 }
 
 .primary-page-desc {
@@ -140,7 +165,6 @@ body {
 	display: flex;
 	justify-content: center;
 	font-size: 3rem;
-	color: blue;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 }
@@ -156,7 +180,6 @@ body {
 
 .single-forum-thread {
 	width: 90%;
-	background-color: #D9D9D9;
 	padding: 1rem;
 	margin-left: 1rem;
 	border-radius: 1rem;
@@ -186,12 +209,11 @@ body {
 }
 
 .pm-person-sel {
-	color: white;
 	display: flex;
 	align-items: center;
-	background-color: #00A3FF;
 	width: 100%;
-	padding: .5rem;
+	padding-top: .5rem;
+	padding-bottom: .5rem;
 }
 
 .accountname-side {
@@ -225,13 +247,11 @@ body {
 
 .user-search-fullname {
 	font-size: .75rem;
-	color: #5c5c5c;
 }
 
 /* About user */
 
 .back-arrow {
-	color: #5c5c5c;
 	font-size: 2rem;
 	margin-left: 1rem;
 	position: absolute;
@@ -246,7 +266,6 @@ body {
 .about-user-profilepic {
 	height: 5rem;
 	width: 5rem;
-	background-color: #D9D9D9;
 	border-radius: 50%;
 	border: .2rem solid white;
 }

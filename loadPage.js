@@ -8,29 +8,29 @@ function loadPage(page) {
 				.then((posts) => {
 					mainContent.innerHTML = `
 		  				<div class="container">
-		  					<div class="primary-page-desc">Forums</div>
+		  					<div class="primary-page-desc txt-prim bg-white">Forums</div>
 		  					<!-- Thread -->
 			 				${posts
 								.map(
 									(post) => 
 									`
 										<div class="single-forum clickable">
-											<div class="profilepic">
+											<div class="profilepic bg-gray">
 												<!-- Profilepic -->
 											</div>
-											<div class="single-forum-thread">
+											<div class="single-forum-thread bg-gray">
 												<div class="row">
-													<div class="single-forum-thread-title" maxlength="80">
+													<div class="single-forum-thread-title bg-gray" maxlength="80">
 														${post.title}
 													</div>
-													<div class="single-forum-thread-time">
+													<div class="single-forum-thread-time bg-gray">
 														${post.created_at}
 													</div>
 												</div>
-												<div class="single-forum-thread-uname">
+												<div class="single-forum-thread-uname bg-gray">
 													${post.author}
 												</div>
-												<div class="single-forum-thread-intro" maxlength="600">
+												<div class="single-forum-thread-intro bg-gray" maxlength="600">
 													${post.content}
 												</div>
 											</div>
@@ -45,7 +45,7 @@ function loadPage(page) {
 					sidebarContent.innerHTML = 
 					`
 						<div class="forum-pm-selrow">
-							<div class="forum-pm-icontext-sep forum-pm-active">
+							<div class="forum-pm-icontext-sep txt-white bg-prim">
 								<div>
 								<span class="material-symbols-outlined"> forum </span>
 								</div>
@@ -64,35 +64,35 @@ function loadPage(page) {
 							<ul class="filter-subcat-dot">
 								<li>
 									<a
-									class="filter-subcat clickable"
+									class="filter-subcat txt-scnd clickable"
 									href="/get-posts-by-category?category=Golang"
 									>Golang
 									</a>
 								</li>
 								<li>
 								<a
-								class="filter-subcat clickable"
+								class="filter-subcat txt-scnd clickable"
 								href="get-posts-by-category?category=Python"
 								>Python
 								</a>
 								</li>
 								<li>
 									<a
-									class="filter-subcat clickable"
+									class="filter-subcat txt-scnd clickable"
 									href="get-posts-by-category?category=JavaScript"
 									>JavaScript
 									</a>
 								</li>
 								<li>
 									<a
-									class="filter-subcat clickable"
+									class="filter-subcat txt-scnd clickable"
 									href="get-posts-by-category?category=Docker"
 									>Docker
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat clickable" 
+									class="filter-subcat txt-scnd clickable" 
 									href="get-posts-by-category?category=SQL"
 									>SQL
 									</a>
@@ -101,21 +101,21 @@ function loadPage(page) {
 							<ul class="filter-subcat-nodot">
 								<li>
 									<a 
-									class="filter-subcat filter-mainheader clickable" 
+									class="filter-subcat txt-scnd filter-mainheader clickable" 
 									href="/get-created-posts/"
 									>Most Recent Posts
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat clickable" 
+									class="filter-subcat txt-scnd clickable" 
 									href="/get-liked-posts/"
 									>Liked Posts
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat clickable" 
+									class="filter-subcat txt-scnd clickable" 
 									href="/get-your-posts/"
 									>Your Posts 
 									</a>
@@ -131,7 +131,7 @@ function loadPage(page) {
 					mainContent.innerHTML = 
 						`
 							<div class="container">
-								<div class="primary-page-desc">
+								<div class="primary-page-desc txt-prim bg-white">
 									Users
 								</div>
 								<div class="user-search-items-container">
@@ -139,14 +139,14 @@ function loadPage(page) {
 										(user) =>
 										`
 											<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
-												<div class="profilepic">
+												<div class="profilepic bg-gray">
 													<!-- Profile Pic -->
 												</div>
 												<div class="user-search-info">
 													<div class="user-search-username">
 														${user.username}
 													</div>
-													<div class="user-search-fullname">
+													<div class="user-search-fullname txt-scnd">
 														${user.namefirst} ${user.namelast}
 													</div>
 												</div>
@@ -165,7 +165,7 @@ function loadPage(page) {
 									</div>
 									Forums
 								</div>
-								<div class="forum-pm-icontext-sep forum-pm-active">
+								<div class="forum-pm-icontext-sep txt-white bg-prim">
 									<div>
 										<span class="material-symbols-outlined"> chat </span>
 									</div>
@@ -177,8 +177,8 @@ function loadPage(page) {
 								${users.map(
 									(user) => 
 										`
-											<div class="pm-person-sel clickable">
-												<div class="profilepic">
+											<div class="pm-person-sel txt-white bg-scnd clickable">
+												<div class="profilepic bg-gray">
 													<!-- Profile Pic -->
 												</div>
 												<div class="accountname-side">
@@ -209,14 +209,14 @@ function showUserInfo(userId) {
             mainContent.innerHTML =
                 `
                     <div class="container">
-						<div class="back-arrow clickable" onClick="loadPage('pms')">
+						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
 							Back
 						</div>
-                        <div class="primary-page-desc">
+                        <div class=" txt-prim bg-white">
                             User: ${user.username}
                         </div>
 						<div class="about-user-container">
-							<div class="about-user-profilepic">
+							<div class="about-user-profilepic bg-gray">
 								<!-- Profilepic -->
 							</div>
 							<div class="user-info">
