@@ -151,17 +151,17 @@ function loadPage(page) {
 											</div>
 										</div>
 										<br>
-										<div>
+										<div class="friend-users">
 											${users.map(
 												(user) => 
 												`
 													<div class="pm-person-sel">
-													<div class="profilepic">
-													<!-- Profile Pic -->
-													</div>
-													<div class="accountname-side">
-													${user.username}
-													</div>
+														<div class="profilepic">
+															<!-- Profile Pic -->
+														</div>
+														<div class="accountname-side">
+															${user.username}
+														</div>
 													</div>
 												`
 											).join(``)}
