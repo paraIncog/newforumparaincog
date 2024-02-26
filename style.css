@@ -201,6 +201,8 @@ body {
 .user-search-items-container {
 	display: flex;
 	justify-content: space-around;
+	order: 4;
+	flex-flow: row wrap;
 }
 
 .user-search-item {
@@ -210,6 +212,7 @@ body {
 	align-items: center;
 	width: 20rem;
 	padding: .5rem;
+	margin-bottom: 1rem;
 }
 
 .user-search-info {

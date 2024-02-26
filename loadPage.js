@@ -147,9 +147,6 @@ function loadPage(page) {
 															<div class="user-search-fullname">
 																${user.namefirst} ${user.namelast}
 															</div>
-															<div>
-																Age: ${user.age}
-															</div>
 														</div>
 													</div>
 												`
