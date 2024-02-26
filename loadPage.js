@@ -39,8 +39,8 @@ function loadPage(page) {
           					</div>
 		  				</div>
 		  			`;
-				});
-				sidebarContent.innerHTML = 
+					});
+					sidebarContent.innerHTML = 
 					`
 						<div class="forum-pm-selrow">
 							<div class="forum-pm-icontext-sep forum-pm-active">
@@ -123,48 +123,48 @@ function loadPage(page) {
 					`;
 					break;
 					case "pms":
-						mainContent.innerHTML = 
-						`
-							<div class="primary-page-desc">
-								<div class="container">
-									Sorry, this section has not been implemented yet.
-								</div>
-							</div>
-						`;
 						fetch("/get-users")
 							.then((response) => response.json())
 								.then((users) => {
+									mainContent.innerHTML = 
+									`
+										<div class="primary-page-desc">
+											<div class="container">
+												Sorry, this section has not been implemented yet.
+											</div>
+										</div>
+									`;
 									sidebarContent.innerHTML = 
-										`
-											<div class="forum-pm-selrow">
-												<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
-													<div>
-														<span class="material-symbols-outlined"> forum </span>
-													</div>
-													Forums
+									`
+										<div class="forum-pm-selrow">
+											<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+												<div>
+													<span class="material-symbols-outlined"> forum </span>
 												</div>
-												<div class="forum-pm-icontext-sep forum-pm-active">
-													<div>
-														<span class="material-symbols-outlined"> chat </span>
+												Forums
+											</div>
+											<div class="forum-pm-icontext-sep forum-pm-active">
+												<div>
+													<span class="material-symbols-outlined"> chat </span>
+												</div>
+												<div>Private Messages</div>
+											</div>
+										</div>
+										<br>
+										${users.map(
+											(user) => 
+											`
+												<div class="pm-person-sel">
+													<div class="profilepic">
+														<!-- Profile Pic -->
 													</div>
-													<div>Private Messages</div>
+													<div class="accountname-side">
+														${user.username}
 													</div>
 												</div>
-												<br>
-												${users.map(
-													(user) => 
-													`
-														<div class="pm-person-sel">
-															<div class="profilepic">
-																<!-- Profile Pic -->
-															</div>
-															<div class="accountname-side">
-																${user.username}
-															</div>
-														</div>
-													`
-												).join(``)}
-										`;
+											`
+										).join(``)}
+									`;
 								})
 							.catch((error) => {
 								console.error("Error fetching users:", error);
