@@ -212,7 +212,7 @@ function showUserInfo(userId) {
 						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
 							Back
 						</div>
-                        <div class=" txt-prim bg-white">
+                        <div class="primary-page-desc txt-prim bg-white">
                             User: ${user.username}
                         </div>
 						<div class="about-user-container">
