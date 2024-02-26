@@ -150,6 +150,7 @@ function loadPage(page) {
 													<div>Private Messages</div>
 													</div>
 												</div>
+												<br>
 												${users.map(
 													(user) => 
 													`
