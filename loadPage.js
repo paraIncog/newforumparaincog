@@ -130,19 +130,27 @@ function loadPage(page) {
 									`
 										<div class="container">
 											<div class="primary-page-desc">
-												Sorry, this section has not been implemented yet.
+												Users
 											</div>
 											<div class="user-search-items-container">
 											${users.map(
 												(user) => 
 												`
 													<div class="user-search-item">
-													<div class="profilepic">
-													<!-- Profile Pic -->
-													</div>
-													<div class="accountname-side">
-													${user.username}
-													</div>
+														<div class="profilepic">
+														<!-- Profile Pic -->
+														</div>
+														<div class="user-search-info">
+															<div class="user-search-username">
+																${user.username}
+															</div>
+															<div class="user-search-fullname">
+																${user.namefirst} ${user.namelast}
+															</div>
+															<div>
+																Age: ${user.age}
+															</div>
+														</div>
 													</div>
 												`
 											).join(``)}

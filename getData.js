@@ -13,11 +13,11 @@ let db = new sqlite3.Database(
 );
 
 db.serialize(() => {
-  db.each(`SELECT id, username FROM users`, (err, row) => {
+  db.each(`SELECT id, username, age, namefirst, namelast FROM users`, (err, row) => {
     if (err) {
       console.error(err.message);
     }
-    console.log(row.id + "\t" + row.username);
+    console.log(row.id + "\t" + row.username + "\t" + row.namelast + "\t" + row.namefirst);
   });
 });
 

@@ -200,11 +200,27 @@ body {
 
 .user-search-items-container {
 	display: flex;
+	justify-content: space-around;
 }
 
 .user-search-item {
 	border: 2px solid blue;
-	border-radius: 1rem;
+	border-radius: .5rem;
+	display: flex;
+	align-items: center;
+	width: 20rem;
+	padding: .5rem;
+}
+
+.user-search-info {
+	display: flex;
+	flex-direction: column;
+	margin-left: 1rem;
+}
+
+.user-search-fullname {
+	font-size: .75rem;
+	color: #5c5c5c;
 }
 
 /* Debugging */
