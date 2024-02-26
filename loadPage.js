@@ -194,7 +194,7 @@ function loadPage(page) {
 					console.error("Error fetching users:", error);
 				});
 		break;
-		default:
-			sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
+	default:
+		sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
 	}
 }
