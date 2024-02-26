@@ -14,8 +14,10 @@ function loadPage(page) {
 								.map(
 									(post) => 
 									`
-										<div class="single-forum">
-											<div class="profilepic">{{ .UserPic }}</div>
+										<div class="single-forum clickable">
+											<div class="profilepic">
+												<!-- Profilepic -->
+											</div>
 											<div class="single-forum-thread">
 												<div class="row">
 													<div class="single-forum-thread-title" maxlength="80">
@@ -49,7 +51,7 @@ function loadPage(page) {
 								</div>
 								Forums
 							</div>
-							<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep">
+							<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep clickable">
 								<div>
 								<span class="material-symbols-outlined"> chat </span>
 								</div>
@@ -62,35 +64,35 @@ function loadPage(page) {
 							<ul class="filter-subcat-dot">
 								<li>
 									<a
-									class="filter-subcat"
+									class="filter-subcat clickable"
 									href="/get-posts-by-category?category=Golang"
 									>Golang
 									</a>
 								</li>
 								<li>
 								<a
-								class="filter-subcat"
+								class="filter-subcat clickable"
 								href="get-posts-by-category?category=Python"
 								>Python
 								</a>
 								</li>
 								<li>
 									<a
-									class="filter-subcat"
+									class="filter-subcat clickable"
 									href="get-posts-by-category?category=JavaScript"
 									>JavaScript
 									</a>
 								</li>
 								<li>
 									<a
-									class="filter-subcat"
+									class="filter-subcat clickable"
 									href="get-posts-by-category?category=Docker"
 									>Docker
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat" 
+									class="filter-subcat clickable" 
 									href="get-posts-by-category?category=SQL"
 									>SQL
 									</a>
@@ -99,21 +101,21 @@ function loadPage(page) {
 							<ul class="filter-subcat-nodot">
 								<li>
 									<a 
-									class="filter-subcat filter-mainheader" 
+									class="filter-subcat filter-mainheader clickable" 
 									href="/get-created-posts/"
 									>Most Recent Posts
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat" 
+									class="filter-subcat clickable" 
 									href="/get-liked-posts/"
 									>Liked Posts
 									</a>
 								</li>
 								<li>
 									<a 
-									class="filter-subcat" 
+									class="filter-subcat clickable" 
 									href="/get-your-posts/"
 									>Your Posts 
 									</a>
@@ -136,7 +138,7 @@ function loadPage(page) {
 									${users.map(
 										(user) =>
 										`
-											<div class="user-search-item" onclick="showUserInfo(${user.id})">
+											<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
 												<div class="profilepic">
 													<!-- Profile Pic -->
 												</div>
@@ -157,7 +159,7 @@ function loadPage(page) {
 					sidebarContent.innerHTML = 
 						`
 							<div class="forum-pm-selrow">
-								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep">
+								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
 									<div>
 										<span class="material-symbols-outlined"> forum </span>
 									</div>
@@ -175,7 +177,7 @@ function loadPage(page) {
 								${users.map(
 									(user) => 
 										`
-											<div class="pm-person-sel">
+											<div class="pm-person-sel clickable">
 												<div class="profilepic">
 													<!-- Profile Pic -->
 												</div>
@@ -207,7 +209,7 @@ function showUserInfo(userId) {
             mainContent.innerHTML =
                 `
                     <div class="container">
-						<div class="back-arrow" onClick="loadPage('pms')">
+						<div class="back-arrow clickable" onClick="loadPage('pms')">
 							Back
 						</div>
                         <div class="primary-page-desc">
