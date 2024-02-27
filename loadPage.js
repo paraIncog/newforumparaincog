@@ -254,7 +254,27 @@ function showForum(postId) {
                         <div class="primary-page-desc txt-prim bg-white">
                             Forum: ${post.id}
                         </div>
-						${post.title}
+						<div class="single-forum clickable" onclick="showForum(${post.id})">
+											<div class="profilepic bg-gray">
+												<!-- Profilepic -->
+											</div>
+											<div class="single-forum-thread bg-gray">
+												<div class="row">
+													<div class="single-forum-thread-title bg-gray" maxlength="80">
+														${post.title}
+													</div>
+													<div class="single-forum-thread-time bg-gray">
+														${post.created_at}
+													</div>
+												</div>
+												<div class="single-forum-thread-uname bg-gray">
+													${post.author}
+												</div>
+												<div class="single-forum-thread-intro bg-gray" maxlength="600">
+													${post.content}
+												</div>
+											</div>
+										</div>
                     </div>
                 `;
         })
