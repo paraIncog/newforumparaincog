@@ -14,7 +14,7 @@ function loadPage(page) {
 								.map(
 									(post) => 
 									`
-										<div class="single-forum clickable">
+										<div class="single-forum clickable" onclick="showForum(${post.id})">
 											<div class="profilepic bg-gray">
 												<!-- Profilepic -->
 											</div>
@@ -236,5 +236,29 @@ function showUserInfo(userId) {
         })
         .catch((error) => {
             console.error("Error fetching user information:", error);
+        });
+}
+
+// Function to show forum post
+function showForum(postId) {
+    fetch(`/get-forum?id=${postId}`)
+        .then((response) => response.json())
+        .then((post) => {
+            const mainContent = document.getElementById("main-content");
+            mainContent.innerHTML =
+                `
+                    <div class="container">
+						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+							Back
+						</div>
+                        <div class="primary-page-desc txt-prim bg-white">
+                            Forum: ${post.id}
+                        </div>
+						${post.title}
+                    </div>
+                `;
+        })
+        .catch((error) => {
+            console.error("Error fetching forum:", error);
         });
 }

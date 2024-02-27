@@ -71,6 +71,28 @@ app.get("/get-user", (req, res) => {
   });
 });
 
+// Endpoint to fetch a specific forum post by ID
+app.get("/get-forum", (req, res) => {
+  const postId = req.query.id;
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.get("SELECT id, title, author, content, created_at FROM posts WHERE id = ?", [postId], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      if (!row) {
+        return res.status(404).send("User not found");
+      }
+      res.json(row);
+    });
+  });
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
