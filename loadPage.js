@@ -246,37 +246,37 @@ function showForum(postId) {
         .then((post) => {
             const mainContent = document.getElementById("main-content");
             mainContent.innerHTML =
-                `
-                    <div class="container">
-						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
-							Back
-						</div>
-                        <div class="primary-page-desc txt-prim bg-white">
-                            Forum: ${post.id}
-                        </div>
-						<div class="single-forum clickable" onclick="showForum(${post.id})">
-											<div class="profilepic bg-gray">
-												<!-- Profilepic -->
-											</div>
-											<div class="single-forum-thread bg-gray">
-												<div class="row">
-													<div class="single-forum-thread-title bg-gray" maxlength="80">
-														${post.title}
-													</div>
-													<div class="single-forum-thread-time bg-gray">
-														${post.created_at}
-													</div>
-												</div>
-												<div class="single-forum-thread-uname bg-gray">
-													${post.author}
-												</div>
-												<div class="single-forum-thread-intro bg-gray" maxlength="600">
-													${post.content}
-												</div>
-											</div>
-										</div>
+            `
+                <div class="container">
+					<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+						Back
+					</div>
+                    <div class="primary-page-desc txt-prim bg-white">
+                        Forum: ${post.id}
                     </div>
-                `;
+					<div class="single-forum clickable" onclick="showForum(${post.id})">
+						<div class="profilepic bg-gray">
+							<!-- Profilepic -->
+						</div>
+						<div class="single-forum-thread bg-gray">
+							<div class="row">
+								<div class="single-forum-thread-title bg-gray" maxlength="80">
+									${post.title}
+								</div>
+								<div class="single-forum-thread-time bg-gray">
+									${post.created_at}
+								</div>
+							</div>
+							<div class="single-forum-thread-uname bg-gray">
+								${post.author}
+							</div>
+							<div class="single-forum-thread-intro bg-gray" maxlength="600">
+								${post.content}
+							</div>
+						</div>
+					</div>
+                </div>
+            `;
         })
         .catch((error) => {
             console.error("Error fetching forum:", error);
