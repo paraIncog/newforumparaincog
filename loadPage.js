@@ -248,7 +248,7 @@ function showForum(postId) {
             mainContent.innerHTML =
             `
                 <div class="container">
-					<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+					<div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
 						Back
 					</div>
                     <div class="primary-page-desc txt-prim bg-white">
