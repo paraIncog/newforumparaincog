@@ -13,6 +13,19 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
+// Endpoint to handle registration/login
+app.post("/register", (req, res) => {
+  // Handle registration/login logic here
+  const username = req.body.username;
+  const password = req.body.password;
+
+  // Perform registration/login logic
+  // Example: Check if the username and password are valid, then create a new user or authenticate the user
+
+  res.json({ message: "Registration/Login successful" });
+});
+
+
 // Endpoint to fetch users
 app.get("/get-users", (req, res) => {
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
