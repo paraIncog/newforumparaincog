@@ -5,6 +5,9 @@ const sqlite3 = require("sqlite3").verbose();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
+// Middleware to parse JSON data in the request body
+app.use(express.json());
+
 // Serve static files (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname)));
 
@@ -15,14 +18,33 @@ app.get("/", (req, res) => {
 
 // Endpoint to handle login
 app.post("/login", (req, res) => {
-  // Handle login logic here
-  const username = req.body.username;
-  const password = req.body.password;
+  const { username, password } = req.body;
 
-  // Perform registration/login logic
-  res.json({ message: "Login successful" });
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username and password are required." });
+  }
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      if (!row) {
+        return res.status(401).json({ error: "Invalid username or password." });
+      }
+
+      // Authentication successful
+      res.json({ message: "Login successful", username: row.username });
+    });
+  });
 });
-
 
 // Endpoint to fetch users
 app.get("/get-users", (req, res) => {
