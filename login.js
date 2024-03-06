@@ -1,11 +1,18 @@
 function login() {
-    const loginpopup = document.getElementById("loginpopup");
+    const mainContent = document.getElementById("main-content");
+	const sidebarContent = document.getElementById("sidebar-content");
     console.log(`Hello! Login Popup had been clicked.`);
-    loginpopup.innerHTML = `
-        <div>
-            Login
+    mainContent.innerHTML = `
+        <div class="container">
+            <div class="primary-page-desc txt-prim bg-white">
+                Login
+            </div>
         </div>
     `;
+    sidebarContent.innerHTML = 
+        `
+            <div></div>
+        `;
 
     // Add event listener for form submission
     document.getElementById("loginForm").addEventListener("submit", function(event) {
