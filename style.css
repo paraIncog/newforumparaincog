@@ -311,6 +311,20 @@ body {
   'opsz' 48
 }
 
+/* Login/register button */
+
+.loginregister-sidebarbox {
+	position: absolute;
+	bottom: 1.5rem;
+	display: flex;
+	justify-content: center;
+	padding-top: 1rem;
+	padding-bottom: 1rem;
+	width: 90%;
+	border-radius: 50rem;
+	margin-left: 1rem;
+}
+
 /* Debugging */
 
 .debug-area {
