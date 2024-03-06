@@ -311,9 +311,9 @@ body {
   'opsz' 48
 }
 
-/* Login/register button */
+/* Login button */
 
-.loginregister-sidebarbox {
+.login-sidebarbox {
 	position: absolute;
 	bottom: 1.5rem;
 	display: flex;

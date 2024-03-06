@@ -13,16 +13,14 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Endpoint to handle registration/login
-app.post("/register", (req, res) => {
-  // Handle registration/login logic here
+// Endpoint to handle login
+app.post("/login", (req, res) => {
+  // Handle login logic here
   const username = req.body.username;
   const password = req.body.password;
 
   // Perform registration/login logic
-  // Example: Check if the username and password are valid, then create a new user or authenticate the user
-
-  res.json({ message: "Registration/Login successful" });
+  res.json({ message: "Login successful" });
 });
 
 
