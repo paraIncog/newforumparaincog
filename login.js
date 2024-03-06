@@ -7,6 +7,19 @@ function login() {
             <div class="primary-page-desc txt-prim bg-white">
                 Login
             </div>
+            <div class="logincontainer">
+                <form>
+                    <div class="login-txtinput">
+                        Username <input class="login">
+                    </div>
+                    <div class="login-txtinput">
+                        Password <input class="login">
+                    </div>
+                    <div class="login-txtinput">
+                        <button class="login bg-prim">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     `;
     sidebarContent.innerHTML = 

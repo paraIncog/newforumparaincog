@@ -66,6 +66,34 @@ body {
 	color: #FFF;
 }
 
+/* Login Screen */
+
+.logincontainer {
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
+	height: 100%;
+}
+
+.login-txtinput {
+	display: flex;
+	flex-direction: column;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	text-align: center;
+}
+
+input.login, button.login {
+	padding: .375rem;
+	border-radius: 1rem;
+}
+
+button.login {
+	color: white;
+	border: 0;
+	outline: 0;
+}
+
 /* Sidebar */
 
 .sidebar {
