@@ -11,7 +11,11 @@ function login() {
     `;
     sidebarContent.innerHTML = 
         `
-            <div></div>
+            <div>
+                <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+					Back
+				</div>
+            </div>
         `;
 
     // Add event listener for form submission
