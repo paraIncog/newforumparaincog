@@ -44,6 +44,11 @@ function loadPage(page) {
 					});
 					sidebarContent.innerHTML = 
 					`
+						<input
+						class="searchbar"
+						placeholder="Search Something..."
+						maxlength="40"
+						/>
 						<div class="forum-pm-selrow">
 							<div class="forum-pm-icontext-sep txt-white bg-prim">
 								<div>
@@ -158,6 +163,11 @@ function loadPage(page) {
 						`;
 					sidebarContent.innerHTML = 
 						`
+							<input
+							class="searchbar"
+							placeholder="Search Something..."
+							maxlength="40"
+        					/>
 							<div class="forum-pm-selrow">
 								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
 									<div>
