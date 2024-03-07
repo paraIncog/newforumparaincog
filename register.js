@@ -1,29 +1,44 @@
-function login() {
+function register() {
     const mainContent = document.getElementById("main-content");
     const sidebarContent = document.getElementById("sidebar-content");
-    console.log(`Hello! Login Popup had been clicked.`);
+    console.log(`Hello! Registration Popup had been clicked.`);
     mainContent.innerHTML = `
           <div class="container">
               <div class="primary-page-desc txt-prim bg-white">
-                  Login
+                  Register New User
               </div>
               <div class="logincontainer">
-                <form id="loginForm">
+                <form id="registerForm">
                   <div class="login-txtinput">
                     Username <input id="username" class="login" type="text" minlength="3" required>
                   </div>
                   <div class="login-txtinput">
                     Password <input id="password" class="login" type="password" minlength="6" required>
                   </div>
+				  <div class="login-txtinput">
+                    Firstname <input id="namefirst" class="login" type="text" required>
+                  </div>
+				  <div class="login-txtinput">
+                    Lastname <input id="namelast" class="login" type="text" required>
+                  </div>
+				  <div class="login-txtinput">
+                    Email <input id="email" class="login" type="email" required>
+                  </div>
+				  <div class="login-txtinput">
+                    Gender <input id="gender" class="login" type="text" required>
+                  </div>
+				  <div class="login-txtinput">
+                    Age <input id="age" class="login" type="text" required>
+                  </div>
                   <div id="error-message" class="error-message">
                   </div>
                   <div class="login-txtinput">
-                    <button type="submit" class="login bg-prim">Login</button>
+                    <button type="submit" class="login bg-prim">Send Request</button>
                   </div>
                 </form>
               </div>
               <div class="logincontainer">
-                Don't have an account? <span class="login-to-registration clickable txt-scnd" onclick="register()">Register here</span>
+                Already have an account? <span class="login-to-registration clickable txt-scnd" onclick="login()">Log in</span>
               </div>
           </div>
       `;

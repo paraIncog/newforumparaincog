@@ -94,6 +94,11 @@ button.login {
 	outline: 0;
 }
 
+.login-to-registration {
+	margin-left: .5rem;
+	text-decoration: underline;
+}
+
 /* Sidebar */
 
 .sidebar {
