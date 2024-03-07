@@ -46,6 +46,49 @@ app.post("/login", (req, res) => {
   });
 });
 
+// Endpoint to handle user registration
+app.post("/register", (req, res) => {
+  const { username, password, namefirst, namelast, email, gender, age } = req.body;
+
+  // Check if all required fields are provided
+  // if (!username || !password || !namefirst || !namelast || !email || !gender || !age) {
+  //   return res.status(400).json({ error: "All fields are required for registration." });
+  // }
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Hash the password before storing it
+    // You can use a library like bcrypt for password hashing
+    // For simplicity, I'll assume a synchronous hashing function here
+    const hashedPassword = hashPasswordSync(password);
+
+    // Prepare the SQL statement for inserting the user into the database
+    const insertQuery = `INSERT INTO users (username, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+
+    // Execute the SQL query to insert the user into the database
+    db.run(insertQuery, [username, hashedPassword, namefirst, namelast, email, gender, age], function (err) {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      // Return success message
+      res.json({ message: "Registration successful", username: username });
+    });
+  });
+});
+
+// Example synchronous password hashing function
+function hashPasswordSync(password) {
+  // Implement your password hashing logic here
+  // For demonstration purposes, let's say we are just adding a prefix to the password
+  return "hashed:" + password;
+}
+
 // Endpoint to fetch users
 app.get("/get-users", (req, res) => {
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
