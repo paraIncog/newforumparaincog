@@ -25,7 +25,18 @@ function register() {
                     Email <input id="email" class="login" type="email" required>
                   </div>
 				  <div class="login-txtinput">
-                    Gender <input id="gender" class="login" type="text" required>
+                    Gender
+					<select id="gender" required>
+						<option selected disabled>
+							Your Gender
+						</option>
+						<option>
+							Hello1
+						</option>
+						<option>
+							Hello2
+						</option>
+					</select>
                   </div>
 				  <div class="login-txtinput">
                     Age <input id="age" class="login" type="text" required>
@@ -52,7 +63,7 @@ function register() {
   
     // Add event listener for form submission
     document
-      .getElementById("loginForm")
+      .getElementById("registerForm")
       .addEventListener("submit", function (event) {
         event.preventDefault(); // Prevent default form submission behavior
         const formData = new FormData(this); // Get form data
@@ -60,7 +71,7 @@ function register() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
   
-        fetch("/login", {
+        fetch("/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

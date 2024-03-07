@@ -75,15 +75,14 @@ body {
 	height: 100%;
 }
 
-.login-txtinput {
+.login-txtinput, select {
 	display: flex;
 	flex-direction: column;
-	padding-top: .75rem;
-	padding-bottom: .75rem;
+	padding-bottom: .5rem;
 	text-align: center;
 }
 
-input.login, button.login {
+input.login, button.login, select {
 	padding: .375rem;
 	border-radius: 1rem;
 }
