@@ -8,18 +8,19 @@ function login() {
                   Login
               </div>
               <div class="logincontainer">
-                  <form id="loginForm">
-                      <div class="login-txtinput">
-                          Username <input id="username" class="login" type="text" minlength="3" required>
-                      </div>
-                      <div class="login-txtinput">
-                          Password <input id="password" class="login" type="password" minlength="6" required>
-                      </div>
-                      <div id="error-message" class="error-message"></div>
-                      <div class="login-txtinput">
-                          <button type="submit" class="login bg-prim">Login</button>
-                      </div>
-                  </form>
+                <form id="loginForm">
+                  <div class="login-txtinput">
+                    Username <input id="username" class="login" type="text" minlength="3" required>
+                  </div>
+                  <div class="login-txtinput">
+                    Password <input id="password" class="login" type="password" minlength="6" required>
+                  </div>
+                  <div id="error-message" class="error-message">
+                  </div>
+                  <div class="login-txtinput">
+                    <button type="submit" class="login bg-prim">Login</button>
+                  </div>
+                </form>
               </div>
           </div>
       `;
