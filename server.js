@@ -21,28 +21,28 @@ app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required." });
+      return res.status(400).json({ error: "Username and password are required." });
   }
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
       if (err) {
-        console.error(err.message);
-        return res.status(500).send("Internal Server Error");
+          console.error(err.message);
+          return res.status(500).send("Internal Server Error");
       }
 
-      if (!row) {
-        return res.status(401).json({ error: "Invalid username or password." });
-      }
+      db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
+          if (err) {
+              console.error(err.message);
+              return res.status(500).send("Internal Server Error");
+          }
 
-      // Authentication successful
-      res.json({ message: "Login successful", username: row.username });
-    });
+          if (!row) {
+              return res.status(401).json({ error: "Invalid username or password." });
+          }
+
+          // Authentication successful
+          res.json({ message: "Login successful", username: row.username }); // Return the username
+      });
   });
 });
 
