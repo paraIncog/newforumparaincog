@@ -6,43 +6,43 @@ function loadPage(page) {
       fetch("/get-forums")
         .then((response) => response.json())
         .then((posts) => {
-          mainContent.innerHTML = `
-		  				<div class="container">
-		  					<div class="primary-page-desc txt-prim bg-white">Forums</div>
-		  					<!-- Thread -->
-			 				${posts
-                .map(
-                  (post) =>
-                    `
-										<div class="single-forum clickable" onclick="showForum(${post.id})">
-											<div class="profilepic bg-gray">
-												<!-- Profilepic -->
+          	mainContent.innerHTML = `
+		  		<div class="container">
+		  			<div class="primary-page-desc txt-prim bg-white">Forums</div>
+		  				<!-- Thread -->
+			 			${posts
+                		.map(
+                  			(post) =>
+                    			`
+									<div class="single-forum clickable" onclick="showForum(${post.id})">
+										<div class="profilepic bg-gray">
+											<!-- Profilepic -->
+										</div>
+										<div class="single-forum-thread bg-gray">
+											<div class="row">
+												<div class="single-forum-thread-title bg-gray" maxlength="80">
+													${post.title}
+												</div>
+												<div class="single-forum-thread-time bg-gray">
+													${post.created_at}
+												</div>
 											</div>
-											<div class="single-forum-thread bg-gray">
-												<div class="row">
-													<div class="single-forum-thread-title bg-gray" maxlength="80">
-														${post.title}
-													</div>
-													<div class="single-forum-thread-time bg-gray">
-														${post.created_at}
-													</div>
-												</div>
-												<div class="single-forum-thread-uname bg-gray">
-													${post.author}
-												</div>
-												<div class="single-forum-thread-intro bg-gray" maxlength="600">
-													${post.content}
-												</div>
+											<div class="single-forum-thread-uname bg-gray">
+												${post.author}
+											</div>
+											<div class="single-forum-thread-intro bg-gray" maxlength="600">
+												${post.content}
 											</div>
 										</div>
-									`
-                )
-                .join(``)}
+									</div>
+								`
+                		)
+                	.join(``)}
           					</div>
 		  				</div>
 		  			`;
-        });
-      sidebarContent.innerHTML = `
+        	});
+      		sidebarContent.innerHTML = `
 						<input
 						class="searchbar"
 						placeholder="Search Something..."
