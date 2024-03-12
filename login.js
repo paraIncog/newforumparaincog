@@ -1,7 +1,6 @@
 function login() {
   const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
-  console.log(`Hello! Login Popup had been clicked.`);
   mainContent.innerHTML = `
       <div class="container">
           <div class="primary-page-desc txt-prim bg-white">

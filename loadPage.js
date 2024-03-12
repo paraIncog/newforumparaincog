@@ -1,19 +1,19 @@
 function loadPage(page) {
-	const mainContent = document.getElementById("main-content");
-	const sidebarContent = document.getElementById("sidebar-content");
-	switch (page) {
-		case "forums":
-			fetch("/get-forums")
-				.then((response) => response.json())
-				.then((posts) => {
-					mainContent.innerHTML = `
+  const mainContent = document.getElementById("main-content");
+  const sidebarContent = document.getElementById("sidebar-content");
+  switch (page) {
+    case "forums":
+      fetch("/get-forums")
+        .then((response) => response.json())
+        .then((posts) => {
+          mainContent.innerHTML = `
 		  				<div class="container">
 		  					<div class="primary-page-desc txt-prim bg-white">Forums</div>
 		  					<!-- Thread -->
 			 				${posts
-								.map(
-									(post) => 
-									`
+                .map(
+                  (post) =>
+                    `
 										<div class="single-forum clickable" onclick="showForum(${post.id})">
 											<div class="profilepic bg-gray">
 												<!-- Profilepic -->
@@ -36,14 +36,13 @@ function loadPage(page) {
 											</div>
 										</div>
 									`
-								)
-								.join(``)}
+                )
+                .join(``)}
           					</div>
 		  				</div>
 		  			`;
-					});
-					sidebarContent.innerHTML = 
-					`
+        });
+      sidebarContent.innerHTML = `
 						<input
 						class="searchbar"
 						placeholder="Search Something..."
@@ -128,21 +127,21 @@ function loadPage(page) {
 							</ul>
 						</div>
 					`;
-					break;
-		case "pms":
-			fetch("/get-users")
-				.then((response) => response.json())
-				.then((users) => {
-					mainContent.innerHTML = 
-						`
+      break;
+    case "pms":
+      fetch("/get-users")
+        .then((response) => response.json())
+        .then((users) => {
+          mainContent.innerHTML = `
 							<div class="container">
 								<div class="primary-page-desc txt-prim bg-white">
 									Users
 								</div>
 								<div class="user-search-items-container">
-									${users.map(
-										(user) =>
-										`
+									${users
+                    .map(
+                      (user) =>
+                        `
 											<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
 												<div class="profilepic bg-gray">
 													<!-- Profile Pic -->
@@ -157,13 +156,13 @@ function loadPage(page) {
 												</div>
 											</div>
 										`
-									).join(``)}
+                    )
+                    .join(``)}
 								</div>
 							</div>
 						`;
-					sidebarContent.innerHTML = 
-						`
-							<input
+          sidebarContent.innerHTML = `
+				<input
 							class="searchbar"
 							placeholder="Search Something..."
 							maxlength="40"
@@ -184,40 +183,40 @@ function loadPage(page) {
 							</div>
 							<br>
 							<div class="friend-users">
-								${users.map(
-									(user) => 
-										`
-											<div class="pm-person-sel txt-white bg-scnd clickable">
-												<div class="pm-inner-container profilepic bg-gray">
-													<!-- Profile Pic -->
-												</div>
-												<div class="accountname-side">
-													${user.username}
-												</div>
-											</div>
-										`
-									)
-								.join(``)}
-							</div>
-						`;
-				})
-				.catch((error) => {
-					console.error("Error fetching users:", error);
-				});
-		break;
-	default:
-		sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
-	}
+					${users
+                  .map(
+                    (user) =>
+                  	`
+					<div class="pm-person-sel txt-white bg-scnd clickable">
+						<div class="pm-inner-container profilepic bg-gray">
+							<!-- Profile Pic -->
+						</div>
+						<div class="accountname-side">
+							${user.username}
+						</div>
+					</div>
+					`
+                  )
+                  .join(``)}
+				</div>
+			`;
+        })
+        .catch((error) => {
+          console.error("Error fetching users:", error);
+        });
+      break;
+    default:
+      sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
+  }
 }
 
 // Function to show user information
 function showUserInfo(userId) {
-    fetch(`/get-user?id=${userId}`) // Assuming there's an endpoint to fetch a specific user by ID
-        .then((response) => response.json())
-        .then((user) => {
-            const mainContent = document.getElementById("main-content");
-            mainContent.innerHTML =
-                `
+  fetch(`/get-user?id=${userId}`)
+    .then((response) => response.json())
+    .then((user) => {
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
                     <div class="container">
 						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
 							Back
@@ -243,20 +242,18 @@ function showUserInfo(userId) {
 						</div>
                     </div>
                 `;
-        })
-        .catch((error) => {
-            console.error("Error fetching user information:", error);
-        });
+    })
+    .catch((error) => {
+      console.error("Error fetching user information:", error);
+    });
 }
 
-// Function to show forum post
 function showForum(postId) {
-    fetch(`/get-forum?id=${postId}`)
-        .then((response) => response.json())
-        .then((post) => {
-            const mainContent = document.getElementById("main-content");
-            mainContent.innerHTML =
-            `
+  fetch(`/get-forum?id=${postId}`)
+    .then((response) => response.json())
+    .then((post) => {
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
                 <div class="container">
 					<div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
 						Back
@@ -284,8 +281,8 @@ function showForum(postId) {
 					</div>
                 </div>
             `;
-        })
-        .catch((error) => {
-            console.error("Error fetching forum:", error);
-        });
+    })
+    .catch((error) => {
+      console.error("Error fetching forum:", error);
+    });
 }
