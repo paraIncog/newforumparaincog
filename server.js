@@ -208,6 +208,19 @@ app.get("/get-forum", (req, res) => {
   });
 });
 
+// Endpoint to handle logout
+app.get("/logout", (req, res) => {
+  // Destroy the session
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error destroying session:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.redirect("/"); // Redirect to the login page after logout
+  });
+});
+
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}`);
