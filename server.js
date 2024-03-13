@@ -1,4 +1,5 @@
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 
@@ -11,6 +12,13 @@ app.use(express.json());
 // Serve static files (HTML, CSS, JS)
 app.use(express.static(path.join(__dirname)));
 
+// Initialize session middleware
+app.use(session({
+  secret: 'your_secret_key', // Change this to a secret key
+  resave: false,
+  saveUninitialized: true
+}));
+
 // Handle requests to index.html
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -21,29 +29,60 @@ app.post("/login", (req, res) => {
   const { username, password } = req.body;
 
   if (!username || !password) {
-      return res.status(400).json({ error: "Username and password are required." });
+    return res.status(400).json({ error: "Username and password are required." });
   }
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
       if (err) {
-          console.error(err.message);
-          return res.status(500).send("Internal Server Error");
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
       }
 
-      db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
-          if (err) {
-              console.error(err.message);
-              return res.status(500).send("Internal Server Error");
-          }
+      if (!row) {
+        return res.status(401).json({ error: "Invalid username or password." });
+      }
 
-          if (!row) {
-              return res.status(401).json({ error: "Invalid username or password." });
-          }
+      // Authentication successful, store user information in session
+      req.session.user = row;
 
-          // Authentication successful
-          res.json({ message: "Login successful", username: row.username }); // Return the username
-      });
+      res.json({ message: "Login successful", username: row.username }); // Return the username
+    });
   });
+});
+
+// Check if user is logged in
+function isLoggedIn(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.status(401).json({ error: "Unauthorized" });
+  }
+}
+
+// Endpoint to get the username of the logged-in user
+app.get("/get-username", (req, res) => {
+  if (req.session && req.session.user && req.session.user.username) {
+      res.json({ username: req.session.user.username });
+  } else {
+      res.status(401).json({ error: "User not logged in or username not found in session" });
+  }
+});
+
+// Endpoint to check session status
+app.get("/check-session", (req, res) => {
+  if (req.session && req.session.user) {
+      // Session exists and user is logged in
+      res.sendStatus(200); // Send a success status code
+  } else {
+      // Session doesn't exist or user is not logged in
+      res.sendStatus(401); // Send an unauthorized status code
+  }
 });
 
 // Endpoint to handle user registration
