@@ -31,7 +31,7 @@ function loadUsername() {
     })
     .then(data => {
         // Display the username in the sidebar
-        const usernameElement = document.querySelector(".loginpopup");
+        const usernameElement = document.querySelector(".userinsession-username");
         if (usernameElement) {
             usernameElement.textContent = data.username;
         }

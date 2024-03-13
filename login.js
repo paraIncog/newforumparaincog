@@ -66,7 +66,7 @@ function login() {
             // Successful login, display message
             console.log("Congrats, " + username + "!");
             loadPage("forums"); // Load main content page after successful login
-            document.querySelector(".loginpopup").textContent = data.username; // Set the username in the placeholder
+            document.querySelector(".userinsession-username").textContent = data.username; // Set the username in the placeholder
           }
         })
         .catch((error) => {

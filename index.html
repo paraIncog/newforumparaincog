@@ -24,9 +24,15 @@
         <div id="sidebar-content"></div>
         <!-- User's Account -->
         <div
-          class="login-sidebarbox bg-prim txt-white clickable loginpopup"
-          onclick="logout()"
-        >Logout
+          class="login-sidebarbox bg-prim txt-white clickable userinsession"
+        >
+          <div class="userinsession-profilepic bg-gray"></div>
+          <div class="userinsession-username"></div>
+          <div class="btn-logout" onclick="logout()">
+            <span class="material-symbols-outlined">
+              logout
+              </span>
+          </div>
         </div>
       </div>
     </div>

@@ -255,7 +255,7 @@ button.login {
 	margin-left: .5rem;
 }
 
-/* User seacrh */
+/* User search */
 
 .user-search-items-container {
 	display: flex;
@@ -348,13 +348,35 @@ button.login {
 .login-sidebarbox {
 	position: absolute;
 	bottom: 1.5rem;
-	display: flex;
-	justify-content: center;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
 	width: 90%;
 	border-radius: 50rem;
 	margin-left: 1rem;
+}
+
+.userinsession {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	padding-right: .5rem;
+	align-items: center;
+}
+
+.userinsession-username {
+	/* margin-left: 1rem; */
+}
+
+.userinsession-profilepic {
+	height: 3rem;
+	width: 3rem;
+	border-radius: 50%;
+	border: .2rem solid #FFF;
+	margin-left: 1rem;
+}
+
+.btn-logout {
+	margin-right: .5rem;
 }
 
 /* Debugging */
