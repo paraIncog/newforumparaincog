@@ -208,6 +208,38 @@ app.get("/get-forum", (req, res) => {
   });
 });
 
+// Endpoint to handle addition of forum post
+app.post("/add-forum-post", isLoggedIn, (req, res) => {
+  const { title, content } = req.body;
+  const author = req.session.user.username; // Extract author's username from session
+
+  // Check if all required fields are provided
+  if (!title || !content || !author) {
+      return res.status(400).json({ error: "Title, content, and author are required." });
+  }
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+          console.error(err.message);
+          return res.status(500).send("Internal Server Error");
+      }
+
+      // Prepare the SQL statement for inserting the forum post into the database
+      const insertQuery = `INSERT INTO posts (title, content, author) VALUES (?, ?, ?)`;
+
+      // Execute the SQL query to insert the forum post into the database
+      db.run(insertQuery, [title, content, author], function (err) {
+          if (err) {
+              console.error(err.message);
+              return res.status(500).send("Internal Server Error");
+          }
+
+          // Return success message
+          res.json({ message: "Forum post added successfully" });
+      });
+  });
+});
+
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   // Destroy the session
