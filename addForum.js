@@ -1,5 +1,6 @@
 function addForum() {
     const mainContent = document.getElementById("main-content");
+    const sidebarContent = document.getElementById("sidebar-content");
 
     // Form submission handler
     const handleSubmit = (event) => {
@@ -38,19 +39,27 @@ function addForum() {
                 Add Forum Post
             </div>
             <form id="forumForm">
-                <div class="forumtitle">
+                <div class="forumtitle forumContent">
                     <label for="title">Title</label>
-                    <input id="title" name="title"></input>
+                    <input id="title" class="foruminput" name="title"></input>
                 </div>
-                <div class="forumdesc">
+                <div class="forumdesc forumContent">
                     <label for="content">Content</label>
-                    <textarea id="content" name="content" rows="10" cols="50" maxlength="800"></textarea>
+                    <textarea id="content" class="foruminput" name="content" rows="10" cols="50" maxlength="800"></textarea>
                 </div>
-                <div>
-                    <button type="submit">Submit</button>
+                <div class="forumContent">
+                    <button class="foruminput bg-prim txt-white" type="submit">Submit</button>
                 </div>
             </form>
         </div>
+    `;
+
+    sidebarContent.innerHTML = `
+      <div>
+          <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+              Back
+          </div>
+      </div>
     `;
 
     // Attach form submission handler
