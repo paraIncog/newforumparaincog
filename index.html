@@ -23,15 +23,13 @@
       <div class="container">
         <div id="sidebar-content"></div>
         <!-- User's Account -->
-        <div
-          class="login-sidebarbox bg-prim txt-white clickable userinsession"
-        >
+        <div class="login-sidebarbox bg-prim txt-white clickable userinsession">
           <div class="userinsession-profilepic bg-gray"></div>
           <div class="userinsession-username"></div>
           <div class="btn-logout" onclick="logout()">
             <span class="material-symbols-outlined">
               logout
-              </span>
+            </span>
           </div>
         </div>
       </div>
@@ -43,7 +41,7 @@
       <div id="overlay-toggle">
         <span
           class="material-symbols-rounded add-button-selector bg-gray clickable"
-          onclick="console.log(`Hello! AddButton had been clicked.`)"
+          onclick="addForum()"
         >
           add
         </span>
@@ -58,5 +56,6 @@
     <script src="loadPage.js"></script>
     <script src="login.js"></script>
     <script src="register.js"></script>
+    <script src="addForum.js"></script>
   </body>
 </html>

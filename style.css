@@ -367,6 +367,10 @@ button.login {
 	/* margin-left: 1rem; */
 }
 
+textarea {
+	resize: none;
+}
+
 .userinsession-profilepic {
 	height: 3rem;
 	width: 3rem;
