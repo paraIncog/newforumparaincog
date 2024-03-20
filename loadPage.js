@@ -279,6 +279,37 @@ function showForum(postId) {
 							</div>
 						</div>
 					</div>
+					<div class="forum-comment-ph txt-scnd">
+						Comments
+					</div>
+					<div class="comment-input">
+						<form id="commentForm">
+							<div>
+								<textarea id="comment_content" name="comment_content" rows="3" type="text" min="2" required></textarea>
+							</div>
+							<div>
+								<button type="submit" class="login bg-prim">Post Comment</button>
+							</div>
+						</form>
+						</div>
+					<div class="single-forum">
+						<div class="profilepic bg-gray">
+							<!-- Profilepic -->
+						</div>
+						<div class="single-forum-thread bg-gray">
+							<div class="single-forum-thread-uname bg-gray">
+								Comment Author
+							</div>
+							<div class="single-forum-thread-intro bg-gray" maxlength="600">
+								Comment Content
+							</div>
+							<div class="row">
+								<div class="single-forum-thread-time bg-gray">
+									Comment Created At
+								</div>
+							</div>
+						</div>
+					</div>
                 </div>
             `;
     })

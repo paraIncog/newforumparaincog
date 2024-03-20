@@ -436,3 +436,22 @@ textarea {
 .hidden {
 	display: none;
 }
+
+.forum-comment-ph {
+	display: flex;
+	justify-content: center;
+	font-size: 1.2rem;
+}
+
+.comment-input {
+	display: flex;
+	justify-content: center space-between;
+	align-content: center;
+}
+
+#comment_content {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	width: 100%;
+}
