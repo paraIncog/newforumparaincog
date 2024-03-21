@@ -291,25 +291,9 @@ function showForum(postId) {
                             	<button type="submit" class="login bg-prim">Post Comment</button>
                         	</div>
                     	</form>
-                	</div>
-					<div class="single-forum">
-						  <div class="profilepic bg-gray">
-							  <!-- Profilepic -->
-						  </div>
-						  <div class="single-forum-thread bg-gray">
-							  <div class="single-forum-thread-uname bg-gray">
-								  Comment Author
-							  </div>
-							  <div class="single-forum-thread-intro bg-gray" maxlength="600">
-								  Comment Content
-							  </div>
-							  <div class="row">
-								  <div class="single-forum-thread-time bg-gray">
-									  Comment Created At
-								  </div>
-							  </div>
-						  </div>
-					  </div>
+                	  </div>
+					  <div class="comments-container"></div>
+					
 				  </div>
 			  `;
       // Add event listener for comment submission
@@ -320,6 +304,36 @@ function showForum(postId) {
         addComment(postId, commentContent); // Call function to add comment
       });
     })
+
+	// Fetch comments for the post
+	fetch(`/get-comments?id=${postId}`)
+	.then((response) => response.json())
+	.then((comments) => {
+	  const commentsContainer = document.querySelector(".comments-container");
+	  comments.forEach(comment => {
+		commentsContainer.innerHTML += `
+			<div class="single-forum">
+				<div class="profilepic bg-gray">
+					<!-- Profilepic -->
+				</div>
+				<div class="single-forum-thread bg-gray">
+					<div class="single-forum-thread-uname bg-gray">
+						${comment.author}
+					</div>
+					<div class="single-forum-thread-intro bg-gray" maxlength="600">
+						${comment.content}
+					</div>
+					<div class="row">
+						<div class="single-forum-thread-time bg-gray">
+							${comment.created_at}
+						</div>
+					</div>
+				</div>
+			</div>
+		`;
+	  });
+	})
+
     .catch((error) => {
       console.error("Error fetching forum:", error);
     });

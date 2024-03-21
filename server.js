@@ -272,6 +272,25 @@ app.post("/add-comment", isLoggedIn, (req, res) => {
   });
 });
 
+// Endpoint to fetch comments for a specific forum post
+app.get("/get-comments", (req, res) => {
+  const postId = req.query.id;
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.all("SELECT id, post_id, author, content, created_at FROM posts_comments WHERE post_id = ?", [postId], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+      res.json(rows);
+    });
+  });
+});
+
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   // Destroy the session
