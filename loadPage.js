@@ -6,14 +6,14 @@ function loadPage(page) {
       fetch("/get-forums")
         .then((response) => response.json())
         .then((posts) => {
-          	mainContent.innerHTML = `
+          mainContent.innerHTML = `
 		  		<div class="container">
 		  			<div class="primary-page-desc txt-prim bg-white">Forums</div>
 		  				<!-- Thread -->
 			 			${posts
-                		.map(
-                  			(post) =>
-                    			`
+              .map(
+                (post) =>
+                  `
 									<div class="single-forum clickable" onclick="showForum(${post.id})">
 										<div class="profilepic bg-gray">
 											<!-- Profilepic -->
@@ -36,13 +36,13 @@ function loadPage(page) {
 										</div>
 									</div>
 								`
-                		)
-                	.join(``)}
+              )
+              .join(``)}
           					</div>
 		  				</div>
 		  			`;
-        	});
-      		sidebarContent.innerHTML = `
+        });
+      sidebarContent.innerHTML = `
 						<input
 						class="searchbar"
 						placeholder="Search Something..."
@@ -184,9 +184,9 @@ function loadPage(page) {
 				<br>
 				<div class="friend-users">
 					${users
-                  .map(
-                    (user) =>
-                  	`
+            .map(
+              (user) =>
+                `
 					<div class="pm-person-sel txt-white bg-scnd clickable">
 						<div class="pm-inner-container profilepic bg-gray">
 							<!-- Profile Pic -->
@@ -196,8 +196,8 @@ function loadPage(page) {
 						</div>
 					</div>
 					`
-                  )
-                  .join(``)}
+            )
+            .join(``)}
 				</div>
 			`;
         })
@@ -249,11 +249,11 @@ function showUserInfo(userId) {
 }
 
 function showForum(postId) {
-	fetch(`/get-forum?id=${postId}`)
-	  .then((response) => response.json())
-	  .then((post) => {
-		const mainContent = document.getElementById("main-content");
-		mainContent.innerHTML = `
+  fetch(`/get-forum?id=${postId}`)
+    .then((response) => response.json())
+    .then((post) => {
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
 				  <div class="container">
 					  <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
 						  Back
@@ -280,19 +280,19 @@ function showForum(postId) {
 						  </div>
 					  </div>
 					  <div class="forum-comment-ph txt-scnd">
-						  Comments
-					  </div>
-					  <div class="comment-input">
-						  <form id="commentForm">
-							  <div>
-								  <textarea id="comment_content" name="comment_content" rows="3" type="text" min="2" required></textarea>
-							  </div>
-							  <div>
-								  <button type="submit" class="login bg-prim">Post Comment</button>
-							  </div>
-						  </form>
-						  </div>
-					  <div class="single-forum">
+                    	Comments
+                	  </div>
+                	  <div class="comment-input">
+                      	<form id="commentForm">
+                        	<div>
+                            	<textarea id="comment_content" name="comment_content" rows="3" type="text" minlength="2" required></textarea>
+                        	</div>
+                        	<div>
+                            	<button type="submit" class="login bg-prim">Post Comment</button>
+                        	</div>
+                    	</form>
+                	</div>
+					<div class="single-forum">
 						  <div class="profilepic bg-gray">
 							  <!-- Profilepic -->
 						  </div>
@@ -312,9 +312,38 @@ function showForum(postId) {
 					  </div>
 				  </div>
 			  `;
-	  })
-	  .catch((error) => {
-		console.error("Error fetching forum:", error);
-	  });
+      // Add event listener for comment submission
+      const commentForm = document.getElementById("commentForm");
+      commentForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const commentContent = document.getElementById("comment_content").value;
+        addComment(postId, commentContent); // Call function to add comment
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching forum:", error);
+    });
 }
-  
+
+// Function to add comment
+function addComment(postId, commentContent) {
+  fetch("/add-comment", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ postId, commentContent }),
+  })
+    .then((response) => {
+      if (response.ok) {
+        // Reload the forum post page after successful comment addition
+        showForum(postId);
+      } else {
+        throw new Error("Failed to add comment");
+      }
+    })
+    .catch((error) => {
+      console.error("Error adding comment:", error);
+      // Handle error
+    });
+}

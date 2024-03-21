@@ -240,14 +240,14 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
   });
 });
 
-// Endpoint to handle addition of comments
+// Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
-  const { postId, content } = req.body;
+  const { postId, commentContent } = req.body;
   const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
-  if (!postId || !content || !author) {
-    return res.status(400).json({ error: "Post ID, content, and author are required." });
+  if (!postId || !commentContent || !author) {
+    return res.status(400).json({ error: "Post ID, comment content, and author are required." });
   }
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
@@ -260,7 +260,7 @@ app.post("/add-comment", isLoggedIn, (req, res) => {
     const insertQuery = `INSERT INTO posts_comments (post_id, author, content) VALUES (?, ?, ?)`;
 
     // Execute the SQL query to insert the comment into the database
-    db.run(insertQuery, [postId, author, content], function (err) {
+    db.run(insertQuery, [postId, author, commentContent], function (err) {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
