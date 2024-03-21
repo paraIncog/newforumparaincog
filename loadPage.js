@@ -288,7 +288,7 @@ function showForum(postId) {
                             	<textarea id="comment_content" name="comment_content" rows="3" type="text" minlength="2" required></textarea>
                         	</div>
                         	<div>
-                            	<button type="submit" class="login bg-prim">Post Comment</button>
+                            	<button type="submit" class="login bg-prim" style="border: 0;">Post Comment</button>
                         	</div>
                     	</form>
                 	  </div>

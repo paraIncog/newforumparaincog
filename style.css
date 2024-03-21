@@ -85,7 +85,7 @@ body {
 input.login, button.login, select {
 	padding: .375rem;
 	border-radius: 1rem;
-	border: .1rem solid black;
+	border: .1rem solid #000000;
 }
 
 button.login {
@@ -110,17 +110,13 @@ button.login {
 }
 
 .searchbar {
-	align-items: center;
-	border-radius: 1rem;
+	border-radius: 100vh;
 	border: transparent;
 	display: flex;
-	height: 2rem;
-	justify-content: center;
+	padding: 1rem;
 	font-size: 1rem;
-	outline: 0;
-	margin-left: 1rem;
-	letter-spacing: .07rem;
-	width: 90%;
+	margin: 0 1rem;
+	width: 85%;
 }
 
 .searchbar-searchcontent {
@@ -373,10 +369,6 @@ button.login {
 	align-items: center;
 }
 
-.userinsession-username {
-	/* margin-left: 1rem; */
-}
-
 #forumForm {
 	align-content: space-between;
 	display: flex;
@@ -444,23 +436,4 @@ textarea {
 
 .hidden {
 	display: none;
-}
-
-.forum-comment-ph {
-	display: flex;
-	justify-content: center;
-	font-size: 1.2rem;
-}
-
-.comment-input {
-	display: flex;
-	justify-content: center space-between;
-	align-content: center;
-}
-
-#comment_content {
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	width: 100%;
 }
