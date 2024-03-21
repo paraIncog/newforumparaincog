@@ -316,46 +316,5 @@ function showForum(postId) {
 	  .catch((error) => {
 		console.error("Error fetching forum:", error);
 	  });
-  
-	  // Add event listener for comment form submission
-	  const commentForm = document.getElementById("commentForm");
-	  if (commentForm) {
-		  commentForm.addEventListener("submit", function(event) {
-			  event.preventDefault(); // Prevent default form submission
-			  
-			  // Extract comment content
-			  const commentContent = document.getElementById("comment_content").value;
-			  
-			  // Make sure the comment content is not empty
-			  if (!commentContent.trim()) {
-				  alert("Please enter a comment.");
-				  return;
-			  }
-			  
-			  // Make a POST request to add the comment
-			  fetch("/add-comment", {
-				  method: "POST",
-				  headers: {
-					  "Content-Type": "application/json"
-				  },
-				  body: JSON.stringify({ postId, content: commentContent })
-			  })
-			  .then(response => {
-				  if (response.ok) {
-					  // Optionally, you can update the UI to show the newly added comment
-					  // For simplicity, you can reload the page to reflect the changes
-					  loadPage("forums");
-				  } else {
-					  throw new Error("Failed to add comment");
-				  }
-			  })
-			  .catch(error => {
-				  console.error("Error adding comment:", error);
-				  // Handle error
-			  });
-		  });
-	  } else {
-		  console.error("Comment Form element not found");
-	  }
-  }
+}
   
