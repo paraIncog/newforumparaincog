@@ -249,71 +249,113 @@ function showUserInfo(userId) {
 }
 
 function showForum(postId) {
-  fetch(`/get-forum?id=${postId}`)
-    .then((response) => response.json())
-    .then((post) => {
-      const mainContent = document.getElementById("main-content");
-      mainContent.innerHTML = `
-                <div class="container">
-					<div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
-						Back
-					</div>
-                    <div class="primary-page-desc txt-prim bg-white">
-                        Forum: ${post.title}
-                    </div>
-					<div class="single-forum">
-						<div class="profilepic bg-gray">
-							<!-- Profilepic -->
-						</div>
-						<div class="single-forum-thread bg-gray">
-							<div class="single-forum-thread-uname bg-gray">
-								${post.author}
-							</div>
-							<div class="single-forum-thread-intro bg-gray" maxlength="600">
-								${post.content}
-							</div>
-							<div class="row">
-								<div class="single-forum-thread-time bg-gray">
-									${post.created_at}
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="forum-comment-ph txt-scnd">
-						Comments
-					</div>
-					<div class="comment-input">
-						<form id="commentForm">
-							<div>
-								<textarea id="comment_content" name="comment_content" rows="3" type="text" min="2" required></textarea>
-							</div>
-							<div>
-								<button type="submit" class="login bg-prim">Post Comment</button>
-							</div>
-						</form>
-						</div>
-					<div class="single-forum">
-						<div class="profilepic bg-gray">
-							<!-- Profilepic -->
-						</div>
-						<div class="single-forum-thread bg-gray">
-							<div class="single-forum-thread-uname bg-gray">
-								Comment Author
-							</div>
-							<div class="single-forum-thread-intro bg-gray" maxlength="600">
-								Comment Content
-							</div>
-							<div class="row">
-								<div class="single-forum-thread-time bg-gray">
-									Comment Created At
-								</div>
-							</div>
-						</div>
-					</div>
-                </div>
-            `;
-    })
-    .catch((error) => {
-      console.error("Error fetching forum:", error);
-    });
-}
+	fetch(`/get-forum?id=${postId}`)
+	  .then((response) => response.json())
+	  .then((post) => {
+		const mainContent = document.getElementById("main-content");
+		mainContent.innerHTML = `
+				  <div class="container">
+					  <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
+						  Back
+					  </div>
+					  <div class="primary-page-desc txt-prim bg-white">
+						  Forum: ${post.title}
+					  </div>
+					  <div class="single-forum">
+						  <div class="profilepic bg-gray">
+							  <!-- Profilepic -->
+						  </div>
+						  <div class="single-forum-thread bg-gray">
+							  <div class="single-forum-thread-uname bg-gray">
+								  ${post.author}
+							  </div>
+							  <div class="single-forum-thread-intro bg-gray" maxlength="600">
+								  ${post.content}
+							  </div>
+							  <div class="row">
+								  <div class="single-forum-thread-time bg-gray">
+									  ${post.created_at}
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+					  <div class="forum-comment-ph txt-scnd">
+						  Comments
+					  </div>
+					  <div class="comment-input">
+						  <form id="commentForm">
+							  <div>
+								  <textarea id="comment_content" name="comment_content" rows="3" type="text" min="2" required></textarea>
+							  </div>
+							  <div>
+								  <button type="submit" class="login bg-prim">Post Comment</button>
+							  </div>
+						  </form>
+						  </div>
+					  <div class="single-forum">
+						  <div class="profilepic bg-gray">
+							  <!-- Profilepic -->
+						  </div>
+						  <div class="single-forum-thread bg-gray">
+							  <div class="single-forum-thread-uname bg-gray">
+								  Comment Author
+							  </div>
+							  <div class="single-forum-thread-intro bg-gray" maxlength="600">
+								  Comment Content
+							  </div>
+							  <div class="row">
+								  <div class="single-forum-thread-time bg-gray">
+									  Comment Created At
+								  </div>
+							  </div>
+						  </div>
+					  </div>
+				  </div>
+			  `;
+	  })
+	  .catch((error) => {
+		console.error("Error fetching forum:", error);
+	  });
+  
+	  // Add event listener for comment form submission
+	  const commentForm = document.getElementById("commentForm");
+	  if (commentForm) {
+		  commentForm.addEventListener("submit", function(event) {
+			  event.preventDefault(); // Prevent default form submission
+			  
+			  // Extract comment content
+			  const commentContent = document.getElementById("comment_content").value;
+			  
+			  // Make sure the comment content is not empty
+			  if (!commentContent.trim()) {
+				  alert("Please enter a comment.");
+				  return;
+			  }
+			  
+			  // Make a POST request to add the comment
+			  fetch("/add-comment", {
+				  method: "POST",
+				  headers: {
+					  "Content-Type": "application/json"
+				  },
+				  body: JSON.stringify({ postId, content: commentContent })
+			  })
+			  .then(response => {
+				  if (response.ok) {
+					  // Optionally, you can update the UI to show the newly added comment
+					  // For simplicity, you can reload the page to reflect the changes
+					  loadPage("forums");
+				  } else {
+					  throw new Error("Failed to add comment");
+				  }
+			  })
+			  .catch(error => {
+				  console.error("Error adding comment:", error);
+				  // Handle error
+			  });
+		  });
+	  } else {
+		  console.error("Comment Form element not found");
+	  }
+  }
+  

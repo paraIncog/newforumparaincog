@@ -240,6 +240,38 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
   });
 });
 
+// Endpoint to handle addition of comments
+app.post("/add-comment", isLoggedIn, (req, res) => {
+  const { postId, content } = req.body;
+  const author = req.session.user.username; // Extract author's username from session
+
+  // Check if all required fields are provided
+  if (!postId || !content || !author) {
+    return res.status(400).json({ error: "Post ID, content, and author are required." });
+  }
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Prepare the SQL statement for inserting the comment into the database
+    const insertQuery = `INSERT INTO posts_comments (post_id, author, content) VALUES (?, ?, ?)`;
+
+    // Execute the SQL query to insert the comment into the database
+    db.run(insertQuery, [postId, author, content], function (err) {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      // Return success message
+      res.json({ message: "Comment added successfully" });
+    });
+  });
+});
+
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   // Destroy the session
