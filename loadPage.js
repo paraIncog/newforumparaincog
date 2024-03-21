@@ -169,12 +169,16 @@ function loadPage(page) {
     			/>
 				<div class="forum-pm-selrow">
 					<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
-						<span class="material-symbols-outlined"> forum </span>
-						<div>Forums</div>
+						<div class="tab-label">
+							<span class="material-symbols-outlined"> forum </span>
+							<div>Forums</div>
+						</div>
 					</div>
 					<div class="forum-pm-icontext-sep txt-white bg-prim">
-						<span class="material-symbols-outlined"> chat </span>
-						<div>Private Messages</div>
+						<div class="tab-label">
+							<span class="material-symbols-outlined"> chat </span>
+							<div>Private Messages</div>
+						</div>
 					</div>
 				</div>
 				<br>
