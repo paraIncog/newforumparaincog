@@ -65,7 +65,7 @@ function loadPage(page) {
 						<div class="forum-filtering">
 							<div class="filter-header">Filters</div>
 							<div class="filter-mainheader">Categories</div>
-							<ul class="filter-subcat-dot">
+							<ul class="filter-maincats">
 								<li>
 									<a
 									class="filter-subcat txt-scnd clickable"
@@ -102,7 +102,7 @@ function loadPage(page) {
 									</a>
 								</li>
 							</ul>
-							<ul class="filter-subcat-nodot">
+							<ul class="filter-misccats">
 								<li>
 									<a 
 									class="filter-subcat txt-scnd filter-mainheader clickable" 

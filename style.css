@@ -34,6 +34,10 @@ body {
 	border: .2rem solid #FFF;
 }
 
+textarea {
+	resize: none;
+}
+
 /* Background cols */
 
 .bg-white {
@@ -119,10 +123,6 @@ button.login {
 	width: 85%;
 }
 
-.searchbar-searchcontent {
-	margin-left: 1rem;
-}
-
 .forum-pm-selrow {
 	display: flex;
 	padding-top: 1rem;
@@ -143,7 +143,6 @@ button.login {
 }
 
 .forum-filtering {
-	border-top: 1px solid #c0c0c0;
 	padding-top: 1rem;
 	padding-left: 1rem;
 }
@@ -162,7 +161,7 @@ button.login {
 	text-decoration: none;
 }
 
-.filter-subcat-dot {
+.filter-maincats {
 	display: flex;
 	gap: 1rem;
 	align-items: center;
@@ -173,7 +172,7 @@ button.login {
     padding-inline-start: 0;
 }
 
-.filter-subcat-nodot {
+.filter-misccats {
 	display: flex;
 	gap: 1rem;
 	padding-top: 2rem;
@@ -349,9 +348,9 @@ button.login {
   'opsz' 48
 }
 
-/* Login button */
+/* Sessioner */
 
-.login-sidebarbox {
+.sessioner-box {
 	position: absolute;
 	bottom: 1.5rem;
 	padding-top: 1rem;
@@ -361,13 +360,15 @@ button.login {
 	margin-left: 2.5%;
 }
 
-.userinsession {
+.sessioner-user {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	padding-right: .5rem;
 	align-items: center;
 }
+
+/* Add Forum page */
 
 #forumForm {
 	align-content: space-between;
@@ -397,11 +398,7 @@ button.foruminput {
 	border: none;
 }
 
-textarea {
-	resize: none;
-}
-
-.userinsession-profilepic {
+.sessioner-user-profilepic {
 	height: 3rem;
 	width: 3rem;
 	border-radius: 50%;
