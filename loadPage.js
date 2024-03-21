@@ -142,20 +142,20 @@ function loadPage(page) {
                     .map(
                       (user) =>
                         `
-											<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
-												<div class="profilepic bg-gray">
-													<!-- Profile Pic -->
-												</div>
-												<div class="user-search-info">
-													<div class="user-search-username">
-														${user.username}
-													</div>
-													<div class="user-search-fullname txt-scnd">
-														${user.namefirst} ${user.namelast}
-													</div>
-												</div>
-											</div>
-										`
+							<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
+								<div class="profilepic bg-gray">
+									<!-- Profile Pic -->
+				 				</div>
+								<div class="user-search-info">
+									<div class="user-search-username">
+										${user.username}
+									</div>
+										<div class="user-search-fullname txt-scnd">
+											${user.namefirst} ${user.namelast}
+										</div>
+									</div>
+							</div>
+						`
                     )
                     .join(``)}
 								</div>
@@ -163,22 +163,22 @@ function loadPage(page) {
 						`;
           sidebarContent.innerHTML = `
 				<input
-							class="searchbar"
-							placeholder="Search Something..."
-							maxlength="40"
-        					/>
-							<div class="forum-pm-selrow">
-								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
-										<span class="material-symbols-outlined"> forum </span>
-									Forums
-								</div>
-								<div class="forum-pm-icontext-sep txt-white bg-prim">
-										<span class="material-symbols-outlined"> chat </span>
-									<div>Private Messages</div>
-								</div>
-							</div>
-							<br>
-							<div class="friend-users">
+					class="searchbar"
+					placeholder="Search Something..."
+					maxlength="40"
+    			/>
+				<div class="forum-pm-selrow">
+					<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
+						<span class="material-symbols-outlined"> forum </span>
+						<div>Forums</div>
+					</div>
+					<div class="forum-pm-icontext-sep txt-white bg-prim">
+						<span class="material-symbols-outlined"> chat </span>
+						<div>Private Messages</div>
+					</div>
+				</div>
+				<br>
+				<div class="friend-users">
 					${users
                   .map(
                     (user) =>
