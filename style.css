@@ -16,6 +16,7 @@ body {
 
 
 .material-symbols-outlined {
+	margin: 0 1rem;
   font-variation-settings:
   'FILL' 0,
   'wght' 200,
@@ -126,7 +127,8 @@ button.login {
 
 .forum-pm-selrow {
 	display: flex;
-	padding-top: 1rem;
+	/* padding-top: 1rem; */
+	padding: 1rem 0.5rem 0 0.5rem;
 }
 
 .forum-pm-icontext-sep {
@@ -140,6 +142,11 @@ button.login {
 	padding: 0.5rem;
 	/* height: 3.5rem; */
 	width: 50%;
+}
+
+.tab-label {
+	text-align: center;
+	width: 100%;
 }
 
 .forum-filtering {

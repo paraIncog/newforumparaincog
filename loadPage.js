@@ -50,16 +50,16 @@ function loadPage(page) {
 						/>
 						<div class="forum-pm-selrow">
 							<div class="forum-pm-icontext-sep txt-white bg-prim">
-								<div>
+								<div class="tab-label">
 								<span class="material-symbols-outlined"> forum </span>
+								<div>Forums</div>
 								</div>
-								Forums
 							</div>
 							<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep clickable">
-								<div>
+								<div class="tab-label">
 								<span class="material-symbols-outlined"> chat </span>
-								</div>
 								<div>Private Messages</div>
+								</div>
 							</div>
 						</div>
 						<div class="forum-filtering">
@@ -169,15 +169,11 @@ function loadPage(page) {
         					/>
 							<div class="forum-pm-selrow">
 								<div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
-									<div>
 										<span class="material-symbols-outlined"> forum </span>
-									</div>
 									Forums
 								</div>
 								<div class="forum-pm-icontext-sep txt-white bg-prim">
-									<div>
 										<span class="material-symbols-outlined"> chat </span>
-									</div>
 									<div>Private Messages</div>
 								</div>
 							</div>
