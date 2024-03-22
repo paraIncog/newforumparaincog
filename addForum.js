@@ -43,6 +43,17 @@ function addForum() {
                     <label for="title">Title</label>
                     <input id="title" class="foruminput" name="title"></input>
                 </div>
+                <div class="forumContent">
+                    <label for="category">Category</label>
+                    <select>
+                        <option id="category" name="category" selected disabled>Select category</option>
+                        <option>Admin News</option>
+                        <option>Technology</option>
+                        <option>Video Games</option>
+                        <option>Memes</option>
+                        <option>Random</option>
+                    </select>
+                </div>
                 <div class="forumdesc forumContent">
                     <label for="content">Content</label>
                     <textarea id="content" class="foruminput" name="content" rows="10" cols="50" maxlength="800"></textarea>

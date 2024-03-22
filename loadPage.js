@@ -69,36 +69,36 @@ function loadPage(page) {
 								<li>
 									<a
 									class="filter-subcat txt-scnd clickable"
-									href="/get-posts-by-category?category=Golang"
-									>Golang
-									</a>
-								</li>
-								<li>
-								<a
-								class="filter-subcat txt-scnd clickable"
-								href="get-posts-by-category?category=Python"
-								>Python
-								</a>
-								</li>
-								<li>
-									<a
-									class="filter-subcat txt-scnd clickable"
-									href="get-posts-by-category?category=JavaScript"
-									>JavaScript
+									href=""
+									>Admin News
 									</a>
 								</li>
 								<li>
 									<a
 									class="filter-subcat txt-scnd clickable"
-									href="get-posts-by-category?category=Docker"
-									>Docker
+									href=""
+									>Technology
+									</a>
+								</li>
+								<li>
+									<a
+									class="filter-subcat txt-scnd clickable"
+									href=""
+									>Video Games
+									</a>
+								</li>
+								<li>
+									<a
+									class="filter-subcat txt-scnd clickable"
+									href=""
+									>Memes
 									</a>
 								</li>
 								<li>
 									<a 
 									class="filter-subcat txt-scnd clickable" 
-									href="get-posts-by-category?category=SQL"
-									>SQL
+									href=""
+									>Random
 									</a>
 								</li>
 							</ul>
