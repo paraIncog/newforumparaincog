@@ -21,7 +21,7 @@ function loadPage(page) {
 										<div class="single-forum-thread bg-gray">
 											<div class="row">
 												<div class="single-forum-thread-category bg-gray">
-													${post.category}
+													${getCategoryIcon(post.category)}
 												</div>
 												<div class="single-forum-thread-title bg-gray" maxlength="80">
 													${post.title}
@@ -67,44 +67,6 @@ function loadPage(page) {
 					</div>
 					<div class="forum-filtering">
 						<div class="filter-header">Filters</div>
-							<div class="filter-mainheader">Categories</div>
-							<ul class="filter-maincats">
-								<li>
-									<a
-									class="filter-subcat txt-scnd clickable"
-									href=""
-									>Admin News
-									</a>
-								</li>
-								<li>
-									<a
-									class="filter-subcat txt-scnd clickable"
-									href=""
-									>Technology
-									</a>
-								</li>
-								<li>
-									<a
-									class="filter-subcat txt-scnd clickable"
-									href=""
-									>Video Games
-									</a>
-								</li>
-								<li>
-									<a
-									class="filter-subcat txt-scnd clickable"
-									href=""
-									>Memes
-									</a>
-								</li>
-								<li>
-									<a 
-									class="filter-subcat txt-scnd clickable" 
-									href=""
-									>Random
-									</a>
-								</li>
-							</ul>
 							<ul class="filter-misccats">
 								<li>
 									<a 
@@ -262,7 +224,7 @@ function showForum(postId) {
 						  Back
 					  </div>
 					  <div class="primary-page-desc txt-prim bg-white">
-						  Forum: ${post.category} ${post.title}
+						  Forum: ${post.title}
 					  </div>
 					  <div class="single-forum">
 						  <div class="profilepic bg-gray">
@@ -364,3 +326,21 @@ function addComment(postId, commentContent) {
       // Handle error
     });
 }
+
+// Function to get category icon based on category name
+function getCategoryIcon(category) {
+	switch (category) {
+	  case "AdminNews":
+		return '<span class="material-symbols-outlined"> news </span>';
+	  case "Technology":
+		return '<span class="material-symbols-outlined"> devices </span>';
+	  case "VideoGames":
+		return '<span class="material-symbols-outlined"> sports_esports </span>';
+	  case "Memes":
+		return '<span class="material-symbols-outlined"> sentiment_very_satisfied </span>';
+	  case "Random":
+		return '<span class="material-symbols-outlined"> shuffle </span>';
+	  default:
+		return '';
+	}
+ }

@@ -175,7 +175,7 @@ button.login {
 .filter-misccats {
 	display: flex;
 	gap: 1rem;
-	padding-top: 2rem;
+	/* padding-top: 2rem; */
 	flex-direction: column;
 	color: transparent;
 	margin-block-start: .5em;
@@ -433,4 +433,8 @@ button.foruminput {
 
 .hidden {
 	display: none;
+}
+
+.icon-showforum {
+	justify-content: center;
 }
