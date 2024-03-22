@@ -103,7 +103,7 @@ function register() {
           } else {
             // Successful registration, display message
             console.log("Congrats, " + userData.username + "!");
-            loadPage("forums"); // Load main content page after successful registration
+            login();
           }
         })
         .catch((error) => {

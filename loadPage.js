@@ -70,16 +70,9 @@ function loadPage(page) {
 							<ul class="filter-misccats">
 								<li>
 									<a 
-									class="filter-subcat txt-scnd filter-mainheader clickable" 
-									href=""
-									>Most Recent Posts
-									</a>
-								</li>
-								<li>
-									<a 
 									class="filter-subcat txt-scnd clickable" 
 									href=""
-									>Liked Posts
+									>All Posts
 									</a>
 								</li>
 								<li>
