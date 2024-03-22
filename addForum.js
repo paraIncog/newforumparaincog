@@ -42,12 +42,12 @@ function addForum() {
             <form id="forumForm">
                 <div class="forumtitle forumContent">
                     <label for="title">Title</label>
-                    <input id="title" class="foruminput" name="title"></input>
+                    <input id="title" class="foruminput" name="title" required></input>
                 </div>
                 <div class="forumContent">
                     <label for="category">Category</label>
                     <select id="category" name="category" required>
-                        <option selected disabled>Select category</option>
+                        <option selected disabled value="Random">Sel</option>
                         <option value="AdminNews">Admin News</option>
                         <option value="Technology">Technology</option>
                         <option value="VideoGames">Video Games</option>
@@ -57,7 +57,7 @@ function addForum() {
                 </div>
                 <div class="forumdesc forumContent">
                     <label for="content">Content</label>
-                    <textarea id="content" class="foruminput" name="content" rows="10" cols="50" maxlength="800"></textarea>
+                    <textarea id="content" class="foruminput" name="content" rows="10" cols="50" maxlength="800" required></textarea>
                 </div>
                 <div class="forumContent">
                     <button class="foruminput bg-prim txt-white" type="submit">Submit</button>
