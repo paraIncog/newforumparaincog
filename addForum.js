@@ -47,8 +47,7 @@ function addForum() {
                 <div class="forumContent">
                     <label for="category">Category</label>
                     <select id="category" name="category" required>
-                        <option selected disabled value="Random">Sel</option>
-                        <option value="AdminNews">Admin News</option>
+                        <option selected disabled value=""></option>
                         <option value="Technology">Technology</option>
                         <option value="VideoGames">Video Games</option>
                         <option value="Memes">Memes</option>
