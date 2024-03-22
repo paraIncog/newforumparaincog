@@ -6,14 +6,14 @@ function loadPage(page) {
       fetch("/get-forums")
         .then((response) => response.json())
         .then((posts) => {
-          mainContent.innerHTML = `
+        	mainContent.innerHTML = `
 		  		<div class="container">
 		  			<div class="primary-page-desc txt-prim bg-white">Forums</div>
 		  				<!-- Thread -->
 			 			${posts
-              .map(
-                (post) =>
-                  `
+							.map(
+								(post) =>
+								`
 									<div class="single-forum clickable" onclick="showForum(${post.id})">
 										<div class="profilepic bg-gray">
 											<!-- Profilepic -->
@@ -39,34 +39,34 @@ function loadPage(page) {
 										</div>
 									</div>
 								`
-              )
-              .join(``)}
-          					</div>
-		  				</div>
-		  			`;
-        });
-      sidebarContent.innerHTML = `
-						<input
-						class="searchbar"
-						placeholder="Search Something..."
-						maxlength="40"
-						/>
-						<div class="forum-pm-selrow">
-							<div class="forum-pm-icontext-sep txt-white bg-prim">
-								<div class="tab-label">
-								<span class="material-symbols-outlined"> forum </span>
-								<div>Forums</div>
-								</div>
-							</div>
-							<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep clickable">
-								<div class="tab-label">
-								<span class="material-symbols-outlined"> chat </span>
+              				)
+              			.join(``)}
+    				</div>
+		  		</div>
+	  		`;
+        	});
+      		sidebarContent.innerHTML = `
+				<input
+					class="searchbar"
+					placeholder="Search Something..."
+					maxlength="40"
+				/>
+				<div class="forum-pm-selrow">
+					<div class="forum-pm-icontext-sep txt-white bg-prim">
+						<div class="tab-label">
+							<span class="material-symbols-outlined"> forum </span>
+							<div>Forums</div>
+						</div>
+					</div>
+					<div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep clickable">
+						<div class="tab-label">
+							<span class="material-symbols-outlined"> chat </span>
 								<div>Private Messages</div>
-								</div>
 							</div>
 						</div>
-						<div class="forum-filtering">
-							<div class="filter-header">Filters</div>
+					</div>
+					<div class="forum-filtering">
+						<div class="filter-header">Filters</div>
 							<div class="filter-mainheader">Categories</div>
 							<ul class="filter-maincats">
 								<li>
@@ -109,42 +109,42 @@ function loadPage(page) {
 								<li>
 									<a 
 									class="filter-subcat txt-scnd filter-mainheader clickable" 
-									href="/get-created-posts/"
+									href=""
 									>Most Recent Posts
 									</a>
 								</li>
 								<li>
 									<a 
 									class="filter-subcat txt-scnd clickable" 
-									href="/get-liked-posts/"
+									href=""
 									>Liked Posts
 									</a>
 								</li>
 								<li>
 									<a 
 									class="filter-subcat txt-scnd clickable" 
-									href="/get-your-posts/"
+									href=""
 									>Your Posts 
 									</a>
 								</li>
 							</ul>
 						</div>
 					`;
-      break;
+      		break;
     case "pms":
       fetch("/get-users")
         .then((response) => response.json())
         .then((users) => {
-          mainContent.innerHTML = `
-							<div class="container">
-								<div class="primary-page-desc txt-prim bg-white">
-									Users
-								</div>
-								<div class="user-search-items-container">
-									${users
-                    .map(
-                      (user) =>
-                        `
+          	mainContent.innerHTML = `
+				<div class="container">
+					<div class="primary-page-desc txt-prim bg-white">
+						Users
+					</div>
+					<div class="user-search-items-container">
+					${users
+                    	.map(
+                      		(user) =>
+                        	`
 							<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
 								<div class="profilepic bg-gray">
 									<!-- Profile Pic -->
@@ -158,11 +158,11 @@ function loadPage(page) {
 										</div>
 									</div>
 							</div>
-						`
-                    )
+							`
+                   		)
                     .join(``)}
-								</div>
-							</div>
+						</div>
+					</div>
 						`;
           sidebarContent.innerHTML = `
 				<input
@@ -187,20 +187,20 @@ function loadPage(page) {
 				<br>
 				<div class="friend-users">
 					${users
-            .map(
-              (user) =>
-                `
-					<div class="pm-person-sel txt-white bg-scnd clickable">
-						<div class="pm-inner-container profilepic bg-gray">
-							<!-- Profile Pic -->
+            		.map(
+              			(user) =>
+                		`
+						<div class="pm-person-sel txt-white bg-scnd clickable">
+							<div class="pm-inner-container profilepic bg-gray">
+								<!-- Profile Pic -->
+							</div>
+							<div class="accountname-side">
+								${user.username}
+							</div>
 						</div>
-						<div class="accountname-side">
-							${user.username}
-						</div>
-					</div>
-					`
-            )
-            .join(``)}
+						`
+            		)
+            		.join(``)}
 				</div>
 			`;
         })
