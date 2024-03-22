@@ -20,6 +20,9 @@ function loadPage(page) {
 										</div>
 										<div class="single-forum-thread bg-gray">
 											<div class="row">
+												<div class="single-forum-thread-category bg-gray">
+													${post.category}
+												</div>
 												<div class="single-forum-thread-title bg-gray" maxlength="80">
 													${post.title}
 												</div>
@@ -259,7 +262,7 @@ function showForum(postId) {
 						  Back
 					  </div>
 					  <div class="primary-page-desc txt-prim bg-white">
-						  Forum: ${post.title}
+						  Forum: ${post.category} ${post.title}
 					  </div>
 					  <div class="single-forum">
 						  <div class="profilepic bg-gray">

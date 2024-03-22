@@ -154,7 +154,7 @@ app.get("/get-forums", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT id, title, author, content, created_at FROM posts", (err, rows) => {
+    db.all("SELECT id, title, author, content, created_at, category FROM posts", (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -195,7 +195,7 @@ app.get("/get-forum", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT id, title, author, content, created_at FROM posts WHERE id = ?", [postId], (err, row) => {
+    db.get("SELECT id, title, author, content, created_at, category FROM posts WHERE id = ?", [postId], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -210,12 +210,12 @@ app.get("/get-forum", (req, res) => {
 
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
-  const { title, content } = req.body;
+  const { title, category, content } = req.body;
   const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
-  if (!title || !content || !author) {
-      return res.status(400).json({ error: "Title, content, and author are required." });
+  if (!title || !category || !content || !author) {
+      return res.status(400).json({ error: "Title, category, content, and author are required." });
   }
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
@@ -225,10 +225,10 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
       }
 
       // Prepare the SQL statement for inserting the forum post into the database
-      const insertQuery = `INSERT INTO posts (title, content, author) VALUES (?, ?, ?)`;
+      const insertQuery = `INSERT INTO posts (title, content, author, category) VALUES (?, ?, ?, ?)`;
 
       // Execute the SQL query to insert the forum post into the database
-      db.run(insertQuery, [title, content, author], function (err) {
+      db.run(insertQuery, [title, content, author, category], function (err) {
           if (err) {
               console.error(err.message);
               return res.status(500).send("Internal Server Error");

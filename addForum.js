@@ -8,6 +8,7 @@ function addForum() {
 
         // Extract data from the form
         const title = document.getElementById("title").value;
+        const category = document.getElementById("category").value;
         const content = document.getElementById("content").value;
 
         // Make a POST request to the server to add the forum post
@@ -16,7 +17,7 @@ function addForum() {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ title, content })
+            body: JSON.stringify({ title, category, content })
         })
         .then(response => {
             if (response.ok) {
@@ -45,13 +46,13 @@ function addForum() {
                 </div>
                 <div class="forumContent">
                     <label for="category">Category</label>
-                    <select>
-                        <option id="category" name="category" selected disabled>Select category</option>
-                        <option>Admin News</option>
-                        <option>Technology</option>
-                        <option>Video Games</option>
-                        <option>Memes</option>
-                        <option>Random</option>
+                    <select id="category" name="category" required>
+                        <option selected disabled>Select category</option>
+                        <option value="AdminNews">Admin News</option>
+                        <option value="Technology">Technology</option>
+                        <option value="VideoGames">Video Games</option>
+                        <option value="Memes">Memes</option>
+                        <option value="Random">Random</option>
                     </select>
                 </div>
                 <div class="forumdesc forumContent">
