@@ -38,6 +38,29 @@ textarea {
 	resize: none;
 }
 
+/* Multi-style */
+
+.searchbar, .sessioner-box {
+	display: flex;
+	border-radius: 50rem;
+	margin-left: 2.5%;
+	padding-right: .5rem;
+	width: 90%;
+}
+
+.login-txtinput, select {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: .5rem;
+	text-align: center;
+}
+
+input.login, button.login, select {
+	padding: .375rem;
+	border-radius: 1rem;
+	border: .1rem solid #000000;
+}
+
 /* Background cols */
 
 .bg-white {
@@ -79,19 +102,6 @@ textarea {
 	height: 100%;
 }
 
-.login-txtinput, select {
-	display: flex;
-	flex-direction: column;
-	padding-bottom: .5rem;
-	text-align: center;
-}
-
-input.login, button.login, select {
-	padding: .375rem;
-	border-radius: 1rem;
-	border: .1rem solid #000000;
-}
-
 button.login {
 	color: white;
 	outline: 0;
@@ -114,13 +124,13 @@ button.login {
 }
 
 .searchbar {
-	border-radius: 100vh;
 	border: transparent;
-	display: flex;
 	padding: 1rem;
 	font-size: 1rem;
 	margin: 0 1rem;
-	width: 85%;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
 }
 
 .forum-pm-selrow {
@@ -360,17 +370,14 @@ button.login {
 	bottom: 1.5rem;
 	padding-top: 1rem;
 	padding-bottom: 1rem;
-	width: 90%;
-	border-radius: 50rem;
-	margin-left: 2.5%;
 }
 
 .sessioner-user {
+	align-items: center;
 	display: flex;
 	flex-direction: row;
+	font-size: 1.25rem;
 	justify-content: space-between;
-	padding-right: .5rem;
-	align-items: center;
 }
 
 /* Add Forum page */
