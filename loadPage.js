@@ -242,13 +242,13 @@ function showForum(postId) {
 					  <div class="forum-comment-ph txt-scnd">
                     	Comments
                 	  </div>
-                	  <div class="comment-input">
+                	  <div class="comment-input-area">
                       	<form id="commentForm">
                         	<div>
-                            	<textarea id="comment_content" name="comment_content" rows="3" type="text" minlength="2" required></textarea>
+                            	<textarea class="comment-input bg-gray" id="comment_content" name="comment_content" rows="3" type="text" minlength="2" required></textarea>
                         	</div>
                         	<div>
-                            	<button type="submit" class="login bg-prim" style="border: 0;">Post Comment</button>
+                            	<button type="submit" class="comment-submit login bg-prim" style="border: 0;">Post Comment</button>
                         	</div>
                     	</form>
                 	  </div>

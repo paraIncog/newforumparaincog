@@ -450,3 +450,30 @@ button.foruminput {
 .icon-showforum {
 	justify-content: center;
 }
+
+/* Commenting */
+
+.forum-comment-ph {
+	display: flex;
+	justify-content: center;
+	font-size: 1.25rem;
+}
+
+.comment-input-area {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+
+.comment-input {
+	border-radius: 1rem;
+	border: 0;
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+	width: 100%;
+}
+
+.comment-submit {
+	margin-top: 1rem;
+	/* margin-bottom: .5rem; */
+}
