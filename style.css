@@ -125,9 +125,9 @@ button.login {
 
 .searchbar {
 	border: transparent;
-	padding: 1rem;
+	padding: 1rem 0;
 	font-size: 1rem;
-	margin: 0 1rem;
+	padding-left: 1rem;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;

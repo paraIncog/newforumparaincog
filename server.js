@@ -146,8 +146,8 @@ app.get("/get-forums", (req, res) => {
       // Format created_at timestamp before sending it in the response
       const formattedRows = rows.map(row => ({
         ...row,
-        created_at: new Date(row.created_at).toLocaleDateString('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ', ' +
-                     new Date(row.created_at).toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit' })
+        created_at: new Date(row.created_at).toLocaleDateString('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone:'Europe/Tallinn' }) + ', ' +
+                     new Date(row.created_at).toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit', timeZone:'Europe/Tallinn' })
       }));
 
       res.json(formattedRows);
@@ -281,8 +281,8 @@ app.get("/get-comments", (req, res) => {
       // Format created_at timestamp before sending it in the response
       const formattedRows = rows.map(row => ({
         ...row,
-        created_at: new Date(row.created_at).toLocaleDateString('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ', ' +
-                     new Date(row.created_at).toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit' })
+        created_at: new Date(row.created_at).toLocaleDateString('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone:'Europe/Tallinn' }) + ', ' +
+                     new Date(row.created_at).toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit', timeZone:'Europe/Tallinn' })
       }));
 
       res.json(formattedRows);
