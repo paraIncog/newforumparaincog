@@ -137,7 +137,7 @@ app.get("/get-forums", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT id, title, author, content, created_at, category FROM posts", (err, rows) => {
+    db.all("SELECT id, title, author, content, datetime(created_at, 'localtime') localtime, category FROM posts", (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -146,8 +146,7 @@ app.get("/get-forums", (req, res) => {
       // Format created_at timestamp before sending it in the response
       const formattedRows = rows.map(row => ({
         ...row,
-        created_at: new Date(row.created_at).toLocaleDateString('et-EE', { year: 'numeric', month: '2-digit', day: '2-digit', timeZone:'Europe/Tallinn' }) + ', ' +
-                     new Date(row.created_at).toLocaleTimeString('et-EE', { hour: '2-digit', minute: '2-digit', timeZone:'Europe/Tallinn' })
+        created_at: row.localtime
       }));
 
       res.json(formattedRows);
