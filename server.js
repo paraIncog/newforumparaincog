@@ -142,7 +142,15 @@ app.get("/get-forums", (req, res) => {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
-      res.json(rows);
+
+      // Format created_at timestamp before sending it in the response
+      const formattedRows = rows.map(row => ({
+        ...row,
+        created_at: new Date(row.created_at).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ', ' +
+                     new Date(row.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      }));
+
+      res.json(formattedRows);
     });
   });
 });
@@ -269,7 +277,15 @@ app.get("/get-comments", (req, res) => {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
-      res.json(rows);
+
+      // Format created_at timestamp before sending it in the response
+      const formattedRows = rows.map(row => ({
+        ...row,
+        created_at: new Date(row.created_at).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) + ', ' +
+                     new Date(row.created_at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })
+      }));
+
+      res.json(formattedRows);
     });
   });
 });
