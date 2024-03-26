@@ -121,7 +121,7 @@ function loadPage(page) {
 						</div>
 					</div>
 						`;
-          sidebarContent.innerHTML = `
+            sidebarContent.innerHTML = `
 				<input
 					class="searchbar"
 					placeholder="Search Something..."
@@ -199,6 +199,9 @@ function showUserInfo(userId) {
 									${user.email}
 								</div>
 							</div>
+						</div>
+						<div class="clickable" onclick="togglePMPerson()">
+							(Add person to PM List)
 						</div>
                     </div>
                 `;
