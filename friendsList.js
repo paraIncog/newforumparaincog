@@ -1,5 +1,5 @@
 function friendsList(userId) {
-	// if (isInPMPersonList) {
+	// if (isInFriendsList) {
 	// 	// Remove user from the private message list
 	// 	removeFromFriendsList(userId);
 	// } else {
