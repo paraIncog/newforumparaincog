@@ -1,11 +1,11 @@
-function friendsList(userId, isInFriendsList) {
-	if (isInPMPersonList) {
-		// Remove user from the private message list
-		removeFromFriendsList(userId);
-	} else {
-		// Add user to the private message list
-		addToFriendsList(userId);
-	}
+function friendsList(userId) {
+	// if (isInPMPersonList) {
+	// 	// Remove user from the private message list
+	// 	removeFromFriendsList(userId);
+	// } else {
+	// 	// Add user to the private message list
+	// 	addToFriendsList(userId);
+	// }
 }
 
 function addToFriendsList(userId) {
