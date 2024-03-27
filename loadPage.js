@@ -201,7 +201,7 @@ function showUserInfo(userId) {
 							</div>
 						</div>
 						<div class="clickable" onclick="friendsList()">
-							(Add person to Fiends List)
+							(Add person to Friends List)
 						</div>
                     </div>
                 `;
