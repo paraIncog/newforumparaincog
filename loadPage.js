@@ -200,7 +200,7 @@ function showUserInfo(userId) {
 								</div>
 							</div>
 						</div>
-						<div class="clickable" onclick="togglePMPerson()">
+						<div class="clickable" onclick="friendsList()">
 							(Add person to PM List)
 						</div>
                     </div>
