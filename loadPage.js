@@ -6,15 +6,15 @@ function loadPage(page) {
       fetch("/get-forums")
         .then((response) => response.json())
         .then((posts) => {
-        	mainContent.innerHTML = `
+          mainContent.innerHTML = `
 		  		<div class="container">
 		  			<div class="primary-page-desc txt-prim bg-white">Forums</div>
 		  				<!-- Thread -->
 						<div class="order-forums">
 							${posts
-								.map(
-									(post) =>
-									`
+                .map(
+                  (post) =>
+                    `
 										<div class="single-forum clickable" onclick="showForum(${post.id})">
 											<div class="profilepic bg-gray">
 												<!-- Profilepic -->
@@ -40,14 +40,14 @@ function loadPage(page) {
 											</div>
 										</div>
 									`
-								)
-							.join(``)}
+                )
+                .join(``)}
 						</div>
     				</div>
 		  		</div>
 	  		`;
-        	});
-      		sidebarContent.innerHTML = `
+        });
+      sidebarContent.innerHTML = `
 				<input
 					class="searchbar"
 					placeholder="Search Something..."
@@ -87,21 +87,21 @@ function loadPage(page) {
 							</ul>
 						</div>
 					`;
-      		break;
+      break;
     case "pms":
       fetch("/get-users")
         .then((response) => response.json())
         .then((users) => {
-          	mainContent.innerHTML = `
+          mainContent.innerHTML = `
 				<div class="container">
 					<div class="primary-page-desc txt-prim bg-white">
 						Users
 					</div>
 					<div class="user-search-items-container">
 					${users
-                    	.map(
-                      		(user) =>
-                        	`
+            .map(
+              (user) =>
+                `
 							<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
 								<div class="profilepic bg-gray">
 									<!-- Profile Pic -->
@@ -116,12 +116,12 @@ function loadPage(page) {
 									</div>
 							</div>
 							`
-                   		)
-                    .join(``)}
+            )
+            .join(``)}
 						</div>
 					</div>
 						`;
-            sidebarContent.innerHTML = `
+          sidebarContent.innerHTML = `
 				<input
 					class="searchbar"
 					placeholder="Search Something..."
@@ -142,11 +142,11 @@ function loadPage(page) {
 					</div>
 				</div>
 				<br>
-				<div class="friend-users">
+				<div id="friend-users">
 					${users
-            		.map(
-              			(user) =>
-                		`
+            .map(
+              (user) =>
+                `
 						<div class="pm-person-sel txt-white bg-scnd clickable">
 							<div class="pm-inner-container profilepic bg-gray">
 								<!-- Profile Pic -->
@@ -156,8 +156,8 @@ function loadPage(page) {
 							</div>
 						</div>
 						`
-            		)
-            		.join(``)}
+            )
+            .join(``)}
 				</div>
 			`;
         })
@@ -200,11 +200,11 @@ function showUserInfo(userId) {
 								</div>
 							</div>
 						</div>
-						<div class="clickable" onclick="addToFriendsList()">
+						<div class="clickable" onclick="addToFriendsList(${userId})">
 							(Add person to Friends List)
 						</div>
 						<br>
-						<div class="clickable" onclick="removeFromFriendsList()">
+						<div class="clickable" onclick="removeFromFriendsList(${userId})">
 							(Remove person from Friends List)
 						</div>
                     </div>
@@ -270,15 +270,15 @@ function showForum(postId) {
         const commentContent = document.getElementById("comment_content").value;
         addComment(postId, commentContent); // Call function to add comment
       });
-    })
+    });
 
-	// Fetch comments for the post
-	fetch(`/get-comments?id=${postId}`)
-	.then((response) => response.json())
-	.then((comments) => {
-	  const commentsContainer = document.querySelector(".comments-container");
-	  comments.forEach(comment => {
-		commentsContainer.innerHTML += `
+  // Fetch comments for the post
+  fetch(`/get-comments?id=${postId}`)
+    .then((response) => response.json())
+    .then((comments) => {
+      const commentsContainer = document.querySelector(".comments-container");
+      comments.forEach((comment) => {
+        commentsContainer.innerHTML += `
 			<div class="single-forum">
 				<div class="profilepic bg-gray">
 					<!-- Profilepic -->
@@ -298,8 +298,8 @@ function showForum(postId) {
 				</div>
 			</div>
 		`;
-	  });
-	})
+      });
+    })
 
     .catch((error) => {
       console.error("Error fetching forum:", error);
@@ -331,18 +331,18 @@ function addComment(postId, commentContent) {
 
 // Function to get category icon based on category name
 function getCategoryIcon(category) {
-	switch (category) {
-	  case "AdminNews":
-		return '<span class="material-symbols-outlined"> news </span>';
-	  case "Technology":
-		return '<span class="material-symbols-outlined"> devices </span>';
-	  case "VideoGames":
-		return '<span class="material-symbols-outlined"> sports_esports </span>';
-	  case "Memes":
-		return '<span class="material-symbols-outlined"> sentiment_very_satisfied </span>';
-	  case "Random":
-		return '<span class="material-symbols-outlined"> shuffle </span>';
-	  default:
-		return '';
-	}
- }
+  switch (category) {
+    case "AdminNews":
+      return '<span class="material-symbols-outlined"> news </span>';
+    case "Technology":
+      return '<span class="material-symbols-outlined"> devices </span>';
+    case "VideoGames":
+      return '<span class="material-symbols-outlined"> sports_esports </span>';
+    case "Memes":
+      return '<span class="material-symbols-outlined"> sentiment_very_satisfied </span>';
+    case "Random":
+      return '<span class="material-symbols-outlined"> shuffle </span>';
+    default:
+      return "";
+  }
+}
