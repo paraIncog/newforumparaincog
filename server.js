@@ -289,6 +289,52 @@ app.get("/get-comments", (req, res) => {
   });
 });
 
+// Endpoint to fetch friends of a specific user
+app.get("/users/:id/friends", (req, res) => {
+  const userId = req.params.id;
+  db.all(
+    "SELECT u.id, u.username, u.age, u.gender, u.namefirst, u.namelast, u.email FROM users u INNER JOIN friends f ON u.id = f.friend_id WHERE f.user_id = ?",
+    [userId],
+    (err, rows) => {
+      if (err) {
+        console.error("Error fetching friends:", err.message);
+        return res.status(500).json({ error: "Internal Server Error" });
+      }
+      res.json(rows);
+    }
+  );
+});
+
+// Endpoint to add a friend for a specific user
+app.post("/users/:id/friends", (req, res) => {
+  const userId = req.params.id;
+  const friendId = req.body.friendId;
+
+  // Insert the friendship into the database
+  db.run("INSERT INTO friends (user_id, friend_id) VALUES (?, ?)", [userId, friendId], function (err) {
+    if (err) {
+      console.error("Error adding friend:", err.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    res.json({ message: "Friend added successfully." });
+  });
+});
+
+// Endpoint to remove a friend for a specific user
+app.delete("/users/:id/friends/:friendId", (req, res) => {
+  const userId = req.params.id;
+  const friendId = req.params.friendId;
+
+  // Delete the friendship from the database
+  db.run("DELETE FROM friends WHERE user_id = ? AND friend_id = ?", [userId, friendId], function (err) {
+    if (err) {
+      console.error("Error removing friend:", err.message);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+    res.json({ message: "Friend removed successfully." });
+  });
+});
+
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   // Destroy the session
@@ -300,7 +346,6 @@ app.get("/logout", (req, res) => {
     res.redirect("/"); // Redirect to the login page after logout
   });
 });
-
 
 // Start the server
 app.listen(PORT, () => {
