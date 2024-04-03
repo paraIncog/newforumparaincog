@@ -143,21 +143,7 @@ function loadPage(page) {
 				</div>
 				<br>
 				<div id="friend-users">
-					${users
-            		.map(
-              		(user) =>
-                	`
-						<div class="pm-person-sel txt-white bg-scnd clickable">
-							<div class="pm-inner-container profilepic bg-gray">
-								<!-- Profile Pic -->
-							</div>
-							<div class="accountname-side">
-								${user.username}
-							</div>
-						</div>
-						`
-            		)
-            		.join(``)}
+					
 				</div>
 			`;
         })
@@ -169,17 +155,6 @@ function loadPage(page) {
       sidebarContent.innerHTML = `<h2>Page not found</h2><p>Sorry, the requested page does not exist.</p>`;
   }
 }
-
-const users = [
-  { id: 1, username: "user1" },
-  { id: 2, username: "user2" },
-  { id: 3, username: "user3" },
-];
-
-const friends = [
-  { userId: 1, friendId: 2 },
-  { userId: 1, friendId: 3 },
-];
 
 // Function to show user information
 function showUserInfo(userId) {
@@ -216,53 +191,11 @@ function showUserInfo(userId) {
 						</div>
                     </div>
                 `;
-      updateFriendButton(userId);
 	  displayFriends()
     })
     .catch((error) => {
       console.error("Error fetching user information:", error);
     });
-}
-
-function displayFriends() {
-	const friendsListDiv = document.getElementById("friend-users");
-	friendsListDiv.innerHTML = ""; // Clear previous content
-    const sessionFriends = friends.filter(friend => friend.userId === sessionUserId);
-	sessionFriends.forEach(friend => {
-        const friendUser = users.find(user => user.id === friend.friendId);
-        if (friendUser) {
-            const friendDiv = document.createElement("div");
-            friendDiv.textContent = friendUser.username;
-            friendsListDiv.appendChild(friendDiv);
-        }
-    });
-}
-
-// Function to update friend button text
-function updateFriendButton(userId) {
-  const friendBtn = document.getElementById(`friend-btn-${userId}`);
-  const isFriend = friends.some((friend) => friend.friendId === userId);
-  friendBtn.textContent = isFriend ? "Remove friend" : "Add friend";
-}
-
-// Function to add or remove friend
-function manageFriend(userId) {
-  const isFriend = friends.some((friend) => friend.friendId === userId);
-  if (isFriend) {
-    // Remove friend
-    console.log("Rm friend");
-    console.log(userId);
-    friends.splice(
-      friends.findIndex((friend) => friend.friendId === userId),
-      1
-    );
-  } else {
-    // Add friend
-    console.log("Add friend");
-    console.log(userId);
-    friends.push({ userId: 1, friendId: userId }); // Replace 1 with the session user's ID
-  }
-  updateFriendButton(userId);
 }
 
 function showForum(postId) {
