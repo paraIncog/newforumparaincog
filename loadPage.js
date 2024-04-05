@@ -143,9 +143,9 @@ function loadPage(page) {
 				</div>
 				<br>
 				<div id="friend-users">
-					
 				</div>
-			`;
+				`;
+				displayFriends()
         })
         .catch((error) => {
           console.error("Error fetching users:", error);
@@ -186,12 +186,9 @@ function showUserInfo(userId) {
 								</div>
 							</div>
 						</div>
-						<div>
-							<button onclick="manageFriend(${userId})" id="friend-btn-${userId}">Loading...</button>
-						</div>
                     </div>
                 `;
-	  displayFriends()
+	  
     })
     .catch((error) => {
       console.error("Error fetching user information:", error);

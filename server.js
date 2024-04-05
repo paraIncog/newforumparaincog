@@ -298,7 +298,7 @@ app.get("/get-friends", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT u.id, u.username, u.age, u.gender, u.namefirst, u.namelast, u.email FROM users u INNER JOIN friends f ON u.id = f.friend_id WHERE f.user_id = ?", [userId], (err, rows) => {
+    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
