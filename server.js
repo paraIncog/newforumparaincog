@@ -290,30 +290,31 @@ app.get("/get-comments", (req, res) => {
 });
 
 // Endpoint to fetch friends of a specific user
-app.get("/get-friends", (req, res) => {
+app.get("/get-friends", isLoggedIn, (req, res) => {
   const userId = req.query.id; // Extract userId from query parameters
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
-    if (err) {
-      console.error(err.message);
-      return res.status(500).send("Internal Server Error");
-    }
-
-    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
       if (err) {
-        console.error(err.message);
-        return res.status(500).send("Internal Server Error");
+          console.error(err.message);
+          return res.status(500).send("Internal Server Error");
       }
 
-      // Format created_at timestamp before sending it in the response
-      const formattedRows = rows.map(row => ({
-        ...row,
-        created_at: row.localtime
-      }));
-
-      res.json(formattedRows);
-    });
+      db.all(`
+          SELECT u.username, u.id
+          FROM users u
+          INNER JOIN messages m ON (u.id = m.sender_id OR u.id = m.recipient_id)
+          WHERE (m.sender_id = ? OR m.recipient_id = ?) AND u.id != ?
+          GROUP BY u.username, u.id
+          ORDER BY MAX(m.created_at) DESC, u.username
+      `, [userId, userId, userId], (err, rows) => {
+          if (err) {
+              console.error(err.message);
+              return res.status(500).send("Internal Server Error");
+          }
+          res.json(rows);
+      });
   });
 });
+
 
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
