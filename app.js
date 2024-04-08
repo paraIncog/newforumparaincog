@@ -42,6 +42,7 @@ function loadUsername() {
 }
 
 function logout() {
+
     fetch("/logout")
       .then(response => {
         if (response.ok) {

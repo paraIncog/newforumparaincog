@@ -67,6 +67,15 @@ function login() {
             console.log("Congrats, " + username + "!");
             loadPage("forums"); // Load main content page after successful login
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
+            
+            // Establish WebSocket connection after successful login
+            const socket = new WebSocket('ws://localhost:4000/ws');
+            socket.addEventListener('open', function (event) {
+              console.log('Connected to WebSocket server');
+              // Send the session ID to the server to associate the WebSocket connection with the session
+              const sessionID = document.cookie.replace(/(?:(?:^|.*;\s*)connect\.sid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+              socket.send(JSON.stringify({ type: 'sessionID', sessionID }));
+            });
           }
         })
         .catch((error) => {

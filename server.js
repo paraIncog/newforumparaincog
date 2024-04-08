@@ -340,16 +340,42 @@ const server = app.listen(PORT, () => {
 });
 
 // WebSocket server
+// WebSocket server
 const wss = new WebSocket.Server({ server });
 
+// Map WebSocket connections to user sessions
+const activeConnections = new Map();
+
 // WebSocket connection handling
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws, req) {
   console.log('A new WebSocket client connected');
 
+  // Retrieve session from Express session middleware
+  const sessionID = req.sessionID;
+
+  // Associate WebSocket connection with session
+  activeConnections.set(sessionID, ws);
+
+  // Handle incoming WebSocket messages
   ws.on('message', function incoming(message) {
     console.log('Received from client: %s', message);
     // Handle incoming WebSocket messages here
   });
 
   ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
+
+  // Handle WebSocket connection close
+  ws.on('close', function close() {
+    console.log('WebSocket client disconnected');
+    // Remove WebSocket connection from activeConnections map
+    activeConnections.delete(sessionID);
+  });
 });
+
+// Example function to send message to a specific user
+function sendMessageToUser(sessionID, message) {
+  const ws = activeConnections.get(sessionID);
+  if (ws) {
+    ws.send(message);
+  }
+}
