@@ -58,6 +58,21 @@
     <script src="register.js"></script>
     <script src="addForum.js"></script>
     <script src="friendList.js"></script>
+
+    <script>
+      const ws = new WebSocket('ws://localhost:4000');
+  
+      ws.onopen = function() {
+          console.log('Connected to WebSocket server');
+          ws.send('Hello, server!'); // Send a message to the server upon connection
+      };
+  
+      ws.onmessage = function(event) {
+          console.log('Received from server: ', event.data);
+          // Handle incoming messages from the server
+      };
+  </script>
+  
   </body>
 </html>
 

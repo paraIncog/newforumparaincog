@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
+const WebSocket = require("ws");
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -329,6 +330,26 @@ app.get("/logout", (req, res) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running at http://localhost:${PORT}`);
+// app.listen(PORT, () => {
+//   console.log(`Server is running at http://localhost:${PORT}`);
+// });
+
+// Start the HTTP server
+const server = app.listen(PORT, () => {
+  console.log(`HTTP server is running at http://localhost:${PORT}`);
+});
+
+// WebSocket server
+const wss = new WebSocket.Server({ server });
+
+// WebSocket connection handling
+wss.on('connection', function connection(ws) {
+  console.log('A new WebSocket client connected');
+
+  ws.on('message', function incoming(message) {
+    console.log('Received from client: %s', message);
+    // Handle incoming WebSocket messages here
+  });
+
+  ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
 });
