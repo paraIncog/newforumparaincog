@@ -42,25 +42,3 @@ function loadUsername() {
       console.error("Error fetching username:", error);
     });
 }
-
-function logout() {
-  // Close WebSocket connection
-  const socket = new WebSocket('ws://localhost:4000/ws');
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.close();
-    console.log("WebSocket connection closed");
-  }
-
-  fetch("/logout")
-    .then((response) => {
-      if (response.ok) {
-        // Session successfully destroyed, redirect to login page
-        window.location.href = "/"; // Redirect to login page
-      } else {
-        console.error("Logout failed");
-      }
-    })
-    .catch((error) => {
-      console.error("Error logging out:", error);
-    });
-}

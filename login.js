@@ -68,6 +68,9 @@ function login() {
             loadPage("forums"); // Load main content page after successful login
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
             
+            checkSession();
+            loadUsername();
+
             // Establish WebSocket connection after successful login
             const socket = new WebSocket('ws://localhost:4000/ws');
             socket.addEventListener('open', function (event) {
@@ -81,5 +84,27 @@ function login() {
         .catch((error) => {
           console.error("Error:", error);
         });
+    });
+}
+
+function logout() {
+  // Close WebSocket connection
+  const socket = new WebSocket('ws://localhost:4000/ws');
+  if (socket && socket.readyState === WebSocket.OPEN) {
+    socket.close();
+    console.log("WebSocket connection closed");
+  }
+
+  fetch("/logout")
+    .then((response) => {
+      if (response.ok) {
+        // Session successfully destroyed, redirect to login page
+        window.location.href = "/"; // Redirect to login page
+      } else {
+        console.error("Logout failed");
+      }
+    })
+    .catch((error) => {
+      console.error("Error logging out:", error);
     });
 }
