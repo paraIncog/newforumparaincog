@@ -316,7 +316,6 @@ app.get("/get-friends", isLoggedIn, (req, res) => {
   });
 });
 
-
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   // Destroy the session
@@ -329,17 +328,11 @@ app.get("/logout", (req, res) => {
   });
 });
 
-// Start the server
-// app.listen(PORT, () => {
-//   console.log(`Server is running at http://localhost:${PORT}`);
-// });
-
 // Start the HTTP server
 const server = app.listen(PORT, () => {
   console.log(`HTTP server is running at http://localhost:${PORT}`);
 });
 
-// WebSocket server
 // WebSocket server
 const wss = new WebSocket.Server({ server });
 
