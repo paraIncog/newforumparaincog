@@ -4,24 +4,24 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function checkSession() {
-  fetch("/check-session") // Endpoint to check session status
+  fetch("/check-session")
     .then((response) => {
       if (response.ok) {
         // Session is active, user is logged in
-        loadPage("forums"); // Redirect to the forums page or any other authenticated page
+        loadPage("forums");
       } else {
         // Session is not active, user is not logged in
-        login(); // Redirect to the login page
+        login();
       }
     })
     .catch((error) => {
       console.error("Error checking session:", error);
-      login(); // Redirect to the login page in case of an error
+      login();
     });
 }
 
 function loadUsername() {
-  fetch("/get-username") // Endpoint to fetch the username
+  fetch("/get-username")
     .then((response) => {
       if (response.ok) {
         return response.json();

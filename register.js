@@ -68,8 +68,8 @@ function register() {
   document
     .getElementById("registerForm")
     .addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent default form submission behavior
-      const formData = new FormData(this); // Get form data
+      event.preventDefault();
+      const formData = new FormData(this);
 
       // Construct an object with all form fields
       const userData = {
@@ -101,7 +101,7 @@ function register() {
             const errorMessage = document.getElementById("error-message");
             errorMessage.textContent = data.error;
           } else {
-            // Successful registration, display message
+            // Successful registration
             console.log("Congrats, " + userData.username + "!");
             login();
           }

@@ -38,8 +38,8 @@ function login() {
   document
     .getElementById("loginForm")
     .addEventListener("submit", function (event) {
-      event.preventDefault(); // Prevent default form submission behavior
-      const formData = new FormData(this); // Get form data
+      event.preventDefault();
+      const formData = new FormData(this);
 
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
@@ -59,11 +59,10 @@ function login() {
         })
         .then((data) => {
           if (data.error) {
-            // Display error message
             const errorMessage = document.getElementById("error-message");
             errorMessage.textContent = data.error;
           } else {
-            // Successful login, display message
+            // Successful login
             console.log("Congrats, " + username + "!");
             loadPage("forums"); // Load main content page after successful login
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
@@ -98,8 +97,8 @@ function logout() {
   fetch("/logout")
     .then((response) => {
       if (response.ok) {
-        // Session successfully destroyed, redirect to login page
-        window.location.href = "/"; // Redirect to login page
+        // Session successfully ended, redirect to login page
+        window.location.href = "/";
       } else {
         console.error("Logout failed");
       }

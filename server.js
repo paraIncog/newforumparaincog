@@ -202,7 +202,7 @@ app.get("/get-forum", (req, res) => {
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
   const { title, category, content } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.username;
 
   // Check if all required fields are provided
   if (!title || !category || !content || !author) {
@@ -234,7 +234,7 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
 // Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
   const { postId, commentContent } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.username;
 
   // Check if all required fields are provided
   if (!postId || !commentContent || !author) {
@@ -292,7 +292,7 @@ app.get("/get-comments", (req, res) => {
 
 // Endpoint to fetch friends of a specific user
 app.get("/get-friends", isLoggedIn, (req, res) => {
-  const userId = req.query.id; // Extract userId from query parameters
+  const userId = req.query.id;
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
       if (err) {
           console.error(err.message);
@@ -318,13 +318,13 @@ app.get("/get-friends", isLoggedIn, (req, res) => {
 
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
-  // Destroy the session
+  // End the session
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
       return res.status(500).send("Internal Server Error");
     }
-    res.redirect("/"); // Redirect to the login page after logout
+    res.redirect("/");
   });
 });
 
@@ -352,7 +352,6 @@ wss.on('connection', function connection(ws, req) {
   // Handle incoming WebSocket messages
   ws.on('message', function incoming(message) {
     console.log('Received from client: %s', message);
-    // Handle incoming WebSocket messages here
   });
 
   ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
