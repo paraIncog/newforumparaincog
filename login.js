@@ -75,8 +75,8 @@ function login() {
             socket.addEventListener('open', function (event) {
               console.log('Connected to WebSocket server');
               // Send the session ID to the server to associate the WebSocket connection with the session
-              const sessionID = document.cookie.replace(/(?:(?:^|.*;\s*)connect\.sid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-              socket.send(JSON.stringify({ type: 'sessionID', sessionID }));
+              // const sessionID = document.cookie.replace(/(?:(?:^|.*;\s*)connect\.sid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+              socket.send(JSON.stringify({ type: 'username', username }));
             });
           }
         })
