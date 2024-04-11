@@ -2,10 +2,15 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
-const WebSocket = require("ws");
+const WebSocket = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+
+// Start the HTTP server
+const server = app.listen(PORT, () => {
+  console.log(`HTTP server is running at http://localhost:${PORT}`);
+});
 
 // Middleware to parse JSON data in the request body
 app.use(express.json());
@@ -202,7 +207,7 @@ app.get("/get-forum", (req, res) => {
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
   const { title, category, content } = req.body;
-  const author = req.session.user.username;
+  const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
   if (!title || !category || !content || !author) {
@@ -234,7 +239,7 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
 // Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
   const { postId, commentContent } = req.body;
-  const author = req.session.user.username;
+  const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
   if (!postId || !commentContent || !author) {
@@ -291,46 +296,41 @@ app.get("/get-comments", (req, res) => {
 });
 
 // Endpoint to fetch friends of a specific user
-app.get("/get-friends", isLoggedIn, (req, res) => {
-  const userId = req.query.id;
+app.get("/get-friends", (req, res) => {
+  const userId = req.query.id; // Extract userId from query parameters
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
       if (err) {
-          console.error(err.message);
-          return res.status(500).send("Internal Server Error");
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
       }
 
-      db.all(`
-          SELECT u.username, u.id
-          FROM users u
-          INNER JOIN messages m ON (u.id = m.sender_id OR u.id = m.recipient_id)
-          WHERE (m.sender_id = ? OR m.recipient_id = ?) AND u.id != ?
-          GROUP BY u.username, u.id
-          ORDER BY MAX(m.created_at) DESC, u.username
-      `, [userId, userId, userId], (err, rows) => {
-          if (err) {
-              console.error(err.message);
-              return res.status(500).send("Internal Server Error");
-          }
-          res.json(rows);
-      });
+      // Format created_at timestamp before sending it in the response
+      const formattedRows = rows.map(row => ({
+        ...row,
+        created_at: row.localtime
+      }));
+
+      res.json(formattedRows);
+    });
   });
 });
 
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
-  // End the session
+  // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
       return res.status(500).send("Internal Server Error");
     }
-    res.redirect("/");
+    res.redirect("/"); // Redirect to the login page after logout
   });
-});
-
-// Start the HTTP server
-const server = app.listen(PORT, () => {
-  console.log(`HTTP server is running at http://localhost:${PORT}`);
 });
 
 // WebSocket server
@@ -371,3 +371,4 @@ function sendMessageToUser(sessionID, message) {
     ws.send(message);
   }
 }
+
