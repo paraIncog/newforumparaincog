@@ -14,6 +14,8 @@ function displayFriends(userId) {
 					</div>
 					<div class="accountname-side">
 						${friend.username}
+						<br>
+						isonline: ${friend.isOnline}
 					</div>
 				</div>
 				`

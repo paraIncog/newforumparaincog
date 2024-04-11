@@ -70,8 +70,9 @@ function login() {
             checkSession();
             loadUsername();
 
+            console.log(data)
             // Establish WebSocket connection after successful login
-            const socket = new WebSocket('ws://localhost:4000/ws');
+            const socket = new WebSocket(`ws://localhost:4000/ws?userID=${data.userid}`);
             socket.addEventListener('open', function (event) {
               console.log('Connected to WebSocket server');
               // Send the session ID to the server to associate the WebSocket connection with the session
