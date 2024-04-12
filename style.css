@@ -271,9 +271,11 @@ button.login {
 .pm-person-sel {
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 	width: 100%;
 	padding-top: .5rem;
 	padding-bottom: .5rem;
+	margin-top: .1rem;
 }
 
 .pm-inner-container {
@@ -282,6 +284,16 @@ button.login {
 
 .accountname-side {
 	margin-left: .5rem;
+}
+
+.about-user-button {
+	margin-right: 2rem;
+	padding: 1rem;
+}
+
+.about-user-button:hover {
+	background-color: #0000FF;
+	border-radius: 100%;
 }
 
 /* User search */
