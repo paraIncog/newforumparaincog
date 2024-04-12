@@ -45,7 +45,9 @@ function loadPage(page) {
 						</div>
     				</div>
 		  		</div>
+				  <div id="add-button-area"></div>
 	  		`;
+			addSend("forums");
         });
       sidebarContent.innerHTML = `
 				<input
@@ -98,7 +100,9 @@ function loadPage(page) {
 						Chat
 					</div>
 				</div>
+				<div id="add-button-area"></div>
 						`;
+						addSend("pms");
           sidebarContent.innerHTML = `
 				<input
 					class="searchbar"

@@ -67,7 +67,7 @@ function addForum() {
 
     sidebarContent.innerHTML = `
       <div>
-          <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
+          <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
               Back
           </div>
       </div>
