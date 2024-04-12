@@ -17,6 +17,7 @@ function displayFriends(userId) {
 						<br>
 						isonline: ${friend.isOnline}
 					</div>
+					<div onclick="showUserInfo(${friend.id})">info</div>
 				</div>
 				`
 			)

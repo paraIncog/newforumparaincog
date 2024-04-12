@@ -298,7 +298,7 @@ app.get("/get-comments", (req, res) => {
 // Endpoint to fetch friends of a specific user
 app.get("/get-friends", (req, res) => {
   const userId = req.query.id; // Extract userId from query parameters
-  console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
+  // console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -351,7 +351,7 @@ wss.on('connection', function connection(ws, req) {
 
   // Associate WebSocket connection with session
   activeConnections.set(userId, ws);
-  console.log('CP1', activeConnections.keys())
+  // console.log('CP1', activeConnections.keys())
 
   // Handle incoming WebSocket messages
   ws.on('message', function incoming(message) {
