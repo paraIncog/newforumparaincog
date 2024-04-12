@@ -95,31 +95,9 @@ function loadPage(page) {
           mainContent.innerHTML = `
 				<div class="container">
 					<div class="primary-page-desc txt-prim bg-white">
-						Users
+						Chat
 					</div>
-					<div class="user-search-items-container">
-					${users
-            .map(
-              (user) =>
-                `
-							<div class="user-search-item clickable" onclick="showUserInfo(${user.id})">
-								<div class="profilepic bg-gray">
-									<!-- Profile Pic -->
-				 				</div>
-								<div class="user-search-info">
-									<div class="user-search-username">
-										${user.username}
-									</div>
-										<div class="user-search-fullname txt-scnd">
-											${user.namefirst} ${user.namelast}
-										</div>
-									</div>
-							</div>
-							`
-            )
-            .join(``)}
-						</div>
-					</div>
+				</div>
 						`;
           sidebarContent.innerHTML = `
 				<input
@@ -235,7 +213,7 @@ function showForum(postId) {
                             	<textarea class="comment-input bg-gray" id="comment_content" name="comment_content" rows="3" type="text" minlength="2" required></textarea>
                         	</div>
                         	<div>
-                            	<button type="submit" class="comment-submit login bg-prim" style="border: 0;">Post Comment</button>
+                            	<button type="submit" class="comment-submit login bg-prim">Post Comment</button>
                         	</div>
                     	</form>
                 	  </div>
