@@ -6,7 +6,7 @@ function addSend(page) {
 			<div class="add-button-area">
 			  <div id="overlay-toggle">
 				<span
-				  class="material-symbols-rounded add-button-selector bg-gray clickable"
+				  class="material-symbols-rounded add-button-selector abs-forums bg-gray clickable"
 				  onclick="addForum()"
 				>
 				  add
@@ -17,10 +17,17 @@ function addSend(page) {
 			break;
 		case "pms":
 			addButtonArea.innerHTML = `
-			<div class="add-button-area">
+			<div class="row add-button-area">
+			<div>
+				<input
+				class="insert-msg bg-gray txt-black"
+				placeholder="Insert Chat Message"
+				maxlength="800"
+				/>
+			</div>
 			  <div id="overlay-toggle">
 				<span
-				  class="material-symbols-rounded add-button-selector bg-gray clickable"
+				  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
 				  onclick="sendMsg()"
 				>
 				  send
