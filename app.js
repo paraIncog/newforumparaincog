@@ -9,6 +9,22 @@ function checkSession() {
       if (response.ok) {
         // Session is active, user is logged in
         loadPage("forums");
+
+        // Establish WebSocket connection
+        fetch("/get-username")
+          .then((response) => response.json())
+          .then((data) => {
+            const userId = data.userid;
+            const socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
+            socket.addEventListener('open', function (event) {
+              console.log('Connected to WebSocket server');
+              // Send the session ID to the server to associate the WebSocket connection with the session
+              socket.send(JSON.stringify({ type: 'username', username: data.username }));
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching username:", error);
+          });
       } else {
         // Session is not active, user is not logged in
         login();
