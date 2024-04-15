@@ -144,6 +144,7 @@ function showUserInfo(userId) {
     .then((response) => response.json())
     .then((user) => {
       const mainContent = document.getElementById("main-content");
+	  console.log(`User: `, user)
       mainContent.innerHTML = `
                     <div class="container">
 						<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
@@ -169,12 +170,38 @@ function showUserInfo(userId) {
 							</div>
 						</div>
                     </div>
+					<div class="row add-button-area">
+			<div>
+				<input
+				class="insert-msg bg-gray txt-black"
+				id="msg-input"
+				name="msg-input"
+				placeholder="Insert Chat Message"
+				maxlength="800"
+				/>
+			</div>
+			  <div id="overlay-toggle">
+				<span
+				  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+				  onclick="console.log('zzz', ${user.id}); sendMsg(${user.id})"
+				>
+				  send
+				</span>
+			  </div>
+			</div>
                 `;
 	  
     })
     .catch((error) => {
       console.error("Error fetching user information:", error);
     });
+}
+
+function sendMsg(userId) {
+	console.log("Sending Message")
+	const message = document.getElementById("msg-input").value;
+    socket.send(JSON.stringify({ type: 'message', message, userId }));
+	console.log("Message sent!")
 }
 
 function showForum(postId) {

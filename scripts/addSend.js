@@ -43,6 +43,3 @@ function addSend(page) {
 	}
 }
 
-function sendMsg() {
-	console.log("sendMsg Initialized")
-}

@@ -3,6 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   loadUsername(); // Load the username if the user is logged in
 });
 
+let socket = null;
+
 function checkSession() {
   fetch("/check-session")
     .then((response) => {
@@ -15,7 +17,7 @@ function checkSession() {
           .then((response) => response.json())
           .then((data) => {
             const userId = data.userid;
-            const socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
+            socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
             socket.addEventListener('open', function (event) {
               console.log('Connected to WebSocket server');
               // Send the session ID to the server to associate the WebSocket connection with the session
@@ -58,3 +60,4 @@ function loadUsername() {
       console.error("Error fetching username:", error);
     });
 }
+

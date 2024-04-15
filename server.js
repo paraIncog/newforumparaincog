@@ -356,7 +356,9 @@ wss.on('connection', function connection(ws, req) {
   // Handle incoming WebSocket messages
   ws.on('message', function incoming(message) {
     console.log(`Received from client ${userId}: %s`, message);
+    broadcastMessage(activeConnections, message, userId)
   });
+
 
   ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
 
@@ -367,6 +369,15 @@ wss.on('connection', function connection(ws, req) {
     activeConnections.delete(userId);
   });
 });
+
+function broadcastMessage(connections, message, fromUserId) {
+  const targetId = message.userId;
+  const ws = activeConnections.get(targetId);
+  console.log("CP5", targetId, ws)
+  if (ws) {
+    ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }))
+  }
+}
 
 // Example function to send message to a specific user
 function sendMessageToUser(sessionID, message) {

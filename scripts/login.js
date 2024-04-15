@@ -89,9 +89,9 @@ function login() {
 
 function logout() {
   // Close WebSocket connection
-  const socket = new WebSocket('ws://localhost:4000/ws');
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.close();
+    socket = null;
     console.log("WebSocket connection closed");
   }
 
