@@ -21,6 +21,8 @@ function addSend(page) {
 			<div>
 				<input
 				class="insert-msg bg-gray txt-black"
+				id="msg-input"
+				name="msg-input"
 				placeholder="Insert Chat Message"
 				maxlength="800"
 				/>
