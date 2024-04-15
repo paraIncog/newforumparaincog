@@ -1,63 +1,34 @@
 document.addEventListener("DOMContentLoaded", function () {
-  checkSession(); // Check session status before automatically redirecting to login
-  loadUsername(); // Load the username if the user is logged in
+  checkSessionAndLoadUsername(); // Check session status before automatically redirecting to login
 });
 
 let socket = null;
 
-function checkSession() {
+function checkSessionAndLoadUsername() {
   fetch("/check-session")
     .then((response) => {
       if (response.ok) {
-        // Session is active, user is logged in
         loadPage("forums");
-
-        // Establish WebSocket connection
-        fetch("/get-username")
-          .then((response) => response.json())
-          .then((data) => {
-            const userId = data.userid;
-            socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
-            socket.addEventListener('open', function (event) {
-              console.log('Connected to WebSocket server');
-              // Send the session ID to the server to associate the WebSocket connection with the session
-              socket.send(JSON.stringify({ type: 'username', username: data.username }));
-            });
-          })
-          .catch((error) => {
-            console.error("Error fetching username:", error);
-          });
+        return fetch("/get-username");
       } else {
-        // Session is not active, user is not logged in
         login();
       }
     })
-    .catch((error) => {
-      console.error("Error checking session:", error);
-      login();
-    });
-}
-
-function loadUsername() {
-  fetch("/get-username")
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("Failed to fetch username");
-      }
-    })
+    .then((response) => response.json())
     .then((data) => {
-      // Display the username in the sidebar
       const usernameElement = document.querySelector(
         ".sessioner-user-username"
       );
       if (usernameElement) {
         usernameElement.textContent = data.username;
+          const userId = data.userid;
+          socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
+          socket.addEventListener("open", (event) => {
+            socket.send(
+              JSON.stringify({ type: "username", username: data.username })
+            );
+          });
       }
     })
-    .catch((error) => {
-      console.error("Error fetching username:", error);
-    });
+    .catch((error) => console.error("Error checking session:", error));
 }
-

@@ -3,27 +3,24 @@ function login() {
   const sidebarContent = document.getElementById("sidebar-content");
   mainContent.innerHTML = `
       <div class="container">
-          <div class="primary-page-desc txt-prim bg-white">
-              Login
-          </div>
-          <div class="logincontainer">
-              <form id="loginForm">
-                  <div class="login-txtinput">
-                      Username <input id="username" class="login" type="text" minlength="3" required>
-                  </div>
-                  <div class="login-txtinput">
-                      Password <input id="password" class="login" type="password" minlength="6" required>
-                  </div>
-                  <div id="error-message" class="error-message">
-                  </div>
-                  <div class="login-txtinput">
-                      <button type="submit" class="login bg-prim">Login</button>
-                  </div>
+        <div class="primary-page-desc txt-prim bg-white">Login</div>
+        <div class="logincontainer">
+          <form id="loginForm">
+            <div class="login-txtinput">
+              Username <input id="username" class="login" type="text" minlength="3" required>
+            </div>
+            <div class="login-txtinput">
+              Password <input id="password" class="login" type="password" minlength="6" required>
+            </div>
+            <div id="error-message" class="error-message"></div>
+            <div class="login-txtinput">
+              <button type="submit" class="login bg-prim">Login</button>
+                </div>
               </form>
           </div>
           <div class="logincontainer">
-              Don't have an account? <span class="login-to-registration clickable txt-scnd" onclick="register()">Register here</span>
-          </div>
+            Don't have an account? <span class="login-to-registration clickable txt-scnd" onclick="register()">Register here</span>
+        </div>
       </div>
   `;
   sidebarContent.innerHTML = `
@@ -67,16 +64,13 @@ function login() {
             loadPage("forums"); // Load main content page after successful login
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
             
-            checkSession();
-            loadUsername();
+            checkSessionAndLoadUsername();
 
             console.log(data)
             // Establish WebSocket connection after successful login
             const socket = new WebSocket(`ws://localhost:4000/ws?userID=${data.userid}`);
             socket.addEventListener('open', function (event) {
               console.log('Connected to WebSocket server');
-              // Send the session ID to the server to associate the WebSocket connection with the session
-              // const sessionID = document.cookie.replace(/(?:(?:^|.*;\s*)connect\.sid\s*\=\s*([^;]*).*$)|^.*$/, "$1");
               socket.send(JSON.stringify({ type: 'username', username }));
             });
           }
