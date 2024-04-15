@@ -22,7 +22,7 @@ function checkSessionAndLoadUsername() {
       if (usernameElement) {
         usernameElement.textContent = data.username;
           const userId = data.userid;
-          socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
+          socket = WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
           socket.addEventListener("open", (event) => {
             socket.send(
               JSON.stringify({ type: "username", username: data.username })
