@@ -66,26 +66,10 @@ function loadPage(page) {
 						</div>
 					</div>
 				</div>
-				<div class="forum-filtering">
-					<div class="filter-header">Filters</div>
-						<ul class="filter-misccats">
-							<li>
-								<a 
-								class="filter-subcat txt-scnd clickable" 
-								href=""
-								>All Posts
-								</a>
-							</li>
-							<li>
-								<a 
-								class="filter-subcat txt-scnd clickable" 
-								href=""
-								>Your Posts 
-								</a>
-							</li>
-						</ul>
-					</div>
+				<br>
+				<div id="friend-users"></div>
 				`;
+				displayFriends()
       	break;
     case "pms":
       fetch("/get-users")
@@ -95,9 +79,9 @@ function loadPage(page) {
 				<div class="container">
 					<div class="primary-page-desc txt-prim bg-white">Chat</div>
 				</div>
-				<div id="add-button-area"></div>
+				Please select user to chat with
+				<!-- <div id="add-button-area"></div> -->
 		    `;
-			addSend("pms");
           	sidebarContent.innerHTML = `
 				<input
 					class="searchbar"
