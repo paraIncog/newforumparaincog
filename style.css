@@ -498,3 +498,11 @@ button.foruminput {
 	display: flex;
 	justify-content: end;
 }
+
+.no-sel-pm {
+	display: flex;
+	justify-content: center;
+	position: absolute;
+	top: 50vh;
+	width: 100%;
+}

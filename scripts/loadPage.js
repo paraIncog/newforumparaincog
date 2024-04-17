@@ -79,8 +79,10 @@ function loadPage(page) {
 				<div class="container">
 					<div class="primary-page-desc txt-prim bg-white">Chat</div>
 				</div>
-				Please select user to chat with
-				<!-- <div id="add-button-area"></div> -->
+				<div class="no-sel-pm">
+					<span class="material-symbols-outlined">sms</span>
+					Please select user to chat with
+				</div>
 		    `;
           	sidebarContent.innerHTML = `
 				<input
