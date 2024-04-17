@@ -73,16 +73,25 @@ function isLoggedIn(req, res, next) {
 
 // Endpoint to get the username of the logged-in user
 app.get("/get-username", (req, res) => {
-  if (req.session && req.session.user && req.session.user.username) {
+  if (req.session.user.username) {
       res.json({ username: req.session.user.username });
   } else {
       res.status(401).json({ error: "User not logged in or username not found in session" });
   }
 });
 
+// Endpoint to get the user id of the logged-in user
+app.get("/get-user-id", (req, res) => {
+  if (req.session.user.id) {
+      res.json({ username: req.session.user.id });
+  } else {
+      res.status(401).json({ error: "User not logged in or user id not found in session" });
+  }
+});
+
 // Endpoint to check session status
 app.get("/check-session", (req, res) => {
-  if (req.session && req.session.user) {
+  if (req.session.user) {
       // Session exists and user is logged in
       res.sendStatus(200); // Send a success status code
   } else {
