@@ -60,7 +60,6 @@ function login() {
           } else {
             // Successful login
             console.log("Congrats, " + username + "!");
-            loadPage("forums"); // Load main content page after successful login
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
@@ -97,7 +96,7 @@ function logout() {
         console.error("Logout failed");
       }
     })
-    
+
     .catch((error) => {
       console.error("Error logging out:", error);
     });
