@@ -31,9 +31,7 @@ function addSend(page) {
 				<span
 				  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
 				  onclick="sendMsg()"
-				>
-				  send
-				</span>
+				>send</span>
 			  </div>
 			</div>
 			`;

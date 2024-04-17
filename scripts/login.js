@@ -2,8 +2,8 @@ function login() {
   const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
   mainContent.innerHTML = `
-      <div class="container">
-        <div class="primary-page-desc txt-prim bg-white">Login</div>
+    <div class="container">
+      <div class="primary-page-desc txt-prim bg-white">Login</div>
         <div class="logincontainer">
           <form id="loginForm">
             <div class="login-txtinput">
@@ -15,20 +15,19 @@ function login() {
             <div id="error-message" class="error-message"></div>
             <div class="login-txtinput">
               <button type="submit" class="login bg-prim">Login</button>
-                </div>
-              </form>
-          </div>
-          <div class="logincontainer">
-            Don't have an account? <span class="login-to-registration clickable txt-scnd" onclick="register()">Register here</span>
+            </div>
+          </form>
+        </div>
+        <div class="logincontainer">
+          Don't have an account? <span class="login-to-registration clickable txt-scnd" onclick="register()">Register here</span>
         </div>
       </div>
+    </div>
   `;
   sidebarContent.innerHTML = `
-      <div>
-          <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">
-              Back
-          </div>
-      </div>
+    <div>
+      <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
+    </div>
   `;
 
   // Add event listener for form submission
@@ -98,6 +97,7 @@ function logout() {
         console.error("Logout failed");
       }
     })
+    
     .catch((error) => {
       console.error("Error logging out:", error);
     });
