@@ -10,6 +10,7 @@ const __dirname = path.dirname(__filename)
 
 const app = express();
 const PORT = process.env.PORT || 4000;
+const PMSG = "Pmsg"
 
 
 // Middleware to parse JSON data in the request body
@@ -18,7 +19,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")))
 
 const expressServer = app.listen(PORT, () => {
-  console.log(`listening on port ${PORT}`)
+  console.log(`Listening on: http://localhost:${PORT}`)
 })
 
 const io = new Server(expressServer, {
@@ -30,9 +31,26 @@ const io = new Server(expressServer, {
 io.on('connection', socket => {
   console.log(`User ${socket.id} connected`)
 
+  // Upon connection - To main user
+  socket.emit('message', "Welcome to Real Time Forums")
+
+  // Upon connection - To other users
+  socket.broadcast.emit('message', `User ${socket.id.substring(0, 20)} connected`)
+
+  // Listening for message event
   socket.on('message', data => {
     console.log(data)
     io.emit('message', `${socket.id.substring(0, 20)}: ${data}`)
+  })
+
+  // User disconnect - To other users
+  socket.on('disconnect', () => {
+    socket.broadcast.emit('message', `User ${socket.id.substring(0, 20)} disconnected`)
+  })
+
+  // Listen for activity
+  socket.on('activity', (name) => {
+    socket.broadcast.emit('activity', name)
   })
 })
 

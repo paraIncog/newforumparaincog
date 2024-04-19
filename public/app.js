@@ -4,22 +4,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const socket = io('ws://localhost:4000')
 
+const activity = document.querySelector('.activity');
+const msgInput = document.querySelector('msgInput');
+
 function sendMessage(e) {
   e.preventDefault()
-  const input1 = document.querySelector('input1')
-  if (input1.value) {
-    socket.emit('message', input1.value)
-    input1.value = ""
+  if (msgInput.value) {
+    socket.emit('message', msgInput.value)
+    msgInput.value = ""
   }
-  input1.focus()
+  msgInput.focus()
 }
 
 document.querySelector('input1-form').addEventListener('submit', sendMessage)
 
 socket.on('message', (data) => {
+  activity.textContent = ""
   const li = document.createElement('li')
   li.textContent = data
   document.querySelector('ul').appendChild(li)
+})
+
+msgInput.addEventListener('keypress', () => {
+  socket.emit('activity', socket.id.substring(0, 20))
+})
+
+let activityTimer
+socket.on('activity', (name) => {
+  activity.textContent = `${name} is typing...`
+  clearTimeout(activityTimer)
+  activityTimer = setTimeout(() => {
+      activity.textContent = ""
+  }, 1000)
 })
 
 function checkSessionAndLoadUsername() {

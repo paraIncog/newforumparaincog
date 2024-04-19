@@ -143,6 +143,7 @@ function showUserInfo(userId) {
 				</div>
             </div>
 			<ul></ul>
+			<p class="activity"></p>
 			<div class="row add-button-area">
 				<div>
 					<input
