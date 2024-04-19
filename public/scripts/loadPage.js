@@ -11,34 +11,34 @@ function loadPage(page) {
 		  			<div class="primary-page-desc txt-prim bg-white">Forums</div>
 						<div class="order-forums">
 							${posts
-                .map(
-                  (post) =>
-                    `
-						<div class="single-forum clickable" onclick="showForum(${post.id})">
-							<div class="profilepic bg-gray"></div>
-							<div class="single-forum-thread bg-gray">
-								<div class="row">
-									<div class="single-forum-thread-category bg-gray">
-										${getCategoryIcon(post.category)}
-									</div>
-									<div class="single-forum-thread-title bg-gray" maxlength="80">
-										${post.title}
-									</div>
-									<div class="single-forum-thread-time bg-gray">
-										${post.created_at}
-									</div>
-								</div>
-								<div class="single-forum-thread-uname bg-gray">
-									${post.author}
-								</div>
-								<div class="single-forum-thread-intro bg-gray" maxlength="600">
-									${post.content}
-								</div>
-							</div>
-						</div>
-					`
-                )
-                .join(``)}
+								.map(
+								(post) =>
+									`
+										<div class="single-forum clickable" onclick="showForum(${post.id})">
+											<div class="profilepic bg-gray"></div>
+											<div class="single-forum-thread bg-gray">
+												<div class="row">
+													<div class="single-forum-thread-category bg-gray">
+														${getCategoryIcon(post.category)}
+													</div>
+													<div class="single-forum-thread-title bg-gray" maxlength="80">
+														${post.title}
+													</div>
+													<div class="single-forum-thread-time bg-gray">
+														${post.created_at}
+													</div>
+												</div>
+												<div class="single-forum-thread-uname bg-gray">
+													${post.author}
+												</div>
+												<div class="single-forum-thread-intro bg-gray" maxlength="600">
+													${post.content}
+												</div>
+											</div>
+										</div>
+									`
+								)
+                			.join(``)}
 						</div>
     				</div>
 		  		</div>
@@ -145,20 +145,25 @@ function showUserInfo(userId) {
 			<ul class="chat-disp"></ul>
 			<p class="activity"></p>
 			<div class="row add-button-area">
-				<div>
-					<input
-					class="insert-msg bg-gray txt-black"
-					id="msg-input"
-					name="msg-input"
-					placeholder="Insert Chat Message"
-					maxlength="800"
-					/>
-				</div>
-			  	<div id="overlay-toggle">
-					<span
-					class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-					>send</span>
-			  	</div>
+				<form class="form-msg">
+					<div>
+						<input
+						class="insert-msg bg-gray txt-black"
+						id="msg-input"
+						name="msg-input"
+						placeholder="Insert Chat Message"
+						maxlength="800"
+						required
+						/>
+					</div>
+					<button type="submit">
+						<div id="overlay-toggle">
+							<span
+							class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+							>send</span>
+						</div>
+					</button>
+				</form>
 			</div>
         `;
     })

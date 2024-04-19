@@ -42,23 +42,55 @@ io.on('connection', socket => {
   // Upon connection - To main user
   socket.emit('message', "Welcome to Real Time Forums")
 
+  socket.on('enterChat', ({ username }) => {
+    const user = activateUser(socket.id, username)
+
+    socket.join(user.room)
+
+    // To user who joined
+    socket.emit('message', buildMsg(PMSG, `You have joined the ${user.room} chat room`))
+
+    // To everyone else 
+    socket.broadcast.to(user.room).emit('message', buildMsg(PMSG, `${user.name} has joined the room`))
+
+    // Update user list for room 
+    io.to(user.room).emit('userList', {
+        users: getUsersInRoom(user.room)
+    })
+  })
+
   // Upon connection - To other users
   socket.broadcast.emit('message', `User ${socket.id.substring(0, 20)} connected`)
 
   // Listening for message event
-  socket.on('message', data => {
-    console.log(data)
-    io.emit('message', `${socket.id.substring(0, 20)}: ${data}`)
+  socket.on('message', ({ username, text }) => {
+    const room = getUser(socket.id)?.room
+    if (room) {
+      io.to(room).emit('message', buildMsg(username, text))
+    }
   })
 
   // User disconnect - To other users
   socket.on('disconnect', () => {
-    socket.broadcast.emit('message', `User ${socket.id.substring(0, 20)} disconnected`)
+    const user = getUser(socket.id)
+      userLeavesApp(socket.id)
+
+      if (user) {
+        io.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has left the room`))
+
+        io.to(user.room).emit('userList', {
+          users: getUsersInRoom(user.room)
+        })
+      }
+      console.log(`User ${socket.id} disconnected`)
   })
 
   // Listen for activity
   socket.on('activity', (username) => {
-    socket.broadcast.emit('activity', username)
+    const room = getUser(socket.id)?.room
+    if (room) {
+        socket.broadcast.to(room).emit('activity', username)
+    }
   })
 })
 
@@ -70,6 +102,18 @@ function activateUser(id, username, room) {
       user
   ])
   return user
+}
+
+function buildMsg(username, text) {
+  return {
+      username,
+      text,
+      time: new Intl.DateTimeFormat('default', {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+      }).format(new Date())
+  }
 }
 
 function userLeavesApp(id) {
@@ -102,7 +146,7 @@ app.post("/login", (req, res) => {
     return res.status(400).json({ error: "Username and password are required." });
   }
 
-  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READONLY, (err) => {
     if (err) {
       console.error(err.message);
       return res.status(500).send("Internal Server Error");

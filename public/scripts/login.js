@@ -5,7 +5,7 @@ function login() {
     <div class="container">
       <div class="primary-page-desc txt-prim bg-white">Login</div>
         <div class="logincontainer">
-          <form id="loginForm">
+          <form id="form-login">
             <div class="login-txtinput">
               Username <input id="username" class="login" type="text" required>
             </div>
@@ -32,7 +32,7 @@ function login() {
 
   // Add event listener for form submission
   document
-    .getElementById("loginForm")
+    .getElementById("form-login")
     .addEventListener("submit", function (event) {
       event.preventDefault();
       const formData = new FormData(this);

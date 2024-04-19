@@ -6,16 +6,16 @@ function displayUsers(userId) {
 		usersListDiv.innerHTML = `
 		${users
 			.map(
-			  (friend) =>
+			  (user) =>
 			`
-				<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${friend.id})">
+				<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${user.id})">
 					<div class="pm-inner-container profilepic bg-gray">
 						<!-- Profile Pic -->
 					</div>
 					<div class="accountname-side">
-						${friend.username}
+						${user.username}
 						<br>
-						isonline: ${friend.isOnline}
+						isonline: ${user.isOnline}
 					</div>
 					<!-- <div class="about-user-button">
 						<span class="material-symbols-outlined">
