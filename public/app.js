@@ -4,7 +4,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const socket = io('ws://localhost:4000')
 
+const nameInput = document.querySelector('#name');
+const usersList = document.querySelector('.user-list');
 const activity = document.querySelector('.activity');
+const chatDisp = document.querySelector('.chat-disp')
 const msgInput = document.querySelector('msgInput');
 
 function sendMessage(e) {

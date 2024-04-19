@@ -67,9 +67,9 @@ function loadPage(page) {
 					</div>
 				</div>
 				<br>
-				<div id="friend-users"></div>
+				<div id="user-list"></div>
 				`;
-				displayFriends()
+				displayUsers()
       	break;
     case "pms":
       fetch("/get-users")
@@ -105,9 +105,9 @@ function loadPage(page) {
 					</div>
 				</div>
 				<br>
-				<div id="friend-users"></div>
+				<div id="user-list"></div>
 				`;
-				displayFriends()
+				displayUsers()
         })
         .catch((error) => {
           console.error("Error fetching users:", error);

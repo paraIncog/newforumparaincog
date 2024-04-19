@@ -1,10 +1,10 @@
-function displayFriends(userId) {
-	const friendsListDiv = document.getElementById("friend-users");
-	fetch("/get-friends")
+function displayUsers(userId) {
+	const usersListDiv = document.getElementById("user-list");
+	fetch("/get-users")
 	.then((response) => response.json())
-	.then((friends) => {
-		friendsListDiv.innerHTML = `
-		${friends
+	.then((users) => {
+		usersListDiv.innerHTML = `
+		${users
 			.map(
 			  (friend) =>
 			`

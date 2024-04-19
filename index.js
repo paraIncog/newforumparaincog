@@ -22,6 +22,14 @@ const expressServer = app.listen(PORT, () => {
   console.log(`Listening on: http://localhost:${PORT}`)
 })
 
+// Users State
+const UsersState = {
+  users: [],
+  setUsers: function (newUsersArray) {
+      this.users = newUsersArray
+  }
+}
+
 const io = new Server(expressServer, {
   cors: {
     origin: process.env.NODE_ENV === "production" ? false : ["http://localhost:5500", "http://127.0.0.1:5500"]
@@ -53,6 +61,26 @@ io.on('connection', socket => {
     socket.broadcast.emit('activity', name)
   })
 })
+
+// User functions 
+function activateUser(id, name, room) {
+  const user = { id, name, room }
+  UsersState.setUsers([
+      ...UsersState.users.filter(user => user.id !== id),
+      user
+  ])
+  return user
+}
+
+function userLeavesApp(id) {
+  UsersState.setUsers(
+      UsersState.users.filter(user => user.id !== id)
+  )
+}
+
+function getUser(id) {
+  return UsersState.users.find(user => user.id === id)
+}
 
 // Initialize session middleware
 app.use(session({
@@ -341,7 +369,7 @@ app.get("/get-comments", (req, res) => {
 });
 
 // Endpoint to fetch friends of a specific user
-app.get("/get-friends", (req, res) => {
+app.get("/get-users", (req, res) => {
   const userId = req.query.id; // Extract userId from query parameters
   
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
