@@ -1,22 +1,40 @@
-const express = require("express");
-const session = require("express-session");
-const path = require("path");
-const sqlite3 = require("sqlite3").verbose();
-// const WebSocket = require('ws');
+import express from 'express'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import { Server } from "socket.io"
+import session from 'express-session'
+import sqlite3 from 'sqlite3'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// Start the HTTP server
-const server = app.listen(PORT, () => {
-  console.log(`HTTP server is running at http://localhost:${PORT}`);
-});
 
 // Middleware to parse JSON data in the request body
 app.use(express.json());
 
-// Serve static files (HTML, CSS, JS)
-app.use(express.static(path.join(__dirname)));
+app.use(express.static(path.join(__dirname, "public")))
+
+const expressServer = app.listen(PORT, () => {
+  console.log(`listening on port ${PORT}`)
+})
+
+const io = new Server(expressServer, {
+  cors: {
+    origin: process.env.NODE_ENV === "production" ? false : ["http://localhost:5500", "http://127.0.0.1:5500"]
+  }
+})
+
+io.on('connection', socket => {
+  console.log(`User ${socket.id} connected`)
+
+  socket.on('message', data => {
+    console.log(data)
+    io.emit('message', `${socket.id.substring(0, 20)}: ${data}`)
+  })
+})
 
 // Initialize session middleware
 app.use(session({

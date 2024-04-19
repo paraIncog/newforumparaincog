@@ -2,6 +2,26 @@ document.addEventListener("DOMContentLoaded", function () {
   checkSessionAndLoadUsername(); // Check session status before automatically redirecting to login
 });
 
+const socket = io('ws://localhost:4000')
+
+function sendMessage(e) {
+  e.preventDefault()
+  const input1 = document.querySelector('input1')
+  if (input1.value) {
+    socket.emit('message', input1.value)
+    input1.value = ""
+  }
+  input1.focus()
+}
+
+document.querySelector('input1-form').addEventListener('submit', sendMessage)
+
+socket.on('message', (data) => {
+  const li = document.createElement('li')
+  li.textContent = data
+  document.querySelector('ul').appendChild(li)
+})
+
 function checkSessionAndLoadUsername() {
   fetch("/check-session")
     .then((response) => {

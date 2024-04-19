@@ -142,6 +142,7 @@ function showUserInfo(userId) {
 					</div>
 				</div>
             </div>
+			<ul></ul>
 			<div class="row add-button-area">
 				<div>
 					<input
@@ -155,7 +156,6 @@ function showUserInfo(userId) {
 			  	<div id="overlay-toggle">
 					<span
 					class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-					onclick="console.log('zzz', ${user.id}); sendMsg(${user.id})"
 					>send</span>
 			  	</div>
 			</div>
@@ -164,13 +164,6 @@ function showUserInfo(userId) {
     .catch((error) => {
       console.error("Error fetching user information:", error);
     });
-}
-
-function sendMsg(userId) {
-	console.log("Sending Message")
-	const message = document.getElementById("msg-input").value;
-    socket.send(JSON.stringify({ type: 'message', message, userId }));
-	console.log("Message sent!")
 }
 
 function showForum(postId) {

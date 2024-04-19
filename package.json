@@ -2,18 +2,19 @@
   "name": "newforumparaincog",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node .",
+    "dev": "nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
     "express-session": "^1.18.0",
-    "sqlite3": "^5.1.7",
-    "ws": "^8.16.0"
+    "socket.io": "^4.7.5",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
