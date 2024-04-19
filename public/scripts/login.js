@@ -7,10 +7,10 @@ function login() {
         <div class="logincontainer">
           <form id="loginForm">
             <div class="login-txtinput">
-              Username <input id="username" class="login" type="text" minlength="3" required>
+              Username <input id="username" class="login" type="text" required>
             </div>
             <div class="login-txtinput">
-              Password <input id="password" class="login" type="password" minlength="6" required>
+              Password <input id="password" class="login" type="password" required>
             </div>
             <div id="error-message" class="error-message"></div>
             <div class="login-txtinput">

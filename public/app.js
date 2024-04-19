@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const socket = io('ws://localhost:4000')
 
-const nameInput = document.querySelector('#name');
+const nameInput = document.querySelector('#username');
 const usersList = document.querySelector('.user-list');
 const activity = document.querySelector('.activity');
 const chatDisp = document.querySelector('.chat-disp')
@@ -33,8 +33,8 @@ msgInput.addEventListener('keypress', () => {
 })
 
 let activityTimer
-socket.on('activity', (name) => {
-  activity.textContent = `${name} is typing...`
+socket.on('activity', (username) => {
+  activity.textContent = `${username} is typing...`
   clearTimeout(activityTimer)
   activityTimer = setTimeout(() => {
       activity.textContent = ""

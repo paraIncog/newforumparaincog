@@ -142,7 +142,7 @@ function showUserInfo(userId) {
 					</div>
 				</div>
             </div>
-			<ul></ul>
+			<ul class="chat-disp"></ul>
 			<p class="activity"></p>
 			<div class="row add-button-area">
 				<div>

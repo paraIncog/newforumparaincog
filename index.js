@@ -57,14 +57,14 @@ io.on('connection', socket => {
   })
 
   // Listen for activity
-  socket.on('activity', (name) => {
-    socket.broadcast.emit('activity', name)
+  socket.on('activity', (username) => {
+    socket.broadcast.emit('activity', username)
   })
 })
 
 // User functions 
-function activateUser(id, name, room) {
-  const user = { id, name, room }
+function activateUser(id, username, room) {
+  const user = { id, username, room }
   UsersState.setUsers([
       ...UsersState.users.filter(user => user.id !== id),
       user
