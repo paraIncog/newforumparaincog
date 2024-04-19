@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
-const WebSocket = require('ws');
+// const WebSocket = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -307,8 +307,7 @@ app.get("/get-comments", (req, res) => {
 // Endpoint to fetch friends of a specific user
 app.get("/get-friends", (req, res) => {
   const userId = req.query.id; // Extract userId from query parameters
-  // console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
-
+  
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
@@ -325,7 +324,7 @@ app.get("/get-friends", (req, res) => {
       const formattedRows = rows.map(row => ({
         ...row,
         created_at: row.localtime,
-        isOnline: activeConnections.get(`${row.id}`) != null
+        // isOnline: activeConnections.get(`${row.id}`) != null
       }));
 
       res.json(formattedRows);
@@ -344,55 +343,3 @@ app.get("/logout", (req, res) => {
     res.redirect("/"); // Redirect to the login page after logout
   });
 });
-
-// WebSocket server
-const wss = new WebSocket.Server({ server });
-
-// Map WebSocket connections to user sessions
-const activeConnections = new Map();
-
-// WebSocket connection handling
-wss.on('connection', function connection(ws, req) {
-  console.log('A new WebSocket client connected');
-  // Retrieve session from Express session middleware
-  const userId = req.url.substring(req.url.indexOf('=')+1)
-  console.log('user: ', userId)
-
-  // Associate WebSocket connection with session
-  activeConnections.set(userId, ws);
-  // console.log('CP1', activeConnections.keys())
-
-  // Handle incoming WebSocket messages
-  ws.on('message', function incoming(message) {
-    console.log(`Received from client ${userId}: %s`, message);
-    broadcastMessage(activeConnections, message, userId)
-  });
-
-
-  ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
-
-  // Handle WebSocket connection close
-  ws.on('close', function close() {
-    console.log('WebSocket client disconnected', userId);
-    // Remove WebSocket connection from activeConnections map
-    activeConnections.delete(userId);
-  });
-});
-
-function broadcastMessage(connections, message, fromUserId) {
-  const targetId = message.userId;
-  const ws = activeConnections.get(targetId);
-  console.log("CP5", targetId, ws)
-  if (ws) {
-    ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }))
-  }
-}
-
-// Example function to send message to a specific user
-function sendMessageToUser(sessionID, message) {
-  const ws = activeConnections.get(sessionID);
-  if (ws) {
-    ws.send(message);
-  }
-}
-

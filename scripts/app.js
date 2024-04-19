@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   checkSessionAndLoadUsername(); // Check session status before automatically redirecting to login
 });
 
-let socket = null;
-
 function checkSessionAndLoadUsername() {
   fetch("/check-session")
     .then((response) => {
@@ -21,13 +19,8 @@ function checkSessionAndLoadUsername() {
       );
       if (usernameElement) {
         usernameElement.textContent = data.username;
-          const userId = data.userid;
-          socket = WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
-          socket.addEventListener("open", (event) => {
-            socket.send(
-              JSON.stringify({ type: "username", username: data.username })
-            );
-          });
+        const userId = data.userid;
+        JSON.stringify({ type: "username", username: data.username })
       }
     })
     .catch((error) => console.error("Error checking session:", error));

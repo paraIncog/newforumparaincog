@@ -65,12 +65,6 @@ function login() {
             checkSessionAndLoadUsername();
 
             console.log(data)
-            // Establish WebSocket connection after successful login
-            const socket = new WebSocket(`ws://localhost:4000/ws?userID=${data.userid}`);
-            socket.addEventListener('open', function (event) {
-              console.log('Connected to WebSocket server');
-              socket.send(JSON.stringify({ type: 'username', username }));
-            });
           }
         })
         .catch((error) => {
@@ -81,11 +75,6 @@ function login() {
 
 function logout() {
   // Close WebSocket connection
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.close();
-    socket = null;
-    console.log("WebSocket connection closed");
-  }
 
   fetch("/logout")
     .then((response) => {
