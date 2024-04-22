@@ -35,7 +35,6 @@ function login() {
     .getElementById("form-login")
     .addEventListener("submit", function (event) {
       event.preventDefault();
-      const formData = new FormData(this);
 
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
@@ -59,7 +58,6 @@ function login() {
             errorMessage.textContent = data.error;
           } else {
             // Successful login
-            console.log("Congrats, " + username + "!");
             document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
@@ -73,9 +71,16 @@ function login() {
     });
 }
 
-function logout() {
-  // Close WebSocket connection
+function enterChat(e) {
+  e.preventDefault()
+  if (nameInput.value) {
+    socket.emit('enterChat', {
+      username: nameInput.value
+    })
+  }
+}
 
+function logout() {
   fetch("/logout")
     .then((response) => {
       if (response.ok) {

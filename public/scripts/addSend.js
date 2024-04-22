@@ -17,26 +17,6 @@ function addSend(page) {
 			break;
 		case "pms":
 			addButtonArea.innerHTML = `
-			<div class="row add-button-area">
-				<form class="form-msg">
-					<input
-					type="text"
-					class="insert-msg bg-gray txt-black"
-					id="message"
-					name="msg-input"
-					placeholder="Your message"
-					maxlength="800"
-					/>
-					</div>
-					<button type="submin">
-						<div id="overlay-toggle">
-							<span
-							class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-							>send</span>
-						</div>
-					</button>
-				</form>
-			</div>
 			`;
 			break;
 		default:

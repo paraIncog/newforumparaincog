@@ -35,7 +35,6 @@ function enterChat(e) {
     })
   }
 }
-
 socket.on('message', (data) => {
   activity.textContent = ""
   const { username, text, time } = data
