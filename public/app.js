@@ -33,10 +33,10 @@ function enterRoom(e) {
   }
 }
 
-document.querySelector('#form-msg')
+document.querySelector('form-msg')
     .addEventListener('submit', sendMessage)
 
-document.querySelector('#form-join')
+document.querySelector('form-join')
     .addEventListener('submit', enterRoom)
 
 msgInput.addEventListener('keypress', () => {

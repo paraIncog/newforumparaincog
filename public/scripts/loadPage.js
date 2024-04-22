@@ -79,11 +79,36 @@ function loadPage(page) {
 				<div class="container">
 					<div class="primary-page-desc txt-prim bg-white">Chat</div>
 				</div>
-				<div class="no-sel-pm">
+				<!-- <div class="no-sel-pm">
 					<span class="material-symbols-outlined">sms</span>
 					Please select user to chat with
-				</div>
+				</div> -->
+				<ul class="chat-disp"></ul>
+				<p class="activity"></p>
+				<div class="row add-button-area">
+				<form class="form-msg">
+					<div>
+						<input
+						class="insert-msg bg-gray txt-black"
+						id="message"
+						name="message"
+						placeholder="Insert Chat Message"
+						maxlength="800"
+						type="text"
+						required
+						/>
+					</div>
+					<button type="submit">
+						<div id="overlay-toggle">
+							<span
+							class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+							>send</span>
+						</div>
+					</button>
+				</form>
+			</div>
 		    `;
+			// addSend("pms")
           	sidebarContent.innerHTML = `
 				<input
 					class="searchbar"
@@ -142,30 +167,6 @@ function showUserInfo(userId) {
 					</div>
 				</div>
             </div>
-			<ul class="chat-disp"></ul>
-			<p class="activity"></p>
-			<div class="row add-button-area">
-				<form class="form-msg">
-					<div>
-						<input
-						class="insert-msg bg-gray txt-black"
-						id="message"
-						name="message"
-						placeholder="Insert Chat Message"
-						maxlength="800"
-						type="text"
-						required
-						/>
-					</div>
-					<button type="submit">
-						<div id="overlay-toggle">
-							<span
-							class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-							>send</span>
-						</div>
-					</button>
-				</form>
-			</div>
         `;
     })
     .catch((error) => {
