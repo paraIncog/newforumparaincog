@@ -10,7 +10,7 @@ const __dirname = path.dirname(__filename)
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const PMSG = "Pmsg"
+const ADMIN = "Admin"
 
 
 // Middleware to parse JSON data in the request body
@@ -39,74 +39,81 @@ const io = new Server(expressServer, {
 io.on('connection', socket => {
   console.log(`User ${socket.id} connected`)
 
-  // Upon connection - To main user
-  socket.emit('message', "Welcome to Real Time Forums")
+  // Upon connection - only to user 
+  socket.emit('message', buildMsg(ADMIN, "Welcome to Chat App!"))
 
-  socket.on('enterChat', ({ username }) => {
-    const user = activateUser(socket.id, username)
+  socket.on('enterRoom', ({ name, room }) => {
 
-    socket.join(user.room)
+      const defaultRoom = "General";
+      room = room.trim() ? room.trim() : defaultRoom;
 
-    // To user who joined
-    socket.emit('message', buildMsg(PMSG, `You have joined the ${user.room} chat room`))
+      // leave previous room 
+      const prevRoom = getUser(socket.id)?.room
 
-    // To everyone else 
-    socket.broadcast.to(user.room).emit('message', buildMsg(PMSG, `${user.name} has joined the room`))
+      if (prevRoom) {
+          socket.leave(prevRoom)
+          io.to(prevRoom).emit('message', buildMsg(ADMIN, `${name} has left the room`))
+      }
 
-    // Update user list for room 
-    io.to(user.room).emit('userList', {
-        users: getUsersInRoom(user.room)
-    })
+      const user = activateUser(socket.id, name, room)
+
+      // Cannot update previous room users list until after the state update in activate user 
+      if (prevRoom) {
+          io.to(prevRoom).emit('userList', {
+              users: getUsersInRoom(prevRoom)
+          })
+      }
+
+      // join room 
+      socket.join(user.room)
+
+      // To user who joined 
+      socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`))
+
+      // To everyone else 
+      socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`))
+
+      // Update user list for room 
+      io.to(user.room).emit('userList', {
+          users: getUsersInRoom(user.room)
+      })
+
   })
 
-  // Upon connection - To other users
-  socket.broadcast.emit('message', `User ${socket.id.substring(0, 20)} connected`)
-
-  // Listening for message event
-  socket.on('message', ({ username, text }) => {
-    const room = getUser(socket.id)?.room
-    if (room) {
-      io.to(room).emit('message', buildMsg(username, text))
-    }
-  })
-
-  // User disconnect - To other users
+  // When user disconnects - to all others 
   socket.on('disconnect', () => {
-    const user = getUser(socket.id)
+      const user = getUser(socket.id)
       userLeavesApp(socket.id)
 
       if (user) {
-        io.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has left the room`))
-
-        io.to(user.room).emit('userList', {
-          users: getUsersInRoom(user.room)
-        })
+          io.to(user.room).emit('userList', {
+              users: getUsersInRoom(user.room)
+          })
       }
+
       console.log(`User ${socket.id} disconnected`)
   })
 
-  // Listen for activity
-  socket.on('activity', (username) => {
-    const room = getUser(socket.id)?.room
-    if (room) {
-        socket.broadcast.to(room).emit('activity', username)
-    }
+  // Listening for a message event 
+  socket.on('message', ({ name, text }) => {
+      const room = getUser(socket.id)?.room
+      if (room) {
+          io.to(room).emit('message', buildMsg(name, text))
+      }
+  })
+
+  // Listen for activity 
+  socket.on('activity', (name) => {
+      const room = getUser(socket.id)?.room
+      if (room) {
+          socket.broadcast.to(room).emit('activity', name)
+      }
   })
 })
 
-// User functions 
-function activateUser(id, username, room) {
-  const user = { id, username, room }
-  UsersState.setUsers([
-      ...UsersState.users.filter(user => user.id !== id),
-      user
-  ])
-  return user
-}
-
-function buildMsg(username, text) {
+function buildMsg(name, text) {
   return {
-      username,
+      name,
       text,
       time: new Intl.DateTimeFormat('default', {
           hour: 'numeric',
@@ -114,6 +121,16 @@ function buildMsg(username, text) {
           second: 'numeric'
       }).format(new Date())
   }
+}
+
+// User functions 
+function activateUser(id, name, room) {
+  const user = { id, name, room }
+  UsersState.setUsers([
+      ...UsersState.users.filter(user => user.id !== id),
+      user
+  ])
+  return user
 }
 
 function userLeavesApp(id) {
@@ -124,6 +141,14 @@ function userLeavesApp(id) {
 
 function getUser(id) {
   return UsersState.users.find(user => user.id === id)
+}
+
+function getUsersInRoom(room) {
+  return UsersState.users.filter(user => user.room === room)
+}
+
+function getAllActiveRooms() {
+  return Array.from(new Set(UsersState.users.map(user => user.room)))
 }
 
 // Initialize session middleware
@@ -140,10 +165,10 @@ app.get("/", (req, res) => {
 
 // Endpoint to handle login
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { name, password } = req.body;
 
-  if (!username || !password) {
-    return res.status(400).json({ error: "Username and password are required." });
+  if (!name || !password) {
+    return res.status(400).json({ error: "name and password are required." });
   }
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READONLY, (err) => {
@@ -152,20 +177,20 @@ app.post("/login", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
+    db.get("SELECT * FROM users WHERE name = ? AND password = ?", [name, password], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
 
       if (!row) {
-        return res.status(401).json({ error: "Invalid username or password." });
+        return res.status(401).json({ error: "Invalid name or password." });
       }
 
       // Authentication successful, store user information in session
       req.session.user = row;
 
-      res.json({ message: "Login successful", username: row.username, userid: row.id }); // Return the username
+      res.json({ message: "Login successful", name: row.name, userid: row.id }); // Return the name
     });
   });
 });
@@ -179,19 +204,19 @@ function isLoggedIn(req, res, next) {
   }
 }
 
-// Endpoint to get the username of the logged-in user
-app.get("/get-username", (req, res) => {
-  if (req.session.user.username) {
-      res.json({ username: req.session.user.username });
+// Endpoint to get the name of the logged-in user
+app.get("/get-name", (req, res) => {
+  if (req.session.user.name) {
+      res.json({ name: req.session.user.name });
   } else {
-      res.status(401).json({ error: "User not logged in or username not found in session" });
+      res.status(401).json({ error: "User not logged in or name not found in session" });
   }
 });
 
 // Endpoint to get the user id of the logged-in user
 app.get("/get-user-id", (req, res) => {
   if (req.session.user.id) {
-      res.json({ username: req.session.user.id });
+      res.json({ name: req.session.user.id });
   } else {
       res.status(401).json({ error: "User not logged in or user id not found in session" });
   }
@@ -210,7 +235,7 @@ app.get("/check-session", (req, res) => {
 
 // Endpoint to handle user registration
 app.post("/register", (req, res) => {
-  const { username, password, namefirst, namelast, email, gender, age } = req.body;
+  const { name, password, namefirst, namelast, email, gender, age } = req.body;
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -219,17 +244,17 @@ app.post("/register", (req, res) => {
     }
 
     // Prepare the SQL statement for inserting the user into the database
-    const insertQuery = `INSERT INTO users (username, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const insertQuery = `INSERT INTO users (name, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
     // Execute the SQL query to insert the user into the database
-    db.run(insertQuery, [username, password, namefirst, namelast, email, gender, age], function (err) {
+    db.run(insertQuery, [name, password, namefirst, namelast, email, gender, age], function (err) {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
 
       // Return success message
-      res.json({ message: "Registration successful", username: username });
+      res.json({ message: "Registration successful", name: name });
     });
   });
 });
@@ -242,7 +267,7 @@ app.get("/get-users", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT id, username, age, namefirst, namelast, email FROM users", (err, rows) => {
+    db.all("SELECT id, name, age, namefirst, namelast, email FROM users", (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -286,7 +311,7 @@ app.get("/get-user", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT id, username, age, namefirst, namelast, email FROM users WHERE id = ?", [userId], (err, row) => {
+    db.get("SELECT id, name, age, namefirst, namelast, email FROM users WHERE id = ?", [userId], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -324,7 +349,7 @@ app.get("/get-forum", (req, res) => {
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
   const { title, category, content } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.name; // Extract author's name from session
 
   // Check if all required fields are provided
   if (!title || !category || !content || !author) {
@@ -356,7 +381,7 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
 // Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
   const { postId, commentContent } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.name; // Extract author's name from session
 
   // Check if all required fields are provided
   if (!postId || !commentContent || !author) {
@@ -422,7 +447,7 @@ app.get("/get-users", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
+    db.all("SELECT u.name, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.name, u.id ORDER BY m.created_at DESC, u.name", [userId], (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");

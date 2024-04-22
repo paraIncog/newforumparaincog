@@ -129,7 +129,7 @@ function showUserInfo(userId) {
         <div class="container">
 			<div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
             <div class="primary-page-desc txt-prim bg-white">
-                User: ${user.username}
+                User: ${user.name}
             </div>
 			<div class="about-user-container">
 				<div class="about-user-profilepic bg-gray"></div>
@@ -149,10 +149,11 @@ function showUserInfo(userId) {
 					<div>
 						<input
 						class="insert-msg bg-gray txt-black"
-						id="msg-input"
-						name="msg-input"
+						id="message"
+						name="message"
 						placeholder="Insert Chat Message"
 						maxlength="800"
+						type="text"
 						required
 						/>
 					</div>

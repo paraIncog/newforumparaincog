@@ -4,79 +4,116 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const socket = io('ws://localhost:4000')
 
-const nameInput = document.querySelector('#username');
-const msgInput = document.querySelector('#msg-input');
-const usersList = document.querySelector('.user-list');
-const activity = document.querySelector('.activity');
-const chatDisp = document.querySelector('.chat-disp')
+const msgInput = document.querySelector('#message')
+const nameInput = document.querySelector('#name')
+const chatRoom = document.querySelector('#room')
+const activity = document.querySelector('.activity')
+const usersList = document.querySelector('.user-list')
+const chatDisplay = document.querySelector('.chat-display')
 
 function sendMessage(e) {
   e.preventDefault()
   if (nameInput.value && msgInput.value) {
-    socket.emit('message', {username: nameInput.value, text: msgInput.value})
-    msgInput.value = ""
+      socket.emit('message', {
+          name: nameInput.value,
+          text: msgInput.value
+      })
+      msgInput.value = ""
   }
   msgInput.focus()
 }
 
-document.querySelector('.form-login').addEventListener('submit', enterChat)
-
-document.querySelector('.form-msg').addEventListener('submit', sendMessage)
-
-msgInput.addEventListener('keypress', () => {
-  socket.emit('activity', socket.id.substring(0, 20))
-})
-
-function enterChat(e) {
+function enterRoom(e) {
   e.preventDefault()
   if (nameInput.value) {
-    socket.emit('enterChat', {
-      username: nameInput.value
-    })
+      socket.emit('enterRoom', {
+          name: nameInput.value,
+          room: ''
+      })
   }
 }
-socket.on('message', (data) => {
-  activity.textContent = ""
-  const { username, text, time } = data
-  const li = document.createElement('li')
-  li.className = 'post'
 
-  if (username === nameInput.value) li.className = 'post post--left'
-    if (username !== nameInput.value && username !== 'Pmsg') li.className = 'post post--right'
-    if (username !== 'Pmsg') {
-        li.innerHTML = `<div class="post__header ${username === nameInput.value
-            ? 'post__header--user'
-            : 'post__header--reply'
-            }">
-        <span class="post__header--name">${username}</span> 
-        <span class="post__header--time">${time}</span> 
-        </div>
-        <div class="post__text">${text}</div>`
-    } else {
-        li.innerHTML = `<div class="post__text">${text}</div>`
-    }
+document.querySelector('#form-msg')
+    .addEventListener('submit', sendMessage)
 
-  document.querySelector('.chat-disp').appendChild(li)
+document.querySelector('#form-join')
+    .addEventListener('submit', enterRoom)
 
-  chatDisp.scrollTop = chatDisp.scrollHeight
+msgInput.addEventListener('keypress', () => {
+    socket.emit('activity', nameInput.value)
 })
 
+// Listen for messages 
+socket.on("message", (data) => {
+  activity.textContent = ""
+  const { name, text, time } = data
+  const li = document.createElement('li')
+  li.className = 'post'
+  if (name === nameInput.value) li.className = 'post post--left'
+  if (name !== nameInput.value && name !== 'Admin') li.className = 'post post--right'
+  if (name !== 'Admin') {
+      li.innerHTML = `<div class="post__header ${name === nameInput.value
+          ? 'post__header--user'
+          : 'post__header--reply'
+          }">
+      <span class="post__header--name">${name}</span> 
+      <span class="post__header--time">${time}</span> 
+      </div>
+      <div class="post__text">${text}</div>`
+  } else {
+      li.innerHTML = `<div class="post__text">${text}</div>`
+  }
+  document.querySelector('.chat-display').appendChild(li)
+
+  chatDisplay.scrollTop = chatDisplay.scrollHeight
+})
 
 let activityTimer
-socket.on('activity', (username) => {
-  activity.textContent = `${username} is typing...`
+socket.on("activity", (name) => {
+  activity.textContent = `${name} is typing...`
+
+  // Clear after 3 seconds 
   clearTimeout(activityTimer)
   activityTimer = setTimeout(() => {
       activity.textContent = ""
-  }, 1000)
+  }, 3000)
 })
+
+socket.on('userList', ({ users }) => {
+  showUsers(users)
+})
+
+function showUsers(users) {
+  usersList.textContent = ''
+  if (users) {
+      usersList.innerHTML = ``
+      users.forEach((user, i) => {
+          usersList.innerHTML += `<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${user.id})">
+          <div class="pm-inner-container profilepic bg-gray">
+              <!-- Profile Pic -->
+          </div>
+          <div class="accountname-side">
+              ${user.name}
+          </div>
+          <!-- <div class="about-user-button">
+              <span class="material-symbols-outlined">
+                  more_horiz
+              </span>
+          </div> -->
+      </div>`
+          if (users.length > 1 && i !== users.length - 1) {
+              usersList.innerHTML += ""
+          }
+      })
+  }
+}
 
 function checkSessionAndLoadUsername() {
   fetch("/check-session")
     .then((response) => {
       if (response.ok) {
         loadPage("forums");
-        return fetch("/get-username");
+        return fetch("/get-name");
       } else {
         login();
       }
@@ -84,12 +121,11 @@ function checkSessionAndLoadUsername() {
     .then((response) => response.json())
     .then((data) => {
       const usernameElement = document.querySelector(
-        ".sessioner-user-username"
+        ".sessioner-user-name"
       );
       if (usernameElement) {
-        usernameElement.textContent = data.username;
-        const userId = data.userid;
-        JSON.stringify({ type: "username", username: data.username })
+        usernameElement.textContent = data.name;
+        JSON.stringify({ type: "name", name: data.name })
       }
     })
     .catch((error) => console.error("Error checking session:", error));

@@ -13,7 +13,7 @@ function displayUsers(userId) {
 						<!-- Profile Pic -->
 					</div>
 					<div class="accountname-side">
-						${user.username}
+						${user.name}
 						<br>
 						isonline: ${user.isOnline}
 					</div>

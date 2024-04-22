@@ -7,7 +7,7 @@ function login() {
         <div class="logincontainer">
           <form id="form-login">
             <div class="login-txtinput">
-              Username <input id="username" class="login" type="text" required>
+              name <input id="name" class="login" type="text" required>
             </div>
             <div class="login-txtinput">
               Password <input id="password" class="login" type="password" required>
@@ -36,7 +36,7 @@ function login() {
     .addEventListener("submit", function (event) {
       event.preventDefault();
 
-      const username = document.getElementById("username").value;
+      const name = document.getElementById("name").value;
       const password = document.getElementById("password").value;
 
       fetch("/login", {
@@ -44,7 +44,7 @@ function login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ name, password }),
       })
         .then((response) => {
           if (!response.ok) {
@@ -58,7 +58,7 @@ function login() {
             errorMessage.textContent = data.error;
           } else {
             // Successful login
-            document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
+            document.querySelector(".sessioner-user-name").textContent = data.name; // Set the name in the placeholder
             
             checkSessionAndLoadUsername();
 
@@ -75,7 +75,7 @@ function enterChat(e) {
   e.preventDefault()
   if (nameInput.value) {
     socket.emit('enterChat', {
-      username: nameInput.value
+      name: nameInput.value
     })
   }
 }

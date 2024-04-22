@@ -7,7 +7,7 @@ function register() {
         <div class="logincontainer">
           <form id="registerForm">
             <div class="login-txtinput">
-              Username <input id="username" name="username" class="login" type="text" minlength="3" required>
+              name <input id="name" name="name" class="login" type="text" minlength="3" required>
             </div>
             <div class="login-txtinput">
               Password <input id="password" name="password" class="login" type="password" minlength="6" required>
@@ -57,7 +57,7 @@ function register() {
 
       // Construct an object with all form fields
       const userData = {
-        username: formData.get("username"),
+        name: formData.get("name"),
         password: formData.get("password"),
         namefirst: formData.get("namefirst"),
         namelast: formData.get("namelast"),
@@ -86,7 +86,7 @@ function register() {
             errorMessage.textContent = data.error;
           } else {
             // Successful registration
-            console.log("Congrats, " + userData.username + "!");
+            console.log("Congrats, " + userData.name + "!");
             login();
           }
         })
