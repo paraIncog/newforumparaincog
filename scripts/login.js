@@ -5,12 +5,12 @@ function login() {
     <div class="container">
       <div class="primary-page-desc txt-prim bg-white">Login</div>
         <div class="logincontainer">
-          <form id="form-login">
+          <form id="loginForm">
             <div class="login-txtinput">
-              name <input id="name" class="login" type="text" required>
+              Username <input id="username" class="login" type="text" minlength="3" required>
             </div>
             <div class="login-txtinput">
-              Password <input id="password" class="login" type="password" required>
+              Password <input id="password" class="login" type="password" minlength="6" required>
             </div>
             <div id="error-message" class="error-message"></div>
             <div class="login-txtinput">
@@ -32,11 +32,12 @@ function login() {
 
   // Add event listener for form submission
   document
-    .getElementById("form-login")
+    .getElementById("loginForm")
     .addEventListener("submit", function (event) {
       event.preventDefault();
+      const formData = new FormData(this);
 
-      const name = document.getElementById("name").value;
+      const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
 
       fetch("/login", {
@@ -44,7 +45,7 @@ function login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, password }),
+        body: JSON.stringify({ username, password }),
       })
         .then((response) => {
           if (!response.ok) {
@@ -58,11 +59,18 @@ function login() {
             errorMessage.textContent = data.error;
           } else {
             // Successful login
-            document.querySelector(".sessioner-user-name").textContent = data.name; // Set the name in the placeholder
+            console.log("Congrats, " + username + "!");
+            document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
 
             console.log(data)
+            // Establish WebSocket connection after successful login
+            const socket = new WebSocket(`ws://localhost:4000/ws?userID=${data.userid}`);
+            socket.addEventListener('open', function (event) {
+              console.log('Connected to WebSocket server');
+              socket.send(JSON.stringify({ type: 'username', username }));
+            });
           }
         })
         .catch((error) => {
@@ -71,16 +79,14 @@ function login() {
     });
 }
 
-function enterChat(e) {
-  e.preventDefault()
-  if (nameInput.value) {
-    socket.emit('enterChat', {
-      name: nameInput.value
-    })
-  }
-}
-
 function logout() {
+  // Close WebSocket connection
+  if (socket && socket.readyState === WebSocket.OPEN) {
+    socket.close();
+    socket = null;
+    console.log("WebSocket connection closed");
+  }
+
   fetch("/logout")
     .then((response) => {
       if (response.ok) {

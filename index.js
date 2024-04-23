@@ -1,155 +1,22 @@
-import express from 'express'
-import path from 'path'
-import { fileURLToPath } from 'url'
-import { Server } from "socket.io"
-import session from 'express-session'
-import sqlite3 from 'sqlite3'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
+const express = require("express");
+const session = require("express-session");
+const path = require("path");
+const sqlite3 = require("sqlite3").verbose();
+const WebSocket = require('ws');
 
 const app = express();
 const PORT = process.env.PORT || 4000;
-const ADMIN = "Admin"
 
+// Start the HTTP server
+const server = app.listen(PORT, () => {
+  console.log(`HTTP server is running at http://localhost:${PORT}`);
+});
 
 // Middleware to parse JSON data in the request body
 app.use(express.json());
 
-app.use(express.static(path.join(__dirname, "public")))
-
-const expressServer = app.listen(PORT, () => {
-  console.log(`Listening on: http://localhost:${PORT}`)
-})
-
-// Users State
-const UsersState = {
-  users: [],
-  setUsers: function (newUsersArray) {
-      this.users = newUsersArray
-  }
-}
-
-const io = new Server(expressServer, {
-  cors: {
-    origin: process.env.NODE_ENV === "production" ? false : ["http://localhost:5500", "http://127.0.0.1:5500"]
-  }
-})
-
-io.on('connection', socket => {
-  console.log(`User ${socket.id} connected`)
-
-  // Upon connection - only to user 
-  socket.emit('message', buildMsg(ADMIN, "Welcome to Chat App!"))
-
-  socket.on('enterRoom', ({ name, room }) => {
-
-      const defaultRoom = "General";
-      room = room.trim() ? room.trim() : defaultRoom;
-
-      // leave previous room 
-      const prevRoom = getUser(socket.id)?.room
-
-      if (prevRoom) {
-          socket.leave(prevRoom)
-          io.to(prevRoom).emit('message', buildMsg(ADMIN, `${name} has left the room`))
-      }
-
-      const user = activateUser(socket.id, name, room)
-
-      // Cannot update previous room users list until after the state update in activate user 
-      if (prevRoom) {
-          io.to(prevRoom).emit('userList', {
-              users: getUsersInRoom(prevRoom)
-          })
-      }
-
-      // join room 
-      socket.join(user.room)
-
-      // To user who joined 
-      socket.emit('message', buildMsg(ADMIN, `You have joined the ${user.room} chat room`))
-
-      // To everyone else 
-      socket.broadcast.to(user.room).emit('message', buildMsg(ADMIN, `${user.name} has joined the room`))
-
-      // Update user list for room 
-      io.to(user.room).emit('userList', {
-          users: getUsersInRoom(user.room)
-      })
-
-  })
-
-  // When user disconnects - to all others 
-  socket.on('disconnect', () => {
-      const user = getUser(socket.id)
-      userLeavesApp(socket.id)
-
-      if (user) {
-          io.to(user.room).emit('userList', {
-              users: getUsersInRoom(user.room)
-          })
-      }
-
-      console.log(`User ${socket.id} disconnected`)
-  })
-
-  // Listening for a message event 
-  socket.on('message', ({ name, text }) => {
-      const room = getUser(socket.id)?.room
-      if (room) {
-          io.to(room).emit('message', buildMsg(name, text))
-      }
-  })
-
-  // Listen for activity 
-  socket.on('activity', (name) => {
-      const room = getUser(socket.id)?.room
-      if (room) {
-          socket.broadcast.to(room).emit('activity', name)
-      }
-  })
-})
-
-function buildMsg(name, text) {
-  return {
-      name,
-      text,
-      time: new Intl.DateTimeFormat('default', {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric'
-      }).format(new Date())
-  }
-}
-
-// User functions 
-function activateUser(id, name, room) {
-  const user = { id, name, room }
-  UsersState.setUsers([
-      ...UsersState.users.filter(user => user.id !== id),
-      user
-  ])
-  return user
-}
-
-function userLeavesApp(id) {
-  UsersState.setUsers(
-      UsersState.users.filter(user => user.id !== id)
-  )
-}
-
-function getUser(id) {
-  return UsersState.users.find(user => user.id === id)
-}
-
-function getUsersInRoom(room) {
-  return UsersState.users.filter(user => user.room === room)
-}
-
-function getAllActiveRooms() {
-  return Array.from(new Set(UsersState.users.map(user => user.room)))
-}
+// Serve static files (HTML, CSS, JS)
+app.use(express.static(path.join(__dirname)));
 
 // Initialize session middleware
 app.use(session({
@@ -165,32 +32,32 @@ app.get("/", (req, res) => {
 
 // Endpoint to handle login
 app.post("/login", (req, res) => {
-  const { name, password } = req.body;
+  const { username, password } = req.body;
 
-  if (!name || !password) {
-    return res.status(400).json({ error: "name and password are required." });
+  if (!username || !password) {
+    return res.status(400).json({ error: "Username and password are required." });
   }
 
-  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READONLY, (err) => {
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT * FROM users WHERE name = ? AND password = ?", [name, password], (err, row) => {
+    db.get("SELECT * FROM users WHERE username = ? AND password = ?", [username, password], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
 
       if (!row) {
-        return res.status(401).json({ error: "Invalid name or password." });
+        return res.status(401).json({ error: "Invalid username or password." });
       }
 
       // Authentication successful, store user information in session
       req.session.user = row;
 
-      res.json({ message: "Login successful", name: row.name, userid: row.id }); // Return the name
+      res.json({ message: "Login successful", username: row.username, userid: row.id }); // Return the username
     });
   });
 });
@@ -204,19 +71,19 @@ function isLoggedIn(req, res, next) {
   }
 }
 
-// Endpoint to get the name of the logged-in user
-app.get("/get-name", (req, res) => {
-  if (req.session.user.name) {
-      res.json({ name: req.session.user.name });
+// Endpoint to get the username of the logged-in user
+app.get("/get-username", (req, res) => {
+  if (req.session.user.username) {
+      res.json({ username: req.session.user.username });
   } else {
-      res.status(401).json({ error: "User not logged in or name not found in session" });
+      res.status(401).json({ error: "User not logged in or username not found in session" });
   }
 });
 
 // Endpoint to get the user id of the logged-in user
 app.get("/get-user-id", (req, res) => {
   if (req.session.user.id) {
-      res.json({ name: req.session.user.id });
+      res.json({ username: req.session.user.id });
   } else {
       res.status(401).json({ error: "User not logged in or user id not found in session" });
   }
@@ -235,7 +102,7 @@ app.get("/check-session", (req, res) => {
 
 // Endpoint to handle user registration
 app.post("/register", (req, res) => {
-  const { name, password, namefirst, namelast, email, gender, age } = req.body;
+  const { username, password, namefirst, namelast, email, gender, age } = req.body;
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -244,17 +111,17 @@ app.post("/register", (req, res) => {
     }
 
     // Prepare the SQL statement for inserting the user into the database
-    const insertQuery = `INSERT INTO users (name, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+    const insertQuery = `INSERT INTO users (username, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
     // Execute the SQL query to insert the user into the database
-    db.run(insertQuery, [name, password, namefirst, namelast, email, gender, age], function (err) {
+    db.run(insertQuery, [username, password, namefirst, namelast, email, gender, age], function (err) {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
 
       // Return success message
-      res.json({ message: "Registration successful", name: name });
+      res.json({ message: "Registration successful", username: username });
     });
   });
 });
@@ -267,7 +134,7 @@ app.get("/get-users", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT id, name, age, namefirst, namelast, email FROM users", (err, rows) => {
+    db.all("SELECT id, username, age, namefirst, namelast, email FROM users", (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -311,7 +178,7 @@ app.get("/get-user", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.get("SELECT id, name, age, namefirst, namelast, email FROM users WHERE id = ?", [userId], (err, row) => {
+    db.get("SELECT id, username, age, namefirst, namelast, email FROM users WHERE id = ?", [userId], (err, row) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -349,7 +216,7 @@ app.get("/get-forum", (req, res) => {
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
   const { title, category, content } = req.body;
-  const author = req.session.user.name; // Extract author's name from session
+  const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
   if (!title || !category || !content || !author) {
@@ -381,7 +248,7 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
 // Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
   const { postId, commentContent } = req.body;
-  const author = req.session.user.name; // Extract author's name from session
+  const author = req.session.user.username; // Extract author's username from session
 
   // Check if all required fields are provided
   if (!postId || !commentContent || !author) {
@@ -437,17 +304,18 @@ app.get("/get-comments", (req, res) => {
   });
 });
 
-// Endpoint to fetch friends of a specific user
+// Endpoint to fetch users of a specific user
 app.get("/get-users", (req, res) => {
   const userId = req.query.id; // Extract userId from query parameters
-  
+  // console.log("CP2 getusers userid: ", userId, activeConnections.keys())
+
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
       console.error(err.message);
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all("SELECT u.name, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.name, u.id ORDER BY m.created_at DESC, u.name", [userId], (err, rows) => {
+    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
@@ -457,7 +325,36 @@ app.get("/get-users", (req, res) => {
       const formattedRows = rows.map(row => ({
         ...row,
         created_at: row.localtime,
-        // isOnline: activeConnections.get(`${row.id}`) != null
+        isOnline: activeConnections.get(`${row.id}`) != null
+      }));
+
+      res.json(formattedRows);
+    });
+  });
+});
+
+// Endpoint to fetch friends of a specific user
+app.get("/get-friends", (req, res) => {
+  const userId = req.query.id; // Extract userId from query parameters
+  // console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.all("SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username", [userId], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
+      }
+
+      // Format created_at timestamp before sending it in the response
+      const formattedRows = rows.map(row => ({
+        ...row,
+        created_at: row.localtime,
+        isOnline: activeConnections.get(`${row.id}`) != null
       }));
 
       res.json(formattedRows);
@@ -476,3 +373,54 @@ app.get("/logout", (req, res) => {
     res.redirect("/"); // Redirect to the login page after logout
   });
 });
+
+// WebSocket server
+const wss = new WebSocket.Server({ server });
+
+// Map WebSocket connections to user sessions
+const activeConnections = new Map();
+
+// WebSocket connection handling
+wss.on('connection', function connection(ws, req) {
+  console.log('A new WebSocket client connected');
+  // Retrieve session from Express session middleware
+  const userId = req.url.substring(req.url.indexOf('=')+1)
+  console.log('user: ', userId)
+
+  // Associate WebSocket connection with session
+  activeConnections.set(userId, ws);
+  // console.log('CP1', activeConnections.keys())
+
+  // Handle incoming WebSocket messages
+  ws.on('message', function incoming(message) {
+    console.log(`Received from client ${userId}: %s`, message);
+    broadcastMessage(activeConnections, message, userId)
+  });
+
+
+  ws.send('Hello, WebSocket client!'); // Send a message to the client upon connection
+
+  // Handle WebSocket connection close
+  ws.on('close', function close() {
+    console.log('WebSocket client disconnected', userId);
+    // Remove WebSocket connection from activeConnections map
+    activeConnections.delete(userId);
+  });
+});
+
+function broadcastMessage(connections, message, fromUserId) {
+  const targetId = message.userId;
+  const ws = activeConnections.get(targetId);
+  console.log("CP5", targetId, ws)
+  if (ws) {
+    ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }))
+  }
+}
+
+// Example function to send message to a specific user
+function sendMessageToUser(sessionID, message) {
+  const ws = activeConnections.get(sessionID);
+  if (ws) {
+    ws.send(message);
+  }
+}

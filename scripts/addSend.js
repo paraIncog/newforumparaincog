@@ -18,26 +18,21 @@ function addSend(page) {
 		case "pms":
 			addButtonArea.innerHTML = `
 			<div class="row add-button-area">
-				<form class="form-msg">
-					<div>
-						<input
-						class="insert-msg bg-gray txt-black"
-						id="message"
-						name="message"
-						placeholder="Insert Chat Message"
-						maxlength="800"
-						type="text"
-						required
-						/>
-					</div>
-					<button type="submit">
-						<div id="overlay-toggle">
-							<span
-							class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-							>send</span>
-						</div>
-					</button>
-				</form>
+			<div>
+				<input
+				class="insert-msg bg-gray txt-black"
+				id="msg-input"
+				name="msg-input"
+				placeholder="Insert Chat Message"
+				maxlength="800"
+				/>
+			</div>
+			  <div id="overlay-toggle">
+				<span
+				  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+				  onclick="sendMsg()"
+				>send</span>
+			  </div>
 			</div>
 			`;
 			break;
@@ -45,4 +40,3 @@ function addSend(page) {
 			break;
 	}
 }
-
