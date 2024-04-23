@@ -3,7 +3,7 @@ var socket = null;  // This makes `socket` accessible throughout the application
 function setupWebSocket(userId) {
     if (!socket || socket.readyState !== WebSocket.OPEN) {
         socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
-        socket.onopen = function(event) {
+        socket.onopen = function() {
             console.log("WebSocket is open now.");
         };
         socket.onmessage = function(event) {
@@ -12,7 +12,7 @@ function setupWebSocket(userId) {
         socket.onerror = function(event) {
             console.error("WebSocket error observed:", event);
         };
-        socket.onclose = function(event) {
+        socket.onclose = function() {
             console.log("WebSocket is closed now.");
             socket = null;  // Reset the socket to null to handle reconnections cleanly
         };
