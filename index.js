@@ -1,6 +1,5 @@
 const express = require("express");
 const session = require("express-session");
-// const { request } = require("http");
 const path = require("path");
 const sqlite3 = require("sqlite3").verbose();
 const WebSocket = require("ws");
@@ -86,15 +85,6 @@ app.post("/login", (req, res) => {
             console.error(err.message);
             return res.status(500).send("Internal Server Error");
           }
-
-          // if (!row) {
-          //   return res.status(401).json({ error: "Invalid username or password." });
-          // }
-
-          // Authentication successful, store user information in session
-          // req.session.user = row;
-
-          // res.json({ message: "Login successful", username: row.username, userid: row.id }); // Return the username
         }
       );
     }
@@ -515,7 +505,7 @@ server.on("upgrade", (request, socket, head) => {
       socket.destroy();
       return;
     }
-    wss.handleUpgrade(request, socket, head, (ws) => {
+    wss.handleUpgrade(request, socket, head, function done(ws) {
       wss.emit("connection", ws, request);
     });
   });
@@ -523,13 +513,10 @@ server.on("upgrade", (request, socket, head) => {
 
 // WebSocket connection handling
 wss.on("connection", function connection(ws, req) {
-  console.log("Session ID:", req.sessionID); // This should now be defined
-  console.log("User ID:", req.session.user.id);
-
-  const url = new URL(req.url, `http://${req.headers.host}`);
-  const userId = url.searchParams.get("userID");
-
   const user = req.session.user;
+  const userId = req.session.user.id;
+  console.log("Session ID:", req.sessionID);
+  console.log("User ID:", req.session.user.id);
   console.log("Connected User C6: ", user.id);
 
   if (req.session.user) {
@@ -547,16 +534,7 @@ wss.on("connection", function connection(ws, req) {
     });
   }
 
-  // const urlParams = new URLSearchParams(req.url.substring(req.url.indexOf('?')));
-  // const userId = urlParams.get('userID');
-  // const userId = req.url.substring(req.url.indexOf('=')+1)
-  console.log("A new WebSocket client connected");
-  // Retrieve session from Express session middleware
-  console.log("user: ", userId);
-
   if (userId) {
-    console.log("A new WebSocket client connected");
-    console.log("user: ", userId);
     activeConnections.set(userId, ws);
     console.log("CP1", Array.from(activeConnections.keys()));
   }

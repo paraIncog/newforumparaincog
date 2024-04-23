@@ -66,12 +66,6 @@ function login() {
 
             console.log(data)
             setupWebSocket(data.userid);
-            // Establish WebSocket connection after successful login
-            // const socket = new WebSocket(`ws://localhost:4000/ws?userID=${data.userid}`);
-            // socket.addEventListener('open', function (event) {
-            //   console.log('Connected to WebSocket server');
-            //   socket.send(JSON.stringify({ type: 'username', username }));
-            // });
           }
         })
         .catch((error) => {
