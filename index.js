@@ -467,11 +467,9 @@ app.get("/get-friends", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          // Format created_at timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
-            created_at: row.localtime,
-            isOnline: activeConnections.get(`${row.id}`) != null,
+            isOnline: activeConnections.has(row.id),
           }));
 
           res.json(formattedRows);
