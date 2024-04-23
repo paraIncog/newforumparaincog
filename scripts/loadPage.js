@@ -142,6 +142,7 @@ function showUserInfo(userId) {
 					  </div>
 				  </div>
 			  </div>
+			  <div id="chat-display"></div>
 			  <div class="row add-button-area">
 				  <div>
 					  <input
@@ -155,7 +156,7 @@ function showUserInfo(userId) {
 					<div id="overlay-toggle">
 					  <span
 					  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-					  onclick="console.log('zzz', ${user.id}); sendMsg(${user.id})"
+					  onClick="sendMsg()"
 					  >send</span>
 					</div>
 			  </div>
@@ -167,15 +168,25 @@ function showUserInfo(userId) {
 }
 
 function sendMsg(userId) {
-  const message = document.getElementById("msg-input").value;
-  if (socket && socket.readyState === WebSocket.OPEN) {
-    socket.send(
-      JSON.stringify({ type: "message", message: message, userId: userId })
-    );
-    console.log("Message sent!");
-  } else {
-    console.error("WebSocket is not connected.");
-  }
+    const messageInput = document.getElementById("msg-input");
+    const message = messageInput.value;
+    const chatDisplay = document.getElementById("chat-display");
+
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: "message", message: message, userId: userId }));
+        
+        // Append the message to the chat display
+        const messageDiv = document.createElement("div");
+		messageDiv.innerHTML = `<div class="single-forum-thread bg-gray">${message}</div>`;
+        chatDisplay.appendChild(messageDiv);
+        
+        messageInput.value = "";
+		chatDisplay.scrollTop = chatDisplay.scrollHeight
+        
+        console.log("Message sent!");
+    } else {
+        console.error("WebSocket is not connected.");
+    }
 }
 
 function showForum(postId) {
