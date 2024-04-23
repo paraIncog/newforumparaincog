@@ -52,20 +52,7 @@ function loadPage(page) {
 					  placeholder="Search Something..."
 					  maxlength="40"
 				  />
-				  <div class="forum-pm-selrow">
-					  <div class="forum-pm-icontext-sep txt-white bg-prim">
-						  <div class="tab-label">
-							  <span class="material-symbols-outlined">forum</span>
-							  <div>Forums</div>
-						  </div>
-					  </div>
-					  <div onclick="loadPage('pms')" href="/#" class="forum-pm-icontext-sep clickable">
-						  <div class="tab-label">
-							  <span class="material-symbols-outlined">chat</span>
-							  <div>Private Messages</div>
-						  </div>
-					  </div>
-				  </div>
+				  
 				  <br>
 				  <div id="friend-users"></div>
 				  `;
@@ -75,35 +62,12 @@ function loadPage(page) {
       fetch("/get-users")
         .then((response) => response.json())
         .then((users) => {
-          mainContent.innerHTML = `
-				  <div class="container">
-					  <div class="primary-page-desc txt-prim bg-white">Chat</div>
-				  </div>
-				  <div class="no-sel-pm">
-					  <span class="material-symbols-outlined">sms</span>
-					  Please select user to chat with
-				  </div>
-			  `;
           sidebarContent.innerHTML = `
 				  <input
 					  class="searchbar"
 					  placeholder="Search Something..."
 					  maxlength="40"
 				  />
-				  <div class="forum-pm-selrow">
-					  <div onclick="loadPage('forums')" href="/#" class="forum-pm-icontext-sep clickable">
-						  <div class="tab-label">
-							  <span class="material-symbols-outlined">forum</span>
-							  <div>Forums</div>
-						  </div>
-					  </div>
-					  <div class="forum-pm-icontext-sep txt-white bg-prim">
-						  <div class="tab-label">
-							  <span class="material-symbols-outlined">chat</span>
-							  <div>Private Messages</div>
-						  </div>
-					  </div>
-				  </div>
 				  <br>
 				  <div id="friend-users"></div>
 				  `;
@@ -127,7 +91,7 @@ function showUserInfo(userId) {
       console.log(`User: `, user);
       mainContent.innerHTML = `
 		  <div class="container">
-			  <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
+			  <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">Back to Forums</div>
 			  <div class="primary-page-desc txt-prim bg-white">
 				  User: ${user.username}
 			  </div>

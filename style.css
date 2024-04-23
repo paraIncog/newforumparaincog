@@ -137,12 +137,6 @@ button.login {
 	align-items: center;
 }
 
-.forum-pm-selrow {
-	display: flex;
-	padding-top: 1rem;
-	border-bottom: 1px solid #0000FF;
-}
-
 .forum-pm-icontext-sep {
 	display: flex;
 	flex-direction: column;
@@ -239,7 +233,7 @@ button.login {
 	width: 100%;
 	padding-top: .5rem;
 	padding-bottom: .5rem;
-	margin-top: .1rem;
+	/* margin-top: .1rem; */
 }
 
 .pm-inner-container {
@@ -469,4 +463,8 @@ button.foruminput {
 	position: absolute;
 	top: 50vh;
 	width: 100%;
+}
+
+#friend-users {
+	border-top: 1px solid #00A3FF;
 }
