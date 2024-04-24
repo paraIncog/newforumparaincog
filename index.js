@@ -556,8 +556,8 @@ wss.on("connection", function connection(ws, req) {
 
 function broadcastMessage(connections, message, fromUserId) {
   connections.forEach((ws, userId) => {
-      if (userId !== fromUserId) { // Do not send message back to the sender
+      // if (userId !== fromUserId) { // Do not send message back to the sender
           ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }));
-      }
+      // }
   });
 }

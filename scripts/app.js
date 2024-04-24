@@ -26,9 +26,18 @@ function setupWebSocket(userId) {
 function displayMessage(message, userId) {
   const chatDisplay = document.getElementById("chat-display");
   const messageDiv = document.createElement("div");
-  messageDiv.innerHTML = `<div class="chat-message">${message} (from user ${userId})</div>`;
+  messageDiv.innerHTML = `
+    <div class="single-forum-thread bg-gray">
+      ${message}
+      <div class="row">
+        <div class="single-forum-thread-uname">
+          ${userId}
+        </div>
+      </div>
+    </div>
+  `;
   chatDisplay.appendChild(messageDiv);
-  chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll to the latest message
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
