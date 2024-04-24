@@ -1,22 +1,34 @@
-var socket = null;  // This makes `socket` accessible throughout the application
+var socket = null; // This makes `socket` accessible throughout the application
 
 function setupWebSocket(userId) {
-    if (!socket || socket.readyState !== WebSocket.OPEN) {
-        socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
-        socket.onopen = function() {
-            console.log("WebSocket is open now.");
-        };
-        socket.onmessage = function(event) {
-            console.log("WebSocket message received:", event.data);
-        };
-        socket.onerror = function(event) {
-            console.error("WebSocket error observed:", event);
-        };
-        socket.onclose = function() {
-            console.log("WebSocket is closed now.");
-            socket = null;  // Reset the socket to null to handle reconnections cleanly
-        };
-    }
+  if (!socket || socket.readyState !== WebSocket.OPEN) {
+    socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
+    socket.onopen = function () {
+      console.log("WebSocket is open now.");
+    };
+    // Setup to handle incoming WebSocket messages
+    socket.onmessage = function (event) {
+      var data = JSON.parse(event.data);
+      if (data.type === "message") {
+        displayMessage(data.message, data.fromUserId);
+      }
+    };
+    socket.onerror = function (event) {
+      console.error("WebSocket error observed:", event);
+    };
+    socket.onclose = function () {
+      console.log("WebSocket is closed now.");
+      socket = null; // Reset the socket to null to handle reconnections cleanly
+    };
+  }
+}
+
+function displayMessage(message, userId) {
+  const chatDisplay = document.getElementById("chat-display");
+  const messageDiv = document.createElement("div");
+  messageDiv.innerHTML = `<div class="chat-message">${message} (from user ${userId})</div>`;
+  chatDisplay.appendChild(messageDiv);
+  chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll to the latest message
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -40,8 +52,8 @@ function checkSessionAndLoadUsername() {
       );
       if (usernameElement) {
         usernameElement.textContent = data.username;
-          const userId = data.userid;
-          setupWebSocket(userId)
+        const userId = data.userid;
+        setupWebSocket(userId);
       }
     })
     .catch((error) => console.error("Error checking session:", error));

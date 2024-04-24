@@ -62,6 +62,26 @@ function loadPage(page) {
       fetch("/get-users")
         .then((response) => response.json())
         .then((users) => {
+			mainContent.innerHTML = `
+			<div id="chat-display"></div>
+			  <div class="row add-button-area">
+				  <div>
+					  <input
+					  class="insert-msg bg-gray txt-black"
+					  id="msg-input"
+					  name="msg-input"
+					  placeholder="Insert Chat Message"
+					  maxlength="800"
+					  />
+				  </div>
+					<div id="overlay-toggle">
+					  <span
+					  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+					  onClick="sendMsg()"
+					  >send</span>
+					</div>
+			  </div>
+			`
           sidebarContent.innerHTML = `
 				  <input
 					  class="searchbar"
@@ -91,7 +111,7 @@ function showUserInfo(userId) {
       console.log(`User: `, user);
       mainContent.innerHTML = `
 		  <div class="container">
-			  <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">Back to Forums</div>
+			  <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back to Forums</div>
 			  <div class="primary-page-desc txt-prim bg-white">
 				  User: ${user.username}
 			  </div>
@@ -106,7 +126,7 @@ function showUserInfo(userId) {
 					  </div>
 				  </div>
 			  </div>
-			  <div id="chat-display"></div>
+			  <!-- <div id="chat-display"></div>
 			  <div class="row add-button-area">
 				  <div>
 					  <input
@@ -123,7 +143,7 @@ function showUserInfo(userId) {
 					  onClick="sendMsg()"
 					  >send</span>
 					</div>
-			  </div>
+			  </div> -->
 		  `;
     })
     .catch((error) => {
@@ -131,23 +151,13 @@ function showUserInfo(userId) {
     });
 }
 
-function sendMsg(userId) {
+function sendMsg() {
     const messageInput = document.getElementById("msg-input");
     const message = messageInput.value;
-    const chatDisplay = document.getElementById("chat-display");
 
     if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "message", message: message, userId: userId }));
-        
-        // Append the message to the chat display
-        const messageDiv = document.createElement("div");
-		messageDiv.innerHTML = `<div class="single-forum-thread bg-gray">${message}</div>`;
-        chatDisplay.appendChild(messageDiv);
-        
-        messageInput.value = "";
-		chatDisplay.scrollTop = chatDisplay.scrollHeight
-        
-        console.log("Message sent!");
+        socket.send(JSON.stringify({ type: "message", message: message }));
+        messageInput.value = ""; // Clear the input after sending
     } else {
         console.error("WebSocket is not connected.");
     }

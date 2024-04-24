@@ -535,39 +535,29 @@ wss.on("connection", function connection(ws, req) {
   if (userId) {
     activeConnections.set(userId, ws);
     console.log("CP1", Array.from(activeConnections.keys()));
+
+    // Handle incoming WebSocket messages
+    ws.on("message", function incoming(message) {
+      console.log(`Received from client ${userId}: %s`, message);
+      const parsedMessage = JSON.parse(message);
+      broadcastMessage(activeConnections, parsedMessage, userId);
+    });
+
+    ws.send("Hello, WebSocket client!"); // Send a message to the client upon connection
+
   }
-
-  // Handle incoming WebSocket messages
-  ws.on("message", function incoming(message) {
-    console.log(`Received from client ${userId}: %s`, message);
-    broadcastMessage(activeConnections, message, userId);
-  });
-
-  ws.send("Hello, WebSocket client!"); // Send a message to the client upon connection
-
-  // Handle WebSocket connection close
-  ws.on("close", function close() {
-    console.log("WebSocket client disconnected", userId);
-    // Remove WebSocket connection from activeConnections map
-    activeConnections.delete(userId);
-  });
+    // Handle WebSocket connection close
+    ws.on("close", function close() {
+      console.log("WebSocket client disconnected", userId);
+      // Remove WebSocket connection from activeConnections map
+      activeConnections.delete(userId);
+    });
 });
 
 function broadcastMessage(connections, message, fromUserId) {
-  const targetId = message.userId;
-  const ws = connections.get(targetId);
-  console.log("CP5", targetId, ws);
-  if (ws) {
-    ws.send(
-      JSON.stringify({ type: "message", message: message.message, fromUserId })
-    );
-  }
-}
-
-// Example function to send message to a specific user
-function sendMessageToUser(sessionID, message) {
-  const ws = activeConnections.get(sessionID);
-  if (ws) {
-    ws.send(message);
-  }
+  connections.forEach((ws, userId) => {
+      if (userId !== fromUserId) { // Do not send message back to the sender
+          ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }));
+      }
+  });
 }
