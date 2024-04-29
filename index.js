@@ -555,9 +555,10 @@ wss.on("connection", function connection(ws, req) {
 });
 
 function broadcastMessage(connections, message, fromUserId) {
+  let targetUserId = message.targetUserId; // Assume this is passed along with the message
   connections.forEach((ws, userId) => {
-      // if (userId !== fromUserId) { // Do not send message back to the sender
+      if (userId === targetUserId) { // Send message only to the intended recipient
           ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }));
-      // }
+      }
   });
 }

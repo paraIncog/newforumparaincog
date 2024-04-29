@@ -26,18 +26,17 @@ function setupWebSocket(userId) {
 function displayMessage(message, userId) {
   const chatDisplay = document.getElementById("chat-display");
   const messageDiv = document.createElement("div");
+  messageDiv.className = 'single-forum-thread bg-gray';  // Consistent styling for messages
   messageDiv.innerHTML = `
-    <div class="single-forum-thread bg-gray">
       ${message}
       <div class="row">
-        <div class="single-forum-thread-uname">
-          ${userId}
-        </div>
+          <div class="single-forum-thread-uname">
+              ${userId}
+          </div>
       </div>
-    </div>
   `;
   chatDisplay.appendChild(messageDiv);
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;  // Auto-scroll to the latest message
 }
 
 document.addEventListener("DOMContentLoaded", function () {

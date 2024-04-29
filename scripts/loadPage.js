@@ -102,61 +102,53 @@ function loadPage(page) {
   }
 }
 
-// Function to show user information
 function showUserInfo(userId) {
-  fetch(`/get-user?id=${userId}`)
-    .then((response) => response.json())
-    .then((user) => {
-      const mainContent = document.getElementById("main-content");
-      console.log(`User: `, user);
-      mainContent.innerHTML = `
-		  <div class="container">
-			  <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back to Forums</div>
-			  <div class="primary-page-desc txt-prim bg-white">
-				  User: ${user.username}
-			  </div>
-			  <div class="about-user-container">
-				  <div class="about-user-profilepic bg-gray"></div>
-					  <div class="user-info">
-						  <div class="about-user-fullname">
-							  ${user.namefirst} ${user.namelast}
-						  </div>
-						  <div>(${user.age})</div>
-						  <div>${user.email}</div>
-					  </div>
-				  </div>
-			  </div>
-			  <!-- <div id="chat-display"></div>
-			  <div class="row add-button-area">
-				  <div>
-					  <input
-					  class="insert-msg bg-gray txt-black"
-					  id="msg-input"
-					  name="msg-input"
-					  placeholder="Insert Chat Message"
-					  maxlength="800"
-					  />
-				  </div>
-					<div id="overlay-toggle">
-					  <span
-					  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-					  onClick="sendMsg()"
-					  >send</span>
-					</div>
-			  </div> -->
-		  `;
-    })
-    .catch((error) => {
-      console.error("Error fetching user information:", error);
-    });
+    fetch(`/get-user?id=${userId}`)
+        .then((response) => response.json())
+        .then((user) => {
+            const mainContent = document.getElementById("main-content");
+            mainContent.innerHTML = `
+            <div class="container">
+                <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back to Forums</div>
+                <div class="primary-page-desc txt-prim bg-white">
+                    User: ${user.username}
+                </div>
+                <div class="about-user-container">
+                    <!-- User info here -->
+                </div>
+                <div id="chat-display"></div>
+                <div class="row add-button-area">
+                    <div>
+                        <input
+                        class="insert-msg bg-gray txt-black"
+                        id="msg-input"
+                        name="msg-input"
+                        placeholder="Insert Chat Message"
+                        maxlength="800"
+                        />
+                    </div>
+                    <div id="overlay-toggle">
+                        <span
+                        class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+                        onClick="sendMsg(${userId})"
+                        >send</span>
+                    </div>
+                </div>
+            </div>
+            `;
+        })
+        .catch((error) => {
+            console.error("Error fetching user information:", error);
+        });
 }
 
-function sendMsg() {
+function sendMsg(recipientId) {
     const messageInput = document.getElementById("msg-input");
     const message = messageInput.value;
+    displayMessage(message, 'You');  // Display the message immediately in the chat
 
     if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "message", message: message }));
+        socket.send(JSON.stringify({ type: "message", message: message, targetUserId: recipientId }));
         messageInput.value = ""; // Clear the input after sending
     } else {
         console.error("WebSocket is not connected.");
