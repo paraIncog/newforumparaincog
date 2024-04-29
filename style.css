@@ -485,5 +485,10 @@ button.foruminput {
 	width: 90%;
 	padding: 1rem;
 	margin-left: 1rem;
+	margin: 0 1rem;
 	border-radius: 1rem;
+}
+
+.single-chat {
+	padding-top: 1rem;
 }

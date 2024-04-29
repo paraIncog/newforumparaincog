@@ -27,6 +27,7 @@ function displayMessage(message, username) {
   const chatDisplay = document.getElementById("chat-display");
   const messageDiv = document.createElement("div");
   messageDiv.innerHTML = `
+  <div class="single-chat">
     <div class="single-chat-thread bg-gray">
       ${message}
       <div class="row">
@@ -34,6 +35,7 @@ function displayMessage(message, username) {
           ${username}
         </div>
       </div>
+    </div>
     </div>
   `;
   chatDisplay.appendChild(messageDiv);  // Adds new messages at the end, which appear at the bottom due to flex-reverse
