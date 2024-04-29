@@ -10,7 +10,7 @@ function setupWebSocket(userId) {
     socket.onmessage = function (event) {
       var data = JSON.parse(event.data);
       if (data.type === "message") {
-        displayMessage(data.message, data.fromUserId);
+        displayMessage(data.message, data.fromUsername);
       }
     };
     socket.onerror = function (event) {
@@ -23,20 +23,21 @@ function setupWebSocket(userId) {
   }
 }
 
-function displayMessage(message, userId) {
+function displayMessage(message, username) {
   const chatDisplay = document.getElementById("chat-display");
   const messageDiv = document.createElement("div");
-  messageDiv.className = 'single-forum-thread bg-gray';  // Consistent styling for messages
   messageDiv.innerHTML = `
+    <div class="single-chat-thread bg-gray">
       ${message}
       <div class="row">
-          <div class="single-forum-thread-uname">
-              ${userId}
-          </div>
+        <div class="single-forum-thread-uname">
+          ${username}
+        </div>
       </div>
+    </div>
   `;
-  chatDisplay.appendChild(messageDiv);
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;  // Auto-scroll to the latest message
+  chatDisplay.appendChild(messageDiv);  // Adds new messages at the end, which appear at the bottom due to flex-reverse
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;  // Scrolls to the bottom
 }
 
 document.addEventListener("DOMContentLoaded", function () {

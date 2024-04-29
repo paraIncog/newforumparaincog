@@ -63,24 +63,6 @@ function loadPage(page) {
         .then((response) => response.json())
         .then((users) => {
 			mainContent.innerHTML = `
-			<div id="chat-display"></div>
-			  <div class="row add-button-area">
-				  <div>
-					  <input
-					  class="insert-msg bg-gray txt-black"
-					  id="msg-input"
-					  name="msg-input"
-					  placeholder="Insert Chat Message"
-					  maxlength="800"
-					  />
-				  </div>
-					<div id="overlay-toggle">
-					  <span
-					  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-					  onClick="sendMsg()"
-					  >send</span>
-					</div>
-			  </div>
 			`
           sidebarContent.innerHTML = `
 				  <input
@@ -109,7 +91,7 @@ function showUserInfo(userId) {
             const mainContent = document.getElementById("main-content");
             mainContent.innerHTML = `
             <div class="container">
-                <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back to Forums</div>
+                <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">Back to Forums</div>
                 <div class="primary-page-desc txt-prim bg-white">
                     User: ${user.username}
                 </div>
@@ -125,6 +107,7 @@ function showUserInfo(userId) {
                         name="msg-input"
                         placeholder="Insert Chat Message"
                         maxlength="800"
+                        required
                         />
                     </div>
                     <div id="overlay-toggle">
@@ -145,7 +128,7 @@ function showUserInfo(userId) {
 function sendMsg(recipientId) {
     const messageInput = document.getElementById("msg-input");
     const message = messageInput.value;
-    displayMessage(message, 'You');  // Display the message immediately in the chat
+    displayMessage(message, 'You');
 
     if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify({ type: "message", message: message, targetUserId: recipientId }));

@@ -468,3 +468,22 @@ button.foruminput {
 #friend-users {
 	border-top: 1px solid #00A3FF;
 }
+
+#chat-display {
+	position: absolute;
+	bottom: 9vh;
+	display: flex;
+	flex-direction: column;
+	/* Ensures new messages appear from the bottom */
+	overflow-y: auto;
+	/* Enables scrolling */
+	height: 80vh;
+	width: 100%;
+}
+
+.single-chat-thread {
+	width: 90%;
+	padding: 1rem;
+	margin-left: 1rem;
+	border-radius: 1rem;
+}

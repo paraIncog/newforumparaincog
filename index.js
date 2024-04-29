@@ -555,10 +555,31 @@ wss.on("connection", function connection(ws, req) {
 });
 
 function broadcastMessage(connections, message, fromUserId) {
-  let targetUserId = message.targetUserId; // Assume this is passed along with the message
-  connections.forEach((ws, userId) => {
-      if (userId === targetUserId) { // Send message only to the intended recipient
-          ws.send(JSON.stringify({ type: 'message', message: message.message, fromUserId }));
+  let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READONLY, (err) => {
+      if (err) {
+          console.error("Database opening error:", err);
+          return;
       }
   });
+
+  db.get("SELECT username FROM users WHERE id = ?", [fromUserId], (err, row) => {
+      if (err) {
+          console.error("Database query error:", err);
+          return;
+      }
+      if (row) {
+          let username = row.username;
+          connections.forEach((ws, userId) => {
+              if (userId === message.targetUserId) { // Only send to the intended recipient
+                  ws.send(JSON.stringify({
+                      type: 'message',
+                      message: message.message,
+                      fromUsername: username
+                  }));
+              }
+          });
+      }
+  });
+
+  db.close();
 }
