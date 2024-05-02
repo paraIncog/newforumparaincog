@@ -429,13 +429,14 @@ app.get("/get-users", (req, res) => {
             console.error(err.message);
             return res.status(500).send("Internal Server Error");
           }
-
+          
           // Format created_at timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
             created_at: row.localtime,
             isOnline: activeConnections.get(`${row.id}`) != null,
           }));
+
 
           res.json(formattedRows);
         }
@@ -446,7 +447,7 @@ app.get("/get-users", (req, res) => {
 
 // Endpoint to fetch friends of a specific user
 app.get("/get-friends", (req, res) => {
-  const userId = req.query.id; // Extract userId from query parameters
+  const userId = req.session.user.id; // Extract userId from query parameters
   // console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
 
   let db = new sqlite3.Database(
@@ -458,8 +459,9 @@ app.get("/get-friends", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
+      console.log('CP1', userId)
       db.all(
-        "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
+        "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
         [userId],
         (err, rows) => {
           if (err) {
@@ -467,12 +469,16 @@ app.get("/get-friends", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
+          console.log('CP2', rows.length, rows)
+
           const formattedRows = rows.map((row) => ({
             ...row,
             isOnline: activeConnections.has(row.id),
           }));
+          console.log('CP3', formattedRows)
 
           res.json(formattedRows);
+
         }
       );
     }
