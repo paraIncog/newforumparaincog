@@ -492,3 +492,7 @@ button.foruminput {
 .single-chat {
 	padding-top: 1rem;
 }
+
+.logged-in-as {
+	font-size: .9rem;
+}

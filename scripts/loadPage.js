@@ -93,7 +93,7 @@ function showUserInfo(userId) {
             <div class="container">
                 <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">Back to Forums</div>
                 <div class="primary-page-desc txt-prim bg-white">
-                    User: ${user.username}
+                    Chat with User: ${user.username}
                 </div>
                 <div class="about-user-container">
                     <!-- User info here -->
