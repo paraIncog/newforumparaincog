@@ -544,7 +544,10 @@ wss.on("connection", function connection(ws, req) {
     ws.on("message", function incoming(message) {
       console.log(`Received from client ${userId}: %s`, message);
       const parsedMessage = JSON.parse(message);
-      broadcastMessage(activeConnections, parsedMessage, userId);
+      if (parsedMessage.type === "message") {
+        saveMessageToDB(parsedMessage, userId, parsedMessage.recipientId);
+      }
+      // broadcastMessage(activeConnections, parsedMessage, userId);
     });
 
     ws.send("Hello, WebSocket client!"); // Send a message to the client upon connection
@@ -557,6 +560,27 @@ wss.on("connection", function connection(ws, req) {
       activeConnections.delete(userId);
     });
 });
+
+function saveMessageToDB(message, senderId, recipientId) {
+  let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
+      if (err) {
+          console.error("Database connection error:", err);
+          return;
+      }
+  });
+
+  const insertQuery = `INSERT INTO messages (sender_id, recipient_id, content) VALUES (?, ?, ?)`;
+
+  db.run(insertQuery, [senderId, recipientId, message.message], function (err) {
+      if (err) {
+          console.error("Failed to insert message:", err);
+      } else {
+          console.log("Message inserted successfully");
+      }
+  });
+
+  db.close();
+}
 
 function broadcastMessage(connections, message, fromUserId) {
   let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READONLY, (err) => {
