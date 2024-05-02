@@ -458,8 +458,6 @@ app.get("/get-friends", (req, res) => {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
-
-      console.log('CP1', userId)
       db.all(
         "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
         [userId],
@@ -469,13 +467,13 @@ app.get("/get-friends", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          console.log('CP2', rows.length, rows)
+          // console.log('CP2', rows.length, rows)
 
           const formattedRows = rows.map((row) => ({
             ...row,
             isOnline: activeConnections.has(row.id),
           }));
-          console.log('CP3', formattedRows)
+          // console.log('CP3', formattedRows)
 
           res.json(formattedRows);
 
