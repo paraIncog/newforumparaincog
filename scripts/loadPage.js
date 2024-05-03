@@ -126,16 +126,16 @@ function showUserInfo(userId) {
 }
 
 function sendMsg(recipientId) {
-  const messageInput = document.getElementById("msg-input");
-  const message = messageInput.value;
-  displayMessage(message, 'You');
+    const messageInput = document.getElementById("msg-input");
+    const message = messageInput.value;
+    displayMessage(message, 'You');
 
-  if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify({ type: "message", message: message, recipientId: recipientId }));
-      messageInput.value = ""; // Clear the input after sending
-  } else {
-      console.error("WebSocket is not connected.");
-  }
+    if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.send(JSON.stringify({ type: "message", message: message, targetUserId: recipientId }));
+        messageInput.value = ""; // Clear the input after sending
+    } else {
+        console.error("WebSocket is not connected.");
+    }
 }
 
 function showForum(postId) {

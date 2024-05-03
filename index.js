@@ -458,6 +458,8 @@ app.get("/get-friends", (req, res) => {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
+
+      console.log('CP1', userId)
       db.all(
         "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
         [userId],
@@ -467,13 +469,13 @@ app.get("/get-friends", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          // console.log('CP2', rows.length, rows)
+          console.log('CP2', rows.length, rows)
 
           const formattedRows = rows.map((row) => ({
             ...row,
             isOnline: activeConnections.has(row.id),
           }));
-          // console.log('CP3', formattedRows)
+          console.log('CP3', formattedRows)
 
           res.json(formattedRows);
 
@@ -544,10 +546,7 @@ wss.on("connection", function connection(ws, req) {
     ws.on("message", function incoming(message) {
       console.log(`Received from client ${userId}: %s`, message);
       const parsedMessage = JSON.parse(message);
-      if (parsedMessage.type === "message") {
-        saveMessageToDB(parsedMessage, userId, parsedMessage.recipientId);
-      }
-      // broadcastMessage(activeConnections, parsedMessage, userId);
+      broadcastMessage(activeConnections, parsedMessage, userId);
     });
 
     ws.send("Hello, WebSocket client!"); // Send a message to the client upon connection
@@ -560,27 +559,6 @@ wss.on("connection", function connection(ws, req) {
       activeConnections.delete(userId);
     });
 });
-
-function saveMessageToDB(message, senderId, recipientId) {
-  let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
-      if (err) {
-          console.error("Database connection error:", err);
-          return;
-      }
-  });
-
-  const insertQuery = `INSERT INTO messages (sender_id, recipient_id, content) VALUES (?, ?, ?)`;
-
-  db.run(insertQuery, [senderId, recipientId, message.message], function (err) {
-      if (err) {
-          console.error("Failed to insert message:", err);
-      } else {
-          console.log("Message inserted successfully");
-      }
-  });
-
-  db.close();
-}
 
 function broadcastMessage(connections, message, fromUserId) {
   let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READONLY, (err) => {
