@@ -131,7 +131,7 @@ function sendMsg(recipientId) {
     displayMessage(message, 'You');
 
     if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "message", message: message, targetUserId: recipientId }));
+        socket.send(JSON.stringify({ type: "message", message: message, recipientId: recipientId }));
         messageInput.value = ""; // Clear the input after sending
     } else {
         console.error("WebSocket is not connected.");
