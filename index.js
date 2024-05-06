@@ -479,6 +479,30 @@ app.get("/get-friends", (req, res) => {
   );
 });
 
+// In your index.js (Express setup)
+app.get("/get-messages", isLoggedIn, (req, res) => {
+  const { userId } = req.query; // Assuming userId is passed as a query parameter
+
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    db.all(
+      "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY created_at",
+      [userId, userId],
+      (err, rows) => {
+        if (err) {
+          console.error(err.message);
+          return res.status(500).send("Internal Server Error");
+        }
+        res.json(rows);
+      }
+    );
+  });
+});
+
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
   req.session.destroy((err) => {

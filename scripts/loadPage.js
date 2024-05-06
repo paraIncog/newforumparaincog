@@ -62,8 +62,8 @@ function loadPage(page) {
       fetch("/get-users")
         .then((response) => response.json())
         .then((users) => {
-			mainContent.innerHTML = `
-			`
+          mainContent.innerHTML = `
+			`;
           sidebarContent.innerHTML = `
 				  <input
 					  class="searchbar"
@@ -85,11 +85,11 @@ function loadPage(page) {
 }
 
 function showUserInfo(userId) {
-    fetch(`/get-user?id=${userId}`)
-        .then((response) => response.json())
-        .then((user) => {
-            const mainContent = document.getElementById("main-content");
-            mainContent.innerHTML = `
+  fetch(`/get-user?id=${userId}`)
+    .then((response) => response.json())
+    .then((user) => {
+      const mainContent = document.getElementById("main-content");
+      mainContent.innerHTML = `
             <div class="container">
                 <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">Back to Forums</div>
                 <div class="primary-page-desc txt-prim bg-white">
@@ -119,23 +119,55 @@ function showUserInfo(userId) {
                 </div>
             </div>
             `;
-        })
-        .catch((error) => {
-            console.error("Error fetching user information:", error);
-        });
+      fetchMessages(userId);
+    })
+    .catch((error) => {
+      console.error("Error fetching user information:", error);
+    });
+}
+
+function fetchMessages(userId) {
+  fetch(`/get-messages?userId=${userId}`)
+    .then((response) => response.json())
+    .then((messages) => {
+      const chatDisplay = document.getElementById("chat-display");
+      messages.forEach((message) => {
+        const messageDiv = document.createElement("div");
+        messageDiv.innerHTML = `
+          <div class="single-chat">
+            <div class="single-chat-thread bg-gray">
+              ${message.content}
+              <div class="row">
+                <div class="single-forum-thread-uname">
+                  ${message.sender_id === userId ? "You": "Them"}
+                </div>
+              </div>
+            </div>
+            </div>
+          `;
+        chatDisplay.appendChild(messageDiv);
+      });
+      chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll to bottom
+    });
 }
 
 function sendMsg(recipientId) {
-    const messageInput = document.getElementById("msg-input");
-    const message = messageInput.value;
-    displayMessage(message, 'You');
+  const messageInput = document.getElementById("msg-input");
+  const message = messageInput.value;
+  displayMessage(message, "You");
 
-    if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.send(JSON.stringify({ type: "message", message: message, recipientId: recipientId }));
-        messageInput.value = ""; // Clear the input after sending
-    } else {
-        console.error("WebSocket is not connected.");
-    }
+  if (socket && socket.readyState === WebSocket.OPEN) {
+    socket.send(
+      JSON.stringify({
+        type: "message",
+        message: message,
+        recipientId: recipientId,
+      })
+    );
+    messageInput.value = ""; // Clear the input after sending
+  } else {
+    console.error("WebSocket is not connected.");
+  }
 }
 
 function showForum(postId) {
