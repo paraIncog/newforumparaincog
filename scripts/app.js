@@ -11,7 +11,6 @@ function setupWebSocket(userId) {
       var data = JSON.parse(event.data);
       if (data.type === "message") {
         displayMessage(data.message, data.fromUsername);
-        displayNotification(data.fromUsername);
       }
     };
     socket.onerror = function (event) {
@@ -22,16 +21,6 @@ function setupWebSocket(userId) {
       socket = null; // Reset the socket to null to handle reconnections cleanly
     };
   }
-}
-
-function displayNotification(username) {
-  const notificationArea = document.getElementById('notification-area');
-  const notification = document.createElement('div');
-  notification.innerHTML = `<div class="notification">New message from ${username}!</div>`;
-  notification.onclick = function() {
-    this.remove();  // Remove notification when clicked
-  };
-  notificationArea.appendChild(notification);
 }
 
 function displayMessage(message, username) {

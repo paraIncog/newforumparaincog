@@ -89,13 +89,7 @@ function loadPage(page) {
   }
 }
 
-function clearNotifications() {
-  const notifications = document.querySelectorAll('.notification');
-  notifications.forEach(notification => notification.remove());
-}
-
 function showUserInfo(userId) {
-  clearNotifications();
   fetch(`/get-user?id=${userId}`)
     .then((response) => response.json())
     .then((user) => {
