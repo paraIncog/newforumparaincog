@@ -139,12 +139,12 @@ function fetchMessages(userId) {
               ${message.content}
               <div class="row">
                 <div class="single-forum-thread-uname">
-                  ${message.sender_id === userId ? "You": "Them"}
+                  ${message.sender_id === userId ? "You" : message.sender_username}
                 </div>
               </div>
             </div>
-            </div>
-          `;
+          </div>
+        `;
         chatDisplay.appendChild(messageDiv);
       });
       chatDisplay.scrollTop = chatDisplay.scrollHeight; // Scroll to bottom

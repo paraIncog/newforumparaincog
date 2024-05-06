@@ -427,14 +427,13 @@ app.get("/get-users", (req, res) => {
             console.error(err.message);
             return res.status(500).send("Internal Server Error");
           }
-          
+
           // Format created_at timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
             created_at: row.localtime,
             isOnline: activeConnections.get(`${row.id}`) != null,
           }));
-
 
           res.json(formattedRows);
         }
@@ -456,7 +455,7 @@ app.get("/get-friends", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
-      console.log('CP1', userId)
+      console.log("CP1", userId);
       db.all(
         "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
         [userId],
@@ -472,16 +471,14 @@ app.get("/get-friends", (req, res) => {
           }));
 
           res.json(formattedRows);
-
         }
       );
     }
   );
 });
 
-// In your index.js (Express setup)
 app.get("/get-messages", isLoggedIn, (req, res) => {
-  const { userId } = req.query; // Assuming userId is passed as a query parameter
+  const { userId } = req.query;
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -489,17 +486,21 @@ app.get("/get-messages", isLoggedIn, (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
 
-    db.all(
-      "SELECT * FROM messages WHERE sender_id = ? OR recipient_id = ? ORDER BY created_at",
-      [userId, userId],
-      (err, rows) => {
-        if (err) {
-          console.error(err.message);
-          return res.status(500).send("Internal Server Error");
-        }
-        res.json(rows);
+    const query = `
+      SELECT m.*, u.username as sender_username
+      FROM messages m
+      JOIN users u ON m.sender_id = u.id
+      WHERE m.sender_id = ? OR m.recipient_id = ?
+      ORDER BY m.created_at DESC
+    `;
+
+    db.all(query, [userId, userId], (err, rows) => {
+      if (err) {
+        console.error(err.message);
+        return res.status(500).send("Internal Server Error");
       }
-    );
+      res.json(rows);
+    });
   });
 });
 
@@ -566,61 +567,74 @@ wss.on("connection", function connection(ws, req) {
     });
 
     ws.send("Hello, WebSocket client!");
-
   }
-    // Handle WebSocket connection close
-    ws.on("close", function close() {
-      console.log("WebSocket client disconnected", userId);
-      activeConnections.delete(userId);
-    });
+  // Handle WebSocket connection close
+  ws.on("close", function close() {
+    console.log("WebSocket client disconnected", userId);
+    activeConnections.delete(userId);
+  });
 });
 
 function broadcastMessage(connections, message, fromUserId) {
-  let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READONLY, (err) => {
+  let db = new sqlite3.Database(
+    "./database.db",
+    sqlite3.OPEN_READONLY,
+    (err) => {
       if (err) {
-          console.error("Database opening error:", err);
-          return;
+        console.error("Database opening error:", err);
+        return;
       }
-  });
+    }
+  );
 
-  db.get("SELECT username FROM users WHERE id = ?", [fromUserId], (err, row) => {
+  db.get(
+    "SELECT username FROM users WHERE id = ?",
+    [fromUserId],
+    (err, row) => {
       if (err) {
-          console.error("Database query error:", err);
-          return;
+        console.error("Database query error:", err);
+        return;
       }
       if (row) {
-          let username = row.username;
-          connections.forEach((ws, userId) => {
-              if (userId === message.recipientId) {
-                  ws.send(JSON.stringify({
-                      type: 'message',
-                      message: message.message,
-                      fromUsername: username
-                  }));
-              }
-          });
+        let username = row.username;
+        connections.forEach((ws, userId) => {
+          if (userId === message.recipientId) {
+            ws.send(
+              JSON.stringify({
+                type: "message",
+                message: message.message,
+                fromUsername: username,
+              })
+            );
+          }
+        });
       }
-  });
+    }
+  );
 
   db.close();
 }
 
 function saveMessageToDB(message, senderId, recipientId) {
-  let db = new sqlite3.Database('./database.db', sqlite3.OPEN_READWRITE, (err) => {
+  let db = new sqlite3.Database(
+    "./database.db",
+    sqlite3.OPEN_READWRITE,
+    (err) => {
       if (err) {
-          console.error("Database connection error:", err);
-          return;
+        console.error("Database connection error:", err);
+        return;
       }
-  });
+    }
+  );
 
   const insertQuery = `INSERT INTO messages (sender_id, recipient_id, content) VALUES (?, ?, ?)`;
 
   db.run(insertQuery, [senderId, recipientId, message.message], function (err) {
-      if (err) {
-          console.error("Failed to insert message:", err);
-      } else {
-          console.log("Message inserted successfully");
-      }
+    if (err) {
+      console.error("Failed to insert message:", err);
+    } else {
+      console.log("Message inserted successfully");
+    }
   });
 
   db.close();
