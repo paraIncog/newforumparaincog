@@ -496,3 +496,8 @@ button.foruminput {
 .logged-in-as {
 	font-size: .9rem;
 }
+
+.iconsize {
+	height: 2rem;
+	width: 2rem;
+}
