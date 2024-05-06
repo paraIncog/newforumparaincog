@@ -35,7 +35,7 @@ app.use(express.static(path.join(__dirname)));
 // Initialize session middleware
 app.use(
   session({
-    secret: "your_secret_key", // Change this to a secret key
+    secret: "your_secret_key",
     resave: false,
     saveUninitialized: false,
     cookie: { secure: false },
@@ -128,7 +128,6 @@ app.get("/check-session", (req, res) => {
     // Session exists and user is logged in
     res.sendStatus(200); // Send a success status code
   } else {
-    // Session doesn't exist or user is not logged in
     res.sendStatus(401); // Send an unauthorized status code
   }
 });
@@ -227,7 +226,7 @@ app.get("/get-forums", (req, res) => {
 
 // Endpoint to fetch a specific user by ID
 app.get("/get-user", (req, res) => {
-  const userId = req.query.id; // Extract userId from query parameters
+  const userId = req.query.id;
   let db = new sqlite3.Database(
     "./database.db",
     sqlite3.OPEN_READWRITE,
@@ -288,7 +287,7 @@ app.get("/get-forum", (req, res) => {
 // Endpoint to handle addition of forum post
 app.post("/add-forum-post", isLoggedIn, (req, res) => {
   const { title, category, content } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.username;
 
   // Check if all required fields are provided
   if (!title || !category || !content || !author) {
@@ -326,7 +325,7 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
 // Add endpoint to handle adding comments
 app.post("/add-comment", isLoggedIn, (req, res) => {
   const { postId, commentContent } = req.body;
-  const author = req.session.user.username; // Extract author's username from session
+  const author = req.session.user.username;
 
   // Check if all required fields are provided
   if (!postId || !commentContent || !author) {
@@ -409,8 +408,7 @@ app.get("/get-comments", (req, res) => {
 
 // Endpoint to fetch users of a specific user
 app.get("/get-users", (req, res) => {
-  const userId = req.query.id; // Extract userId from query parameters
-  // console.log("CP2 getusers userid: ", userId, activeConnections.keys())
+  const userId = req.query.id;
 
   let db = new sqlite3.Database(
     "./database.db",
@@ -447,8 +445,7 @@ app.get("/get-users", (req, res) => {
 
 // Endpoint to fetch friends of a specific user
 app.get("/get-friends", (req, res) => {
-  const userId = req.session.user.id; // Extract userId from query parameters
-  // console.log("CP2 getFriends userid: ", userId, activeConnections.keys())
+  const userId = req.session.user.id;
 
   let db = new sqlite3.Database(
     "./database.db",
@@ -469,13 +466,10 @@ app.get("/get-friends", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          console.log('CP2', rows.length, rows)
-
           const formattedRows = rows.map((row) => ({
             ...row,
             isOnline: activeConnections.has(row.id),
           }));
-          console.log('CP3', formattedRows)
 
           res.json(formattedRows);
 
@@ -487,19 +481,16 @@ app.get("/get-friends", (req, res) => {
 
 // Endpoint to handle logout
 app.get("/logout", (req, res) => {
-  // Destroy the session
   req.session.destroy((err) => {
     if (err) {
       console.error("Error destroying session:", err);
       return res.status(500).send("Internal Server Error");
     }
-    res.redirect("/"); // Redirect to the login page after logout
+    res.redirect("/");
   });
 });
 
-// WebSocket server
-
-// Map WebSocket connections to user sessions
+// WebSocket
 const activeConnections = new Map();
 
 server.on("upgrade", (request, socket, head) => {
@@ -550,13 +541,12 @@ wss.on("connection", function connection(ws, req) {
       saveMessageToDB(parsedMessage, userId, parsedMessage.recipientId);
     });
 
-    ws.send("Hello, WebSocket client!"); // Send a message to the client upon connection
+    ws.send("Hello, WebSocket client!");
 
   }
     // Handle WebSocket connection close
     ws.on("close", function close() {
       console.log("WebSocket client disconnected", userId);
-      // Remove WebSocket connection from activeConnections map
       activeConnections.delete(userId);
     });
 });
@@ -577,7 +567,7 @@ function broadcastMessage(connections, message, fromUserId) {
       if (row) {
           let username = row.username;
           connections.forEach((ws, userId) => {
-              if (userId === message.recipientId) { // Only send to the intended recipient
+              if (userId === message.recipientId) {
                   ws.send(JSON.stringify({
                       type: 'message',
                       message: message.message,
