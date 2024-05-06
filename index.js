@@ -477,8 +477,9 @@ app.get("/get-friends", (req, res) => {
   );
 });
 
+// Endpoint to fetch messages for a logged-in user
 app.get("/get-messages", isLoggedIn, (req, res) => {
-  const { userId } = req.query;
+  const userId = req.session.user.id;  // Ensure you're using the authenticated user's ID
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -490,7 +491,7 @@ app.get("/get-messages", isLoggedIn, (req, res) => {
       SELECT m.*, u.username as sender_username
       FROM messages m
       JOIN users u ON m.sender_id = u.id
-      WHERE m.sender_id = ? OR m.recipient_id = ?
+      WHERE (m.sender_id = ? OR m.recipient_id = ?)
       ORDER BY m.created_at DESC
     `;
 
@@ -576,41 +577,31 @@ wss.on("connection", function connection(ws, req) {
 });
 
 function broadcastMessage(connections, message, fromUserId) {
-  let db = new sqlite3.Database(
-    "./database.db",
-    sqlite3.OPEN_READONLY,
-    (err) => {
-      if (err) {
-        console.error("Database opening error:", err);
-        return;
-      }
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READONLY, (err) => {
+    if (err) {
+      console.error("Database opening error:", err);
+      return;
     }
-  );
+  });
 
-  db.get(
-    "SELECT username FROM users WHERE id = ?",
-    [fromUserId],
-    (err, row) => {
-      if (err) {
-        console.error("Database query error:", err);
-        return;
-      }
-      if (row) {
-        let username = row.username;
-        connections.forEach((ws, userId) => {
-          if (userId === message.recipientId) {
-            ws.send(
-              JSON.stringify({
-                type: "message",
-                message: message.message,
-                fromUsername: username,
-              })
-            );
-          }
-        });
-      }
+  db.get("SELECT username FROM users WHERE id = ?", [fromUserId], (err, row) => {
+    if (err) {
+      console.error("Database query error:", err);
+      return;
     }
-  );
+    if (row) {
+      let username = row.username;
+      connections.forEach((ws, userId) => {
+        if (userId === message.recipientId) {  // Strictly check recipient ID
+          ws.send(JSON.stringify({
+            type: "message",
+            message: message.message,
+            fromUsername: username,
+          }));
+        }
+      });
+    }
+  });
 
   db.close();
 }
