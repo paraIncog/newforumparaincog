@@ -492,7 +492,7 @@ app.get("/get-messages", isLoggedIn, (req, res) => {
       FROM messages m
       JOIN users u ON m.sender_id = u.id
       WHERE (m.sender_id = ? OR m.recipient_id = ?)
-      ORDER BY m.created_at DESC
+      ORDER BY m.created_at
     `;
 
     db.all(query, [userId, userId], (err, rows) => {
