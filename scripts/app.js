@@ -6,21 +6,46 @@ function setupWebSocket(userId) {
     socket.onopen = function () {
       console.log("WebSocket is open now.");
     };
+
     // Setup to handle incoming WebSocket messages
     socket.onmessage = function (event) {
       var data = JSON.parse(event.data);
       if (data.type === "message") {
-        displayMessage(data.message, data.fromUsername);
+        // Check if the current chat is with the sender
+        const currentChatUser = sessionStorage.getItem('currentChatUser'); // Assuming you store the current chat user's username or id in sessionStorage
+        if (currentChatUser === data.fromUsername) {
+          displayMessage(data.message, data.fromUsername);
+        } else {
+          // Display notification
+          displayNotification(data.fromUsername);
+        }
       }
     };
+    
     socket.onerror = function (event) {
       console.error("WebSocket error observed:", event);
     };
+
     socket.onclose = function () {
       console.log("WebSocket is closed now.");
       socket = null; // Reset the socket to null to handle reconnections cleanly
     };
   }
+}
+
+let notificationCount = 0;  // Keep track of notifications
+
+function displayNotification(username) {
+  const notificationArea = document.getElementById("notification-area");
+  const notification = document.createElement("div");
+  notification.className = "notification";
+  `notification-${notificationCount++}`;
+  notification.innerHTML = `Message from: ${username}`;
+  notification.onclick = function() {
+    openChat(username);
+    notificationArea.removeChild(notification);
+  };
+  notificationArea.appendChild(notification);
 }
 
 function displayMessage(message, username) {
