@@ -1,6 +1,6 @@
 # newforumparaincog
 <!-- Screenshot -->
-Version 0.3
+Version 0.4
 
 ## Table of Contents
 - [Getting Started](#getting-started)
