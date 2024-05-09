@@ -5,7 +5,16 @@ body {
 	font-family: 'Inter', serif;
 }
 
+.apptitle {
+	color: #0000FF;
+	font-size: 1.5rem;
+	font-weight: bold;
+	letter-spacing: .1rem;
+	margin-left: 1rem;
+}
+
 .row {
+	align-items: center;
 	display: flex;
 	flex-direction: row;
 }
@@ -107,7 +116,7 @@ select {
 }
 
 button.login {
-	color: white;
+	color: #FFF;
 	outline: 0;
 }
 
@@ -264,7 +273,7 @@ button.login {
 }
 
 .user-search-item {
-	border: 2px solid blue;
+	border: 2px solid #0000FF;
 	border-radius: .5rem;
 	display: flex;
 	align-items: center;
@@ -301,7 +310,7 @@ button.login {
 	height: 5rem;
 	width: 5rem;
 	border-radius: 50%;
-	border: .2rem solid white;
+	border: .2rem solid #FFF;
 }
 
 .about-user-fullname {
@@ -328,11 +337,11 @@ button.login {
 }
 
 .abs-forums {
-	color: green;
+	color: #008000;
 }
 
 .abs-pms {
-	color: blue;
+	color: #0000FF;
 }
 
 .add-button-selector:hover {
@@ -398,7 +407,7 @@ button.login {
 .foruminput {
 	border-radius: 1rem;
 	outline: none;
-	border: .1rem solid black;
+	border: .1rem solid #000;
 	padding: .5rem;
 }
 
@@ -498,6 +507,14 @@ button.foruminput {
 }
 
 .iconsize {
-	height: 2rem;
-	width: 2rem;
+	color: #0000FF;
+	font-weight: bold;
+	height: 3rem;
+	margin-left: 1rem;
+	width: 3rem;
+	justify-content: end;
+}
+
+.notification {
+	/* Notified */
 }

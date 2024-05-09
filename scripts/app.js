@@ -40,7 +40,7 @@ function displayNotification(username) {
   const notification = document.createElement("div");
   notification.className = "notification";
   `notification-${notificationCount++}`;
-  notification.innerHTML = `Message from: ${username}`;
+  notification.innerHTML = `Message from ${username}`;
   notification.onclick = function() {
     openChat(username);
     notificationArea.removeChild(notification);
