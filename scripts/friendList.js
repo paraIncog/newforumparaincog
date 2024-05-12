@@ -11,7 +11,8 @@ function displayFriends(userId) {
 				<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${friend.id})">
 					<div class="accountname-side">
 						${friend.username}
-						<br>
+					</div>
+					<div>
 						isonline: ${friend.isOnline}
 					</div>
 					<!-- <div class="about-user-button">
