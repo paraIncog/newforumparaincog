@@ -16,7 +16,6 @@ function loadPage(page) {
 		<br>
 		<div id="friend-users"></div>
     <div class="sessioner-box bg-prim txt-white clickable sessioner-user">
-      <div class="sessioner-user-profilepic bg-gray"></div>
         <div>
           <div class="sessioner-user-username"></div>
         </div>
@@ -42,7 +41,6 @@ function loadPage(page) {
                     (post) =>
                       `
 						  <div class="single-forum clickable" onclick="showForum(${post.id})">
-							  <div class="profilepic bg-gray"></div>
 							  <div class="single-forum-thread bg-gray">
 								  <div class="row">
 									  <div class="single-forum-thread-category bg-gray">
@@ -213,7 +211,6 @@ function showForum(postId) {
 				  Forum: ${post.title}
 			  </div>
 			  <div class="single-forum">
-				  <div class="profilepic bg-gray"></div>
 				  <div class="single-forum-thread bg-gray">
 					  <div class="single-forum-thread-uname bg-gray">${post.author}</div>
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${post.content}</div>
@@ -255,7 +252,6 @@ function showForum(postId) {
       comments.forEach((comment) => {
         commentsContainer.innerHTML += `
 			  <div class="single-forum">
-				  <div class="profilepic bg-gray"></div>
 				  <div class="single-forum-thread bg-gray">
 					  <div class="single-forum-thread-uname bg-gray">${comment.author}</div>
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${comment.content}</div>

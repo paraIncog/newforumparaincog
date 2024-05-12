@@ -9,9 +9,6 @@ function displayFriends(userId) {
 			  (friend) =>
 			`
 				<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${friend.id})">
-					<div class="pm-inner-container profilepic bg-gray">
-						<!-- Profile Pic -->
-					</div>
 					<div class="accountname-side">
 						${friend.username}
 						<br>
