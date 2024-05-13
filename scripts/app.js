@@ -84,7 +84,7 @@ function checkSessionAndLoadUsername() {
     .then((response) => response.json())
     .then((data) => {
       const usernameElement = document.querySelector(
-        ".sessioner-user-username"
+        ".sessioner-username"
       );
       if (usernameElement) {
         usernameElement.textContent = data.username;

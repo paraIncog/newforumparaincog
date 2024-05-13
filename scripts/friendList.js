@@ -9,19 +9,12 @@ function displayFriends(userId) {
 			  (friend) =>
 			`
 				<div class="pm-person-sel txt-white bg-scnd clickable" onclick="showUserInfo(${friend.id})">
-					<div class="accountname-side">
+					<div class="username-side">
 						${friend.username}
 					</div>
-					<div>
-						isonline: ${friend.isOnline}
-					</div>
-					<!-- <div class="about-user-button">
-						<span class="material-symbols-outlined">
-							more_horiz
-						</span>
-					</div> -->
+					<div class="${friend.isOnline ? 'online-status' : 'offline-status'}"></div>
 				</div>
-				`
+			`
 			)
 			.join(``)}
 		`;

@@ -24,11 +24,6 @@ function login() {
       </div>
     </div>
   `;
-  sidebarContent.innerHTML = `
-    <div>
-      <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
-    </div>
-  `;
 
   // Add event listener for form submission
   document
@@ -60,7 +55,7 @@ function login() {
           } else {
             // Successful login
             console.log("Congrats, " + username + "!");
-            document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
+            document.querySelector(".sessioner-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
 

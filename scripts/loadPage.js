@@ -1,6 +1,9 @@
 function loadPage(page) {
   const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
+  
+  document.querySelector('.sessioner-box').style.display = 'flex';
+  
   sidebarContent.innerHTML = `
     <div class="row">
       <img src="./icons/rtf_icon.png" alt="" class="iconsize">
@@ -17,7 +20,7 @@ function loadPage(page) {
 		<div id="friend-users"></div>
     <div class="sessioner-box bg-prim txt-white clickable sessioner-user">
         <div>
-          <div class="sessioner-user-username"></div>
+          <div class="sessioner-username"></div>
         </div>
         <div class="btn-logout" onclick="logout()">
           <span class="material-symbols-outlined">
@@ -50,7 +53,7 @@ function loadPage(page) {
 										  ${post.title}
 									  </div>
 									  <div class="single-forum-thread-time bg-gray">
-										  ${post.created_at}
+										  ${post.date}
 									  </div>
 								  </div>
 								  <div class="single-forum-thread-uname bg-gray">
@@ -216,7 +219,7 @@ function showForum(postId) {
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${post.content}</div>
 					  <div class="row">
 						  <div class="single-forum-thread-time bg-gray">
-							  ${post.created_at}
+							  ${post.date}
 						  </div>
 					  </div>
 				  </div>
@@ -256,7 +259,7 @@ function showForum(postId) {
 					  <div class="single-forum-thread-uname bg-gray">${comment.author}</div>
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${comment.content}</div>
 					  <div class="row">
-						  <div class="single-forum-thread-time bg-gray">${comment.created_at}</div>
+						  <div class="single-forum-thread-time bg-gray">${comment.date}</div>
 					  </div>
 				  </div>
 			  </div>
