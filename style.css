@@ -371,6 +371,10 @@ button.login {
 	justify-content: space-between;
 }
 
+.sessioner-username {
+	margin-left: 2rem;
+}
+
 /* Add Forum page */
 
 #forumForm {

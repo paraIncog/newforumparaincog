@@ -17,7 +17,7 @@ function loadPage(page) {
 		<div id="friend-users"></div>
     <div class="sessioner-box bg-prim txt-white clickable sessioner-user">
         <div>
-          <div class="sessioner-user-username"></div>
+          <div class="sessioner-username"></div>
         </div>
         <div class="btn-logout" onclick="logout()">
           <span class="material-symbols-outlined">

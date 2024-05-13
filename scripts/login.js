@@ -60,7 +60,7 @@ function login() {
           } else {
             // Successful login
             console.log("Congrats, " + username + "!");
-            document.querySelector(".sessioner-user-username").textContent = data.username; // Set the username in the placeholder
+            document.querySelector(".sessioner-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
 
