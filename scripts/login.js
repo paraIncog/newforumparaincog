@@ -24,11 +24,6 @@ function login() {
       </div>
     </div>
   `;
-  sidebarContent.innerHTML = `
-    <div>
-      <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
-    </div>
-  `;
 
   // Add event listener for form submission
   document

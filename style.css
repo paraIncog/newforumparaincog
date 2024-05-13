@@ -515,3 +515,8 @@ button.foruminput {
 .offline-status {
     background-color: red;
 }
+
+/* Hide sidebar by default */
+.sessioner-box {
+    display: none;
+}

@@ -1,6 +1,9 @@
 function loadPage(page) {
   const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
+  
+  document.querySelector('.sessioner-box').style.display = 'flex';
+  
   sidebarContent.innerHTML = `
     <div class="row">
       <img src="./icons/rtf_icon.png" alt="" class="iconsize">
