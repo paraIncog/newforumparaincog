@@ -204,17 +204,17 @@ app.get("/get-forums", (req, res) => {
       }
 
       db.all(
-        "SELECT id, title, author, content, datetime(created_at, 'localtime') localtime, category FROM posts",
+        "SELECT id, title, author, content, datetime(date, 'localtime') localtime, category FROM posts",
         (err, rows) => {
           if (err) {
             console.error(err.message);
             return res.status(500).send("Internal Server Error");
           }
 
-          // Format created_at timestamp before sending it in the response
+          // Format date timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
-            created_at: row.localtime,
+            date: row.localtime,
           }));
 
           res.json(formattedRows);
@@ -267,7 +267,7 @@ app.get("/get-forum", (req, res) => {
       }
 
       db.get(
-        "SELECT id, title, author, content, created_at, category FROM posts WHERE id = ?",
+        "SELECT id, title, author, content, date, category FROM posts WHERE id = ?",
         [postId],
         (err, row) => {
           if (err) {
@@ -373,7 +373,7 @@ app.get("/get-comments", (req, res) => {
       }
 
       db.all(
-        "SELECT id, post_id, author, content, created_at FROM posts_comments WHERE post_id = ?",
+        "SELECT id, post_id, author, content, date FROM posts_comments WHERE post_id = ?",
         [postId],
         (err, rows) => {
           if (err) {
@@ -381,18 +381,18 @@ app.get("/get-comments", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          // Format created_at timestamp before sending it in the response
+          // Format date timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
-            created_at:
-              new Date(row.created_at).toLocaleDateString("et-EE", {
+            date:
+              new Date(row.date).toLocaleDateString("et-EE", {
                 year: "numeric",
                 month: "2-digit",
                 day: "2-digit",
                 timeZone: "Europe/Tallinn",
               }) +
               ", " +
-              new Date(row.created_at).toLocaleTimeString("et-EE", {
+              new Date(row.date).toLocaleTimeString("et-EE", {
                 hour: "2-digit",
                 minute: "2-digit",
                 timeZone: "Europe/Tallinn",
@@ -420,7 +420,7 @@ app.get("/get-users", (req, res) => {
       }
 
       db.all(
-        "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
+        "SELECT u.username, u.id, max(date) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id GROUP BY u.username, u.id ORDER BY m.date DESC, u.username",
         [userId],
         (err, rows) => {
           if (err) {
@@ -428,10 +428,10 @@ app.get("/get-users", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          // Format created_at timestamp before sending it in the response
+          // Format date timestamp before sending it in the response
           const formattedRows = rows.map((row) => ({
             ...row,
-            created_at: row.localtime,
+            date: row.localtime,
             isOnline: activeConnections.get(`${row.id}`) != null,
           }));
 
@@ -457,7 +457,7 @@ app.get("/get-friends", (req, res) => {
 
       console.log("CP1", userId);
       db.all(
-        "SELECT u.username, u.id, max(created_at) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.created_at DESC, u.username",
+        "SELECT u.username, u.id, max(date) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.date DESC, u.username",
         [userId],
         (err, rows) => {
           if (err) {
@@ -492,7 +492,7 @@ app.get("/get-messages", isLoggedIn, (req, res) => {
       FROM messages m
       JOIN users u ON m.sender_id = u.id
       WHERE (m.sender_id = ? OR m.recipient_id = ?)
-      ORDER BY m.created_at
+      ORDER BY m.date
     `;
 
     db.all(query, [userId, userId], (err, rows) => {

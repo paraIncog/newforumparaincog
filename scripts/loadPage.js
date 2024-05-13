@@ -50,7 +50,7 @@ function loadPage(page) {
 										  ${post.title}
 									  </div>
 									  <div class="single-forum-thread-time bg-gray">
-										  ${post.created_at}
+										  ${post.date}
 									  </div>
 								  </div>
 								  <div class="single-forum-thread-uname bg-gray">
@@ -216,7 +216,7 @@ function showForum(postId) {
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${post.content}</div>
 					  <div class="row">
 						  <div class="single-forum-thread-time bg-gray">
-							  ${post.created_at}
+							  ${post.date}
 						  </div>
 					  </div>
 				  </div>
@@ -256,7 +256,7 @@ function showForum(postId) {
 					  <div class="single-forum-thread-uname bg-gray">${comment.author}</div>
 					  <div class="single-forum-thread-intro bg-gray" maxlength="600">${comment.content}</div>
 					  <div class="row">
-						  <div class="single-forum-thread-time bg-gray">${comment.created_at}</div>
+						  <div class="single-forum-thread-time bg-gray">${comment.date}</div>
 					  </div>
 				  </div>
 			  </div>
