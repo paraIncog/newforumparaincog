@@ -60,7 +60,7 @@ function displayMessage(message, username) {
         <div class="single-forum-thread-uname">
           ${username}
         </div>
-        <div class="single-forum-thread-time bg-gray">${getFormattedDate()}</div>
+        <div class="single-forum-thread-time bg-gray"></div>
       </div>
     </div>
     </div>

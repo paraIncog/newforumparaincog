@@ -94,12 +94,8 @@ function loadPage(page) {
 
 function openChat(username) {
   sessionStorage.setItem('currentChatUser', username);
-  const chatDisplay = document.getElementById('chat-display'); // The area where chat messages are displayed
+  const chatDisplay = document.getElementById('chat-display');
   chatDisplay.innerHTML = ''; // Optionally clear previous messages
-
-  // Logic to load chat messages from the server could be added here
-
-  // Remove any notifications from this user
   const notifications = document.querySelectorAll('.notification');
   notifications.forEach(notification => {
     if (notification.innerHTML.includes(username)) {
