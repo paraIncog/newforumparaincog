@@ -247,12 +247,12 @@ button.login {
 
 .pm-person-unsel {
 	/* background-color: #FFF; */
-	color: blue
+	color: #0000ff
 }
 
 .pm-person-sel {
-	background-color: blue;
-	color: white;
+	background-color: #0000ff;
+	color: #FFF;
 }
 
 .pm-person-sel, .pm-person-unsel {
@@ -344,10 +344,17 @@ button.login {
 }
 
 .add-button-selector {
+	border-radius: 50%;
+	border-bottom: 1px solid #646464;
 	font-size: 3rem;
-	transition: .25s;
 	height: 4rem;
+	transition: .25s;
 	width: 4rem;
+}
+
+.add-button-selector:hover {
+	background-color: #8f8f8f;
+	transition: .25s;
 	border-radius: 50%;
 	border-bottom: 1px solid #646464;
 }
@@ -360,12 +367,6 @@ button.login {
 	color: #0000FF;
 }
 
-.add-button-selector:hover {
-	background-color: #646464;
-	transition: .25s;
-	border-radius: 50%;
-	border-bottom: 1px solid #646464;
-}
 
 .material-symbols-rounded {
 	font-size: 3.75rem !important;
@@ -540,11 +541,11 @@ button.foruminput {
 }
 
 .online-status {
-    background-color: green;
+    background-color: #008000;
 }
 
 .offline-status {
-    background-color: red;
+    background-color: #ff0000;
 }
 
 /* Hide sidebar by default */
@@ -563,6 +564,15 @@ button.foruminput {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: darkgrey;
+    background-color: #a9a9a9;
     border-radius: 6px;
+}
+
+.error-message {
+	align-content: center;
+	color: #ff0000;
+	display: flex;
+	font-size: 1rem;
+	justify-content: center;
+	padding: .5rem;
 }

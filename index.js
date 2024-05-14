@@ -78,7 +78,7 @@ app.post("/login", (req, res) => {
               userid: row.id,
             });
           } else {
-            res.status(401).json({ error: "Invalid credentials" });
+            res.status(401).json({ error: "Invalid username and/or password" });
           }
 
           if (err) {

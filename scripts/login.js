@@ -1,16 +1,15 @@
 function login() {
   const mainContent = document.getElementById("main-content");
-  const sidebarContent = document.getElementById("sidebar-content");
   mainContent.innerHTML = `
     <div class="container">
       <div class="primary-page-desc txt-prim bg-white">Login</div>
         <div class="logincontainer">
           <form id="loginForm">
             <div class="login-txtinput">
-              Username <input id="username" class="login" type="text" required>
+              Username <input id="username" class="login" type="text" minlength="3" required>
             </div>
             <div class="login-txtinput">
-              Password <input id="password" class="login" type="password" required>
+              Password <input id="password" class="login" type="password" minlength="8" required>
             </div>
             <div id="error-message" class="error-message"></div>
             <div class="login-txtinput">
@@ -30,41 +29,35 @@ function login() {
     .getElementById("loginForm")
     .addEventListener("submit", function (event) {
       event.preventDefault();
-      const formData = new FormData(this);
 
       const username = document.getElementById("username").value;
       const password = document.getElementById("password").value;
 
       fetch("/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username, password }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password })
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (data.error) {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.textContent = data.error;
-          } else {
-            // Successful login
-            document.querySelector(".sessioner-username").textContent = data.username; // Set the username in the placeholder
-            
-            checkSessionAndLoadUsername();
 
-            setupWebSocket(data.userid);
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    });
+      .then(response => response.json())
+
+      .then((data) => {
+        if (data.error) {
+          const errorMessage = document.getElementById("error-message");
+          errorMessage.textContent = data.error;
+          errorMessage.style.color = 'red';
+        } else {
+          document.querySelector(".sessioner-username").textContent = data.username;
+          checkSessionAndLoadUsername();
+          setupWebSocket(data.userid);
+        }
+      })
+      
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+    }
+  );
 }
 
 function logout() {
