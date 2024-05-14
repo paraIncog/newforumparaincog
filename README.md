@@ -9,9 +9,6 @@ Version 0.6
   - [Prerequisites](#prerequisites)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
-    - [Required in Terminal](#required-in-terminal)
-    - [Docker](#docker)
-    - [Direct](#direct)
 - [Features](#features)
 - [Author](#author)
 
@@ -37,10 +34,6 @@ Make sure you have latest web browser and Node.js installed. Ensure you have Git
     ```bash
     npm install
     npm update
-
-#### Docker
-
-#### Direct
 
 3. Start the local server:
     ```bash
