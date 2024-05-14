@@ -195,6 +195,12 @@ function fetchMessages(userId) {
 function sendMsg(recipientId) {
   const messageInput = document.getElementById("msg-input");
   const message = messageInput.value;
+
+  if (message == "") {
+    console.error("Cannot send an empty message.");
+    return;
+  }
+
   displayMessage(message, "You");
 
   if (socket && socket.readyState === WebSocket.OPEN) {
