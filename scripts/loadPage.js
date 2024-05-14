@@ -17,7 +17,9 @@ function loadPage(page) {
       </div>
     </div>
 		<br>
-		<div id="friend-users"></div>
+    <div>
+		  <div id="friend-users"></div>
+    </div>
     <div class="sessioner-box bg-prim txt-white clickable sessioner-user">
         <div>
           <div class="sessioner-username"></div>
