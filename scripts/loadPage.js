@@ -173,6 +173,7 @@ function fetchMessages(userId) {
                       : message.sender_username
                   }
                 </div>
+                <div class="single-chat-thread-time">${message.date}</div>
               </div>
             </div>
           </div>
