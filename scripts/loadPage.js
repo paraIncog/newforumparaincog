@@ -1,9 +1,9 @@
 function loadPage(page) {
   const mainContent = document.getElementById("main-content");
   const sidebarContent = document.getElementById("sidebar-content");
-  
-  document.querySelector('.sessioner-box').style.display = 'flex';
-  
+
+  document.querySelector(".sessioner-box").style.display = "flex";
+
   sidebarContent.innerHTML = `
     <div class="row">
       <img src="./icons/rtf_icon.png" alt="" class="iconsize">
@@ -95,11 +95,21 @@ function loadPage(page) {
 }
 
 function openChat(username) {
-  sessionStorage.setItem('currentChatUser', username);
-  const chatDisplay = document.getElementById('chat-display');
-  chatDisplay.innerHTML = ''; // Optionally clear previous messages
-  const notifications = document.querySelectorAll('.notification');
-  notifications.forEach(notification => {
+  if (username !== currentSelectedUserId) {
+    const selectedElement = document.querySelector(".pm-person-sel");
+    if (selectedElement) {
+      selectedElement.classList.remove("pm-person-sel");
+      selectedElement.classList.add("pm-person");
+    }
+    // Clear the current selection as no user is selected
+    currentSelectedUserId = null;
+  }
+
+  sessionStorage.setItem("currentChatUser", username);
+  const chatDisplay = document.getElementById("chat-display");
+  chatDisplay.innerHTML = ""; // Optionally clear previous messages
+  const notifications = document.querySelectorAll(".notification");
+  notifications.forEach((notification) => {
     if (notification.innerHTML.includes(username)) {
       notification.parentNode.removeChild(notification);
     }
