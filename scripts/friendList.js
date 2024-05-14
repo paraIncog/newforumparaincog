@@ -21,11 +21,9 @@ function displayFriends(userId) {
 	})
 }
 
-// Global variable to keep track of the currently selected user
 var currentSelectedUserId = null;
 
 function selectUser(userId, element) {
-    // Check if there's a previously selected user and remove the selection style
     if (currentSelectedUserId !== null) {
         const previousSelectedElement = document.querySelector('.pm-person-sel');
         if (previousSelectedElement) {
@@ -34,13 +32,9 @@ function selectUser(userId, element) {
         }
     }
 
-    // Update the current selected user
     currentSelectedUserId = userId;
 
-    // Add 'pm-person-sel' class to the clicked user
-    // element.classList.remove('pm-person-unsel');  // Optionally manage default class
     element.classList.add('pm-person-sel');
 
-    // Fetch and display user info
     showUserInfo(userId);
 }

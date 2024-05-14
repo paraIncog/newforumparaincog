@@ -1,10 +1,9 @@
-var socket = null; // This makes `socket` accessible throughout the application
+var socket = null;
 
 function setupWebSocket(userId) {
   if (!socket || socket.readyState !== WebSocket.OPEN) {
     socket = new WebSocket(`ws://localhost:4000/ws?userID=${userId}`);
     socket.onopen = function () {
-      console.log("WebSocket is open now.");
     };
 
     // Setup to handle incoming WebSocket messages
@@ -12,11 +11,10 @@ function setupWebSocket(userId) {
       var data = JSON.parse(event.data);
       if (data.type === "message") {
         // Check if the current chat is with the sender
-        const currentChatUser = sessionStorage.getItem('currentChatUser'); // Assuming you store the current chat user's username or id in sessionStorage
+        const currentChatUser = sessionStorage.getItem('currentChatUser');
         if (currentChatUser === data.fromUsername) {
           displayMessage(data.message, data.fromUsername);
         } else {
-          // Display notification
           displayNotification(data.fromUsername);
         }
       }
@@ -27,13 +25,12 @@ function setupWebSocket(userId) {
     };
 
     socket.onclose = function () {
-      console.log("WebSocket is closed now.");
-      socket = null; // Reset the socket to null to handle reconnections cleanly
+      socket = null;
     };
   }
 }
 
-let notificationCount = 0;  // Keep track of notifications
+let notificationCount = 0;
 
 function displayNotification(username) {
   const notificationArea = document.getElementById("notification-area");
@@ -70,7 +67,7 @@ function displayMessage(message, username) {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  checkSessionAndLoadUsername(); // Check session status before automatically redirecting to login
+  checkSessionAndLoadUsername();
 });
 
 function checkSessionAndLoadUsername() {

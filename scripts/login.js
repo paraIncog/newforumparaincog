@@ -54,12 +54,10 @@ function login() {
             errorMessage.textContent = data.error;
           } else {
             // Successful login
-            console.log("Congrats, " + username + "!");
             document.querySelector(".sessioner-username").textContent = data.username; // Set the username in the placeholder
             
             checkSessionAndLoadUsername();
 
-            console.log(data)
             setupWebSocket(data.userid);
           }
         })
@@ -74,13 +72,11 @@ function logout() {
   if (socket && socket.readyState === WebSocket.OPEN) {
     socket.close();
     socket = null;
-    console.log("WebSocket connection closed");
   }
 
   fetch("/logout")
     .then((response) => {
       if (response.ok) {
-        // Session successfully ended, redirect to login page
         window.location.href = "/";
       } else {
         console.error("Logout failed");

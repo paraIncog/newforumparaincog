@@ -71,7 +71,7 @@ function register() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(userData), // Send all form data
+        body: JSON.stringify(userData),
       })
         .then((response) => {
           if (!response.ok) {
@@ -81,12 +81,10 @@ function register() {
         })
         .then((data) => {
           if (data.error) {
-            // Display error message
             const errorMessage = document.getElementById("error-message");
             errorMessage.textContent = data.error;
           } else {
             // Successful registration
-            console.log("Congrats, " + userData.name + "!");
             login();
           }
         })

@@ -102,13 +102,12 @@ function openChat(username) {
       selectedElement.classList.remove("pm-person-sel");
       selectedElement.classList.add("pm-person");
     }
-    // Clear the current selection as no user is selected
     currentSelectedUserId = null;
   }
 
   sessionStorage.setItem("currentChatUser", username);
   const chatDisplay = document.getElementById("chat-display");
-  chatDisplay.innerHTML = ""; // Optionally clear previous messages
+  chatDisplay.innerHTML = "";
   const notifications = document.querySelectorAll(".notification");
   notifications.forEach((notification) => {
     if (notification.innerHTML.includes(username)) {
@@ -118,7 +117,7 @@ function openChat(username) {
 }
 
 function switchToChat(username) {
-  openChat(username); // Use the same openChat function to handle opening and notification clearance
+  openChat(username);
 }
 
 function showUserInfo(userId) {
@@ -253,7 +252,7 @@ function showForum(postId) {
       commentForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const commentContent = document.getElementById("comment_content").value;
-        addComment(postId, commentContent); // Call function to add comment
+        addComment(postId, commentContent);
       });
     });
 
@@ -293,7 +292,6 @@ function addComment(postId, commentContent) {
   })
     .then((response) => {
       if (response.ok) {
-        // Reload the forum post page after successful comment addition
         showForum(postId);
       } else {
         throw new Error("Failed to add comment");
@@ -301,7 +299,6 @@ function addComment(postId, commentContent) {
     })
     .catch((error) => {
       console.error("Error adding comment:", error);
-      // Handle error
     });
 }
 

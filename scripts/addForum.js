@@ -21,7 +21,6 @@ function addForum() {
         })
         .then(response => {
             if (response.ok) {
-                // Redirect to forums page after successful post
                 loadPage("forums");
             } else {
                 throw new Error("Failed to add forum post");
@@ -29,7 +28,6 @@ function addForum() {
         })
         .catch(error => {
             console.error("Error adding forum post:", error);
-            // Handle error
         });
     };
 

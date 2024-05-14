@@ -125,7 +125,6 @@ app.get("/get-user-id", (req, res) => {
 // Endpoint to check session status
 app.get("/check-session", (req, res) => {
   if (req.session.user) {
-    // Session exists and user is logged in
     res.sendStatus(200); // Send a success status code
   } else {
     res.sendStatus(401); // Send an unauthorized status code
@@ -146,10 +145,8 @@ app.post("/register", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
-      // Prepare the SQL statement for inserting the user into the database
       const insertQuery = `INSERT INTO users (username, password, namefirst, namelast, email, gender, age) VALUES (?, ?, ?, ?, ?, ?, ?)`;
 
-      // Execute the SQL query to insert the user into the database
       db.run(
         insertQuery,
         [username, password, namefirst, namelast, email, gender, age],
@@ -159,7 +156,6 @@ app.post("/register", (req, res) => {
             return res.status(500).send("Internal Server Error");
           }
 
-          // Return success message
           res.json({ message: "Registration successful", username: username });
         }
       );
@@ -305,10 +301,8 @@ app.post("/add-forum-post", isLoggedIn, (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
-      // Prepare the SQL statement for inserting the forum post into the database
       const insertQuery = `INSERT INTO posts (title, content, author, category) VALUES (?, ?, ?, ?)`;
 
-      // Execute the SQL query to insert the forum post into the database
       db.run(insertQuery, [title, content, author, category], function (err) {
         if (err) {
           console.error(err.message);
@@ -343,10 +337,8 @@ app.post("/add-comment", isLoggedIn, (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
-      // Prepare the SQL statement for inserting the comment into the database
       const insertQuery = `INSERT INTO posts_comments (post_id, author, content) VALUES (?, ?, ?)`;
 
-      // Execute the SQL query to insert the comment into the database
       db.run(insertQuery, [postId, author, commentContent], function (err) {
         if (err) {
           console.error(err.message);
@@ -455,7 +447,6 @@ app.get("/get-friends", (req, res) => {
         return res.status(500).send("Internal Server Error");
       }
 
-      console.log("CP1", userId);
       db.all(
         "SELECT u.username, u.id, max(date) FROM users u LEFT OUTER JOIN messages m ON m.sender_id = u.id WHERE u.id <> ? GROUP BY u.username, u.id ORDER BY m.date DESC, u.username",
         [userId],
@@ -479,7 +470,7 @@ app.get("/get-friends", (req, res) => {
 
 // Endpoint to fetch messages for a logged-in user
 app.get("/get-messages", isLoggedIn, (req, res) => {
-  const userId = req.session.user.id;  // Ensure you're using the authenticated user's ID
+  const userId = req.session.user.id;
 
   let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
     if (err) {
@@ -538,7 +529,7 @@ wss.on("connection", function connection(ws, req) {
   const userId = req.session.user.id;
   console.log("Session ID:", req.sessionID);
   console.log("User ID:", req.session.user.id);
-  console.log("Connected User C6: ", user.id);
+  console.log("Connected User: ", user.id);
 
   if (req.session.user) {
     req.session.user.lastActive = new Date();
@@ -549,7 +540,6 @@ wss.on("connection", function connection(ws, req) {
         console.error("Failed to save session", err);
         ws.send(JSON.stringify({ error: "Failed to save session" }));
       } else {
-        console.log("Session saved successfully.");
         ws.send(JSON.stringify({ message: "Session saved" }));
       }
     });
@@ -561,7 +551,6 @@ wss.on("connection", function connection(ws, req) {
 
     // Handle incoming WebSocket messages
     ws.on("message", function incoming(message) {
-      console.log(`Received from client ${userId}: %s`, message);
       const parsedMessage = JSON.parse(message);
       broadcastMessage(activeConnections, parsedMessage, userId);
       saveMessageToDB(parsedMessage, userId, parsedMessage.recipientId);
@@ -571,7 +560,6 @@ wss.on("connection", function connection(ws, req) {
   }
   // Handle WebSocket connection close
   ws.on("close", function close() {
-    console.log("WebSocket client disconnected", userId);
     activeConnections.delete(userId);
   });
 });
@@ -592,7 +580,7 @@ function broadcastMessage(connections, message, fromUserId) {
     if (row) {
       let username = row.username;
       connections.forEach((ws, userId) => {
-        if (userId === message.recipientId) {  // Strictly check recipient ID
+        if (userId === message.recipientId) {
           ws.send(JSON.stringify({
             type: "message",
             message: message.message,
