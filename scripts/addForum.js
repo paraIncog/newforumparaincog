@@ -19,23 +19,28 @@ function addForum() {
             },
             body: JSON.stringify({ title, category, content })
         })
-        .then(response => {
-            if (response.ok) {
-                loadPage("forums");
-            } else {
-                throw new Error("Failed to add forum post");
-            }
-        })
-        .catch(error => {
-            console.error("Error adding forum post:", error);
-        });
+            .then(response => {
+                if (response.ok) {
+                    loadPage("forums");
+                } else {
+                    throw new Error("Failed to add forum post");
+                }
+            })
+            .catch(error => {
+                console.error("Error adding forum post:", error);
+            });
     };
 
     // Render forum post form
     mainContent.innerHTML = `
         <div class="container">
-            <div class="primary-page-desc txt-prim bg-white">
-                Add Forum Post
+            <div class="row">
+                <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
+                    <img class="iconsize" src="../icons/back_arrow.png" alt="back_arrow">
+                </div>
+                <div class="primary-page-desc txt-prim bg-white">
+                    Add Forum Post
+                </div>
             </div>
             <form id="forumForm">
                 <div class="forumtitle forumContent">
@@ -61,14 +66,6 @@ function addForum() {
                 </div>
             </form>
         </div>
-    `;
-
-    sidebarContent.innerHTML = `
-      <div>
-          <div class="back-arrow txt-scnd clickable" onClick="loadPage('forums')">
-              Back
-          </div>
-      </div>
     `;
 
     // Attach form submission handler
