@@ -1,25 +1,29 @@
 function register() {
   const mainContent = document.getElementById("main-content");
-  const sidebarContent = document.getElementById("sidebar-content");
   mainContent.innerHTML = `
     <div class="container">
       <div class="primary-page-desc txt-prim bg-white">Register New User</div>
         <div class="logincontainer">
           <form id="registerForm">
             <div class="login-txtinput">
-              name <input id="name" name="name" class="login" type="text" minlength="3" required>
+              Username
+              <input id="name" name="name" class="login" type="text" minlength="3" required>
             </div>
             <div class="login-txtinput">
-              Password <input id="password" name="password" class="login" type="password" minlength="6" required>
+              Password
+              <input id="password" name="password" class="login" type="password" minlength="8" required>
             </div>
           <div class="login-txtinput">
-            Firstname <input id="namefirst" name="namefirst" class="login" type="text" required>
+            Firstname
+            <input id="namefirst" name="namefirst" class="login" type="text" required>
           </div>
           <div class="login-txtinput">
-            Lastname <input id="namelast" name="namelast" class="login" type="text" required>
+            Lastname
+            <input id="namelast" name="namelast" class="login" type="text" required>
           </div>
           <div class="login-txtinput">
-            Email <input id="email" name="email" class="login" type="email" required>
+            Email
+            <input id="email" name="email" class="login" type="email" required>
           </div>
           <div class="login-txtinput">
             Gender
@@ -30,7 +34,10 @@ function register() {
               <option value="other">Other</option>
             </select>
           </div>
-          <div class="login-txtinput">Age <input id="age" name="age" class="login" type="number" min="1" required></div>
+          <div class="login-txtinput">
+            Age
+            <input id="age" name="age" class="login" type="number" min="1" required>
+          </div>
           <div id="error-message" class="error-message"></div>
           <div class="login-txtinput">
             <button type="submit" class="login bg-prim">Send Request</button>
@@ -40,11 +47,6 @@ function register() {
       <div class="logincontainer">
         Already have an account? <span class="login-to-registration clickable txt-scnd" onclick="login()">Log in</span>
       </div>
-    </div>
-  `;
-  sidebarContent.innerHTML = `
-    <div>
-      <div class="back-arrow txt-scnd clickable" onClick="loadPage('pms')">Back</div>
     </div>
   `;
 
@@ -73,23 +75,27 @@ function register() {
         },
         body: JSON.stringify(userData),
       })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          if (data.error) {
-            const errorMessage = document.getElementById("error-message");
-            errorMessage.textContent = data.error;
-          } else {
-            // Successful registration
-            login();
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+
+      .then((data) => {
+        if (data.error) {
+          const errorMessage = document.getElementById("error-message");
+          errorMessage.textContent = data.error;
+        } else {
+          // Successful registration
+          login();
+        }
+      }
+    )
+
+    .catch((error) => {
+      console.error("Error:", error);
     });
+    }
+  );
 }
