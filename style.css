@@ -192,7 +192,9 @@ button.login {
 
 .order-forums {
 	display: flex;
-	flex-direction: column-reverse;
+	flex-direction: column;
+	max-height: 700px;
+	overflow-y: scroll;
 }
 
 /* Main Content Forum */
@@ -553,4 +555,14 @@ button.foruminput {
 #friend-users {
     height: 725px;
     overflow-y: auto;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 6px;
 }

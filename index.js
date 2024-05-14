@@ -204,7 +204,7 @@ app.get("/get-forums", (req, res) => {
       }
 
       db.all(
-        "SELECT id, title, author, content, datetime(date, 'localtime') localtime, category FROM posts",
+        "SELECT id, title, author, content, datetime(date, 'localtime') localtime, category FROM posts ORDER BY date DESC",
         (err, rows) => {
           if (err) {
             console.error(err.message);

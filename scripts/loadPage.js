@@ -74,6 +74,7 @@ function loadPage(page) {
 					</div>
 				  <div id="add-button-area"></div>
 				`;
+        mainContent.scrollTop = 0;
           addSend("forums");
         });
       break;

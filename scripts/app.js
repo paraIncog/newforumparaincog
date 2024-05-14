@@ -65,8 +65,8 @@ function displayMessage(message, username) {
     </div>
     </div>
   `;
-  chatDisplay.appendChild(messageDiv);  // Adds new messages at the end, which appear at the bottom due to flex-reverse
-  chatDisplay.scrollTop = chatDisplay.scrollHeight;  // Scrolls to the bottom
+  chatDisplay.appendChild(messageDiv);
+  chatDisplay.scrollTop = chatDisplay.scrollHeight;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
