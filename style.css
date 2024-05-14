@@ -61,7 +61,7 @@ button.login {
 	outline: 0;
 }
 
-.insert-msg {
+/* .insert-msg {
 	border: 0;
 	height: 2rem;
 	border-radius: 50rem;
@@ -69,6 +69,13 @@ button.login {
 	padding-right: 2rem;
 	outline: 0;
 	width: 80rem;
+} */
+
+.insert-msg {
+	width: calc(100% - 2rem); /* Adjusts width to be full width of the container minus padding */
+	padding: 0 1rem; /* Optional: Add padding inside the input if needed */
+	margin: 0 auto; /* Centers the input within the container */
+	box-sizing: border-box; /* Ensures padding is included in the width calculation */
 }
 
 .insert-msg:focus {

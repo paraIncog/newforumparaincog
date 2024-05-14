@@ -1,6 +1,7 @@
 # newforumparaincog
 <!-- Screenshot -->
-Version 0.5
+<img src="" alt="screenshot_app">
+Version 0.6
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -18,9 +19,13 @@ Make sure you have latest web browser and Node.js installed. Ensure you have Git
 ### Dependencies
 * Node.js - Server-side JavaScript runtime.
 * Express.js - Web application framework for Node.js.
-* Websocket - protocol enabling communication channels over a single connection.
+* Websocket - Protocol enabling communication channels over a single connection.
 
 ### Installation
+
+#### Docker
+
+#### Direct
 
 1. Clone the repository:
    ```bash

@@ -525,11 +525,7 @@ server.on("upgrade", (request, socket, head) => {
 
 // WebSocket connection handling
 wss.on("connection", function connection(ws, req) {
-  const user = req.session.user;
   const userId = req.session.user.id;
-  console.log("Session ID:", req.sessionID);
-  console.log("User ID:", req.session.user.id);
-  console.log("Connected User: ", user.id);
 
   if (req.session.user) {
     req.session.user.lastActive = new Date();
