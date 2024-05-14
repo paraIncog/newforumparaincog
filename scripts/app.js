@@ -51,6 +51,7 @@ function displayNotification(username) {
 function displayMessage(message, username) {
   const chatDisplay = document.getElementById("chat-display");
   const messageDiv = document.createElement("div");
+
   messageDiv.innerHTML = `
   <div class="single-chat">
     <div class="single-chat-thread bg-gray">
@@ -59,6 +60,7 @@ function displayMessage(message, username) {
         <div class="single-forum-thread-uname">
           ${username}
         </div>
+        <div class="single-forum-thread-time bg-gray">${getFormattedDate()}</div>
       </div>
     </div>
     </div>
