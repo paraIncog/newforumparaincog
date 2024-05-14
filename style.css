@@ -221,6 +221,12 @@ button.login {
 	font-size: .75rem;
 }
 
+.single-chat-thread-time {
+	display: flex;
+	margin-right: 0;
+	font-size: .75rem;
+}
+
 /* user Items */
 
 .user-list {
