@@ -24,7 +24,6 @@ body {
 }
 
 .material-symbols-outlined {
-	margin: 0 1rem;
 	font-variation-settings:
 		'FILL' 0,
 		'wght' 200,
@@ -314,8 +313,6 @@ button.login {
 /* Adding button */
 
 .add-button-area {
-	display: flex;
-	align-items: center;
 	position: absolute;
 	right: 1.25rem;
 	bottom: 1.25rem;
@@ -323,6 +320,7 @@ button.login {
 }
 
 .add-button-selector {
+	font-size: 3rem;
 	transition: .25s;
 	height: 4rem;
 	width: 4rem;
@@ -346,7 +344,8 @@ button.login {
 }
 
 .material-symbols-rounded {
-	font-size: 2rem;
+	font-size: 3.75rem !important;
+	padding-left: .1rem;
 	font-variation-settings:
 		'FILL' 0,
 		'wght' 700,
@@ -355,11 +354,18 @@ button.login {
 }
 
 .insert-msg {
-	display: flex;
-	border-radius: 50rem;
-	padding-right: 2rem;
+	border: 0;
 	height: 2rem;
-	width: 50rem;
+	border-radius: 50rem;
+	display: flex;
+	padding-right: 2rem;
+	outline: 0;
+	width: 80rem;
+}
+
+.insert-msg:focus {
+	outline: .15rem solid #00A3FF;
+	transition: .1s;
 }
 
 /* Sessioner */
@@ -504,11 +510,6 @@ button.foruminput {
 	width: 3rem;
 	justify-content: end;
 }
-
-.notification {
-	/* Notified */
-}
-
 .online-status, .offline-status {
 	padding: 5px;
     border-radius: 10rem;
