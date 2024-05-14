@@ -33,8 +33,6 @@ function selectUser(userId, element) {
 	}
 
 	currentSelectedUserId = userId;
-
 	element.classList.add('pm-person-sel');
-
 	showUserInfo(userId);
 }

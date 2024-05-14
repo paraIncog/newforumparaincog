@@ -1,8 +1,10 @@
-# newforumparaincog
+# real-time-forum
 
 ![forums page](./promo/ss_rtf_fms_1.png)
 ![private page](./promo/ss_rtf_pms_1.png)
 Version 0.6
+
+Real-time Forum and Messaging (RTFM) is an interactive web application enabling users to engage in forums and private messaging in real time. Built using Node.js, Express, and WebSocket, it provides dynamic content loading and real-time updates across user interactions.
 
 ## Table of Contents
 - [Getting Started](#getting-started)
@@ -15,12 +17,12 @@ Version 0.6
 ## Getting Started
 
 ### Prerequisites
-Make sure you have latest web browser and Node.js installed. Ensure you have Git installed on your machine. Also have your Audit Page ready.
+Ensure you have the latest web browser and Node.js installed. Git should also be installed on your machine. Also have your Audit Page ready.
 
 ### Dependencies
-* Node.js - Server-side JavaScript runtime.
-* Express.js - Web application framework for Node.js.
-* Websocket - Protocol enabling communication channels over a single connection.
+**Node.js** - Server-side JavaScript runtime.
+**Express.js** - Web application framework for Node.js.
+**Websocket** - Enables communication channels over a single connection.
 
 ### Installation
 
@@ -41,8 +43,13 @@ Make sure you have latest web browser and Node.js installed. Ensure you have Git
 4. Open your browser and navigate to http://localhost:4000.
 
 ## Features
-* Forums
-* Chat
+* Forums: Engage in discussions across various topics.
+* "Private" Messaging: Communicate "privately" with other users.
+* Real-time Interactions: Experience immediate updates in forum posts and messages without needing to reload the page.
+
+## Something Completely Different
+* Lines of Code: 1458
+* Development Time: 2.7 months
 
 ## Author
 
