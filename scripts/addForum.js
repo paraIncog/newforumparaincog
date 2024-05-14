@@ -1,6 +1,5 @@
 function addForum() {
     const mainContent = document.getElementById("main-content");
-    const sidebarContent = document.getElementById("sidebar-content");
 
     // Form submission handler
     const handleSubmit = (event) => {

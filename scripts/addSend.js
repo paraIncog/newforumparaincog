@@ -3,37 +3,36 @@ function addSend(page) {
 	switch (page) {
 		case "forums":
 			addButtonArea.innerHTML = `
-			<div class="add-button-area">
-			  <div id="overlay-toggle">
-				<span
-				  class="material-symbols-rounded add-button-selector abs-forums bg-gray clickable"
-				  onclick="addForum()"
-				>
-				  add
-				</span>
-			  </div>
-			</div>
+				<div class="add-button-area">
+					<div id="overlay-toggle">
+						<span
+						class="material-symbols-rounded add-button-selector abs-forums bg-gray clickable"
+						onclick="addForum()">add
+						</span>
+					</div>
+				</div>
 			`;
 			break;
 		case "pms":
 			addButtonArea.innerHTML = `
-			<div class="row add-button-area">
-			<div>
-				<input
-				class="insert-msg bg-gray txt-black"
-				id="msg-input"
-				name="msg-input"
-				placeholder="Insert Chat Message"
-				maxlength="800"
-				/>
-			</div>
-			  <div id="overlay-toggle">
-				<span
-				  class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
-				  onclick="sendMsg()"
-				>send</span>
-			  </div>
-			</div>
+				<div class="row add-button-area">
+					<div>
+						<input
+						class="insert-msg bg-gray txt-black"
+						id="msg-input"
+						name="msg-input"
+						placeholder="Insert Chat Message"
+						maxlength="800"
+						required
+						/>
+					</div>
+					<div id="overlay-toggle">
+						<span
+						class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+						onclick="sendMsg()"
+						>send</span>
+					</div>
+				</div>
 			`;
 			break;
 		default:
