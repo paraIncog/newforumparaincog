@@ -7,7 +7,7 @@ function loadPage(page) {
   sidebarContent.innerHTML = `
     <div class="row">
       <img src="./icons/rtf_icon.png" alt="" class="iconsize">
-      <div class="apptitle">RTF</div>
+      <div class="apptitle txt-prim">RTF</div>
       <div class="notifications clickable" id="notification-area">
         <span class="material-symbols-outlined" style="display: flex; justify-content: end">
           notifications
