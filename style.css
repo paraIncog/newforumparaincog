@@ -394,6 +394,8 @@ button.login {
 
 
 .sessioner-box {
+	position: absolute;
+	bottom: 1.5rem;
 	border-radius: 50rem;
 	display: flex;
 	margin-left: 2.5%;
