@@ -1,6 +1,7 @@
 # newforumparaincog
-<!-- Screenshot -->
-<img src="" alt="screenshot_app">
+
+![forums page](./promo/ss_rtf_fms_1.png)
+![private page](./promo/ss_rtf_pms_1.png)
 Version 0.6
 
 ## Table of Contents
@@ -8,6 +9,9 @@ Version 0.6
   - [Prerequisites](#prerequisites)
   - [Dependencies](#dependencies)
   - [Installation](#installation)
+    - [Required in Terminal](#required-in-terminal)
+    - [Docker](#docker)
+    - [Direct](#direct)
 - [Features](#features)
 - [Author](#author)
 
@@ -23,17 +27,21 @@ Make sure you have latest web browser and Node.js installed. Ensure you have Git
 
 ### Installation
 
-#### Docker
-
-#### Direct
+#### Required in terminal
 
 1. Clone the repository:
    ```bash
    git clone https://01.kood.tech/git/aselge/real-time-forum.git
    cd real-time-forum
-2. Install dependencies:
+2. Install/Update dependencies:
     ```bash
     npm install
+    npm update
+
+#### Docker
+
+#### Direct
+
 3. Start the local server:
     ```bash
     node server.js
