@@ -37,7 +37,7 @@ Make sure you have latest web browser and Node.js installed. Ensure you have Git
 
 3. Start the local server:
     ```bash
-    node server.js
+    npm run start
 4. Open your browser and navigate to http://localhost:4000.
 
 ## Features
