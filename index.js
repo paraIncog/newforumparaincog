@@ -534,7 +534,6 @@ wss.on("connection", function connection(ws, req) {
 
   if (userId) {
     activeConnections.set(userId, ws);
-    console.log("CP1", Array.from(activeConnections.keys()));
 
     // Handle incoming WebSocket messages
     ws.on("message", function incoming(message) {
