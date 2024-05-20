@@ -19,9 +19,6 @@ function loadPage(page) {
 		  <div id="friend-users"></div>
     </div>
     <div class="sessioner-box bg-prim txt-white clickable sessioner-user">
-      <div>
-        <div class="sessioner-username"></div>
-      </div>
       <div class="btn-logout" onclick="logout()">
         <span class="material-symbols-outlined">
           logout
@@ -174,7 +171,7 @@ function fetchMessages(userId) {
               ${message.content}
               <div class="row">
                 <div class="single-forum-thread-uname">
-                  ${message.sender_id === userId ? "You" : message.sender_username}
+                  ${message.sender_username}
                 </div>
                 <div class="single-chat-thread-time">${message.date}</div>
               </div>

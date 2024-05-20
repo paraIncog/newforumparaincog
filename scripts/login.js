@@ -47,7 +47,7 @@ function login() {
           errorMessage.textContent = data.error;
           errorMessage.style.color = 'red';
         } else {
-          document.querySelector(".sessioner-username").textContent = data.username;
+          // document.querySelector(".sessioner-username").textContent = data.username;
           checkSessionAndLoadUsername();
           setupWebSocket(data.userid);
         }
