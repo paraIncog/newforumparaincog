@@ -47,6 +47,7 @@ function loadPage(page) {
                             <div class="row">
                               <div class="single-forum-thread-category bg-gray">
                                 ${getCategoryIcon(post.category)}
+                                ${post.category}
                               </div>
                               <div class="single-forum-thread-title bg-gray" maxlength="80">
                                 ${post.title}

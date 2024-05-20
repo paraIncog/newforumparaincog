@@ -6,7 +6,7 @@ function login() {
         <div class="logincontainer">
           <form id="loginForm">
             <div class="login-txtinput">
-              Username <input id="username" class="login" type="text" minlength="3" required>
+              Username / Email <input id="loginId" class="login" type="text" minlength="3" required>
             </div>
             <div class="login-txtinput">
               Password <input id="password" class="login" type="password" minlength="8" required>
@@ -30,13 +30,13 @@ function login() {
     .addEventListener("submit", function (event) {
       event.preventDefault();
 
-      const username = document.getElementById("username").value;
+      const loginId = document.getElementById("loginId").value;
       const password = document.getElementById("password").value;
 
       fetch("/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ loginId, password })
       })
 
       .then(response => response.json())

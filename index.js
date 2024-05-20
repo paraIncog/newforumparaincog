@@ -49,47 +49,38 @@ app.get("/", (req, res) => {
 
 // Endpoint to handle login
 app.post("/login", (req, res) => {
-  const { username, password } = req.body;
+  const { loginId, password } = req.body;
 
-  if (!username || !password) {
-    return res
-      .status(400)
-      .json({ error: "Username and password are required." });
+  if (!loginId || !password) {
+    return res.status(400).json({ error: "Username or email and password are required." });
   }
 
-  let db = new sqlite3.Database(
-    "./database.db",
-    sqlite3.OPEN_READWRITE,
-    (err) => {
+  let db = new sqlite3.Database("./database.db", sqlite3.OPEN_READWRITE, (err) => {
+    if (err) {
+      console.error(err.message);
+      return res.status(500).send("Internal Server Error");
+    }
+
+    // Check if loginId includes an '@', assume it's an email
+    const field = loginId.includes('@') ? 'email' : 'username';
+    const query = `SELECT * FROM users WHERE ${field} = ? AND password = ?`;
+
+    db.get(query, [loginId, password], (err, row) => {
+      if (row) {
+        req.session.user = { id: row.id, username: row.username };
+        res.json({ message: "Login successful", username: row.username, userid: row.id });
+      } else {
+        res.status(401).json({ error: "Invalid login credentials" });
+      }
+
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
       }
-
-      db.get(
-        "SELECT * FROM users WHERE username = ? AND password = ?",
-        [username, password],
-        (err, row) => {
-          if (row) {
-            req.session.user = { id: row.id, username: row.username };
-            res.json({
-              message: "Login successful",
-              username: row.username,
-              userid: row.id,
-            });
-          } else {
-            res.status(401).json({ error: "Invalid username and/or password" });
-          }
-
-          if (err) {
-            console.error(err.message);
-            return res.status(500).send("Internal Server Error");
-          }
-        }
-      );
-    }
-  );
+    });
+  });
 });
+
 
 // Check if user is logged in
 function isLoggedIn(req, res, next) {

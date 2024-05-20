@@ -178,7 +178,6 @@ button.login {
 
 /* Main Content */
 
-
 #main-content {
 	overflow-x: hidden;
 	position: absolute;
@@ -336,7 +335,6 @@ button.login {
 	align-items: center;
 }
 
-
 .about-user-fullname {
 	font-size: 2rem;
 }
@@ -379,7 +377,6 @@ button.login {
 	color: #0000FF;
 }
 
-
 .material-symbols-rounded {
 	font-size: 3.75rem !important;
 	padding-left: .1rem;
@@ -391,7 +388,6 @@ button.login {
 }
 
 /* Session User */
-
 
 .sessioner-box {
 	position: absolute;
