@@ -35,8 +35,10 @@ function displayNotification(username) {
   const notificationArea = document.getElementById("notification-area");
   const notification = document.createElement("div");
   notification.className = "notification";
-  `notification-${notificationCount++}`;
-  notification.innerHTML = `Message from ${username}`;
+  notification.innerHTML = `Message from ${username} <span class="remove-notification" style="color: red; cursor: pointer;">&#x2716;</span>`;
+  notification.querySelector(".remove-notification").onclick = function () {
+    notificationArea.removeChild(notification);
+  }
   notification.onclick = function () {
     openChat(username);
     notificationArea.removeChild(notification);
@@ -56,7 +58,7 @@ function displayMessage(message, username) {
           <div class="single-forum-thread-uname">
             ${username}
           </div>
-          <div class="single-forum-thread-time bg-gray">Recently</div>
+          <div class="single-chat-thread-time bg-gray">Recently</div>
         </div>
       </div>
     </div>
