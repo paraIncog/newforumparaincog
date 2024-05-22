@@ -6,7 +6,7 @@ function addSend(page) {
 				<div class="add-button-area">
 					<div id="overlay-toggle">
 						<span
-						class="material-symbols-rounded add-button-selector abs-forums bg-gray clickable"
+						class="material-symbols-outlined add-button-selector abs-forums bg-gray clickable"
 						onclick="addForum()">add
 						</span>
 					</div>
@@ -28,7 +28,7 @@ function addSend(page) {
 					</div>
 					<div id="overlay-toggle">
 						<span
-						class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+						class="material-symbols-outlined add-button-selector abs-pms bg-gray clickable"
 						onclick="sendMsg()"
 						>send</span>
 					</div>

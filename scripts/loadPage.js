@@ -140,7 +140,7 @@ function showUserInfo(userId) {
             </div>
             <div id="overlay-toggle">
               <span
-                class="material-symbols-rounded add-button-selector abs-pms bg-gray clickable"
+                class="material-symbols-outlined add-button-selector abs-pms bg-gray clickable"
                 onClick="sendMsg(${userId})"
               >
                 send

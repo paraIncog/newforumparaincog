@@ -23,6 +23,8 @@ body {
 }
 
 .material-symbols-outlined {
+	font-size: 2.5rem !important;
+	padding-left: .1rem;
 	font-variation-settings:
 		'FILL' 0,
 		'wght' 200,
@@ -355,7 +357,7 @@ button.login {
 	bottom: 0;
 	border-radius: 50%;
 	border-bottom: 1px solid #646464;
-	font-size: 3rem;
+	font-size: 3.75rem !important;
 	height: 4rem;
 	transition: .25s;
 	width: 4rem;
@@ -375,16 +377,6 @@ button.login {
 
 .abs-pms {
 	color: #0000FF;
-}
-
-.material-symbols-rounded {
-	font-size: 3.75rem !important;
-	padding-left: .1rem;
-	font-variation-settings:
-		'FILL' 0,
-		'wght' 700,
-		'GRAD' 0,
-		'opsz' 48
 }
 
 /* Session User */
