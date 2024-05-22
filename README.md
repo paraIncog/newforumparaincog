@@ -2,7 +2,7 @@
 
 ![forums page](./promo/ss_rtf_fms_1.png)
 ![private page](./promo/ss_rtf_pms_1.png)
-Version 0.6.5
+Version 0.6.6
 
 Real-time Forum and Messaging (RTFM) is an interactive web application enabling users to engage in forums and private messaging in real time. Built using Node.js, Express, and WebSocket, it provides dynamic content loading and real-time updates across user interactions.
 
