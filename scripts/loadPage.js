@@ -162,6 +162,7 @@ function fetchMessages(userId) {
   fetch(`/get-messages?userId=${userId}`)
     .then((response) => response.json())
     .then((messages) => {
+      messages = ``;
       const chatDisplay = document.getElementById("chat-display");
       messages.forEach((message) => {
         const messageDiv = document.createElement("div");

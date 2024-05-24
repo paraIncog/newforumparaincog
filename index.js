@@ -473,11 +473,11 @@ app.get("/get-messages", isLoggedIn, (req, res) => {
       SELECT m.*, u.username as sender_username
       FROM messages m
       JOIN users u ON m.sender_id = u.id
-      WHERE (m.sender_id = ? AND m.recipient_id = ?) OR (m.sender_id = ? AND m.recipient_id = ?)
+      WHERE (m.sender_id = ? OR m.recipient_id = ?)
       ORDER BY m.date
     `;
 
-    db.all(query, [userId, userId, userId, userId], (err, rows) => {
+    db.all(query, [userId, userId], (err, rows) => {
       if (err) {
         console.error(err.message);
         return res.status(500).send("Internal Server Error");
